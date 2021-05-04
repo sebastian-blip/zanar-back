@@ -1,0 +1,27 @@
+#Types
+type userType {
+    firstname: String,
+    secondname: String,
+    gender: String,
+    birthday: String    
+}
+
+#Inputs
+input userInput {
+    firstname: String,
+    secondname: String,
+    gender: String,
+    birthday: String 
+}
+
+#Queries
+type Query {
+    getUsers: [userType]
+}
+
+#Mutations
+type Mutation {
+    createUser(input: userInput): userType 
+    updateUser(id: ID!,input: userInput): String 
+    deleteUser(id: ID!): String
+}

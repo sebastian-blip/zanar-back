@@ -1,0 +1,191 @@
+[2019-10-23T22:58:39.095Z] - [info]: "Begin createUser"
+[2019-10-23T22:58:39.101Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: '655',
+  secondname: '26',
+  gender: 'uu',
+  birthday: '20' }"
+[2019-10-23T22:58:39.109Z] - [info]: "End createUser"
+[2019-10-23T23:27:17.453Z] - [info]: "Begin createUser"
+[2019-10-23T23:27:17.463Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: '655',
+  secondname: '26',
+  gender: 'uu',
+  birthday: '20' }"
+[2019-10-23T23:27:17.471Z] - [info]: "End createUser"
+[2019-10-23T23:27:28.366Z] - [info]: "Begin createUser"
+[2019-10-23T23:27:28.367Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: '655',
+  secondname: '26',
+  gender: 'uu',
+  birthday: '20' }"
+[2019-10-23T23:27:28.368Z] - [info]: "End createUser"
+[2020-07-02T01:53:15.901Z] - [info]: "Begin createUser"
+[2020-07-02T01:53:15.905Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T01:53:15.914Z] - [info]: "End createUser"
+[2020-07-02T01:58:52.238Z] - [info]: "Begin createUser"
+[2020-07-02T01:58:52.241Z] - [info]: "Method: createUser. FilterJson: undefined"
+[2020-07-02T01:58:52.297Z] - [info]: "End createUser"
+[2020-07-02T01:58:52.314Z] - [error]: "Method: createUser Name: ReferenceError,  Error: obUser is not defined, ErrorJson: ReferenceError: obUser is not defined
+    at _callee$ (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\src\graphql\resolvers\user\/index.js:14:13)
+    at tryCatch (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\node_modules\regenerator-runtime\runtime.js:45:40)
+    at Generator.invoke [as _invoke] (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\node_modules\regenerator-runtime\runtime.js:274:22)
+    at Generator.prototype.<computed> [as next] (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\node_modules\regenerator-runtime\runtime.js:97:21)
+    at asyncGeneratorStep (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\src\graphql\resolvers\user\index.js:16:103)
+    at _next (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\src\graphql\resolvers\user\index.js:18:194)
+    at C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\src\graphql\resolvers\user\index.js:18:364
+    at new Promise (<anonymous>)
+    at C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\src\graphql\resolvers\user\index.js:18:97
+    at C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\src\graphql\resolvers\user\/index.js:7:10
+    at new Promise (<anonymous>)
+    at getUserByToken (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\src\graphql\resolvers\user\/index.js:7:10)
+    at field.resolve (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\node_modules\graphql-extensions\src\index.ts:274:18)
+    at field.resolve (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\node_modules\apollo-server-core\src\utils\schemaInstrumentation.ts:103:18)
+    at resolveFieldValueOrError (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\node_modules\graphql\execution\execute.js:467:18)
+    at resolveField (C:\Users\KingsBD\Documents\Daniel\Programas\Github\Base proyects\BaseNodeGraphqlProyect\node_modules\graphql\execution\execute.js:434:16) {
+  [stack]: 'ReferenceError: obUser is not defined\n' +
+    '    at _callee$ (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\src\\graphql\\resolvers\\user\\/index.js:14:13)\n' +
+    '    at tryCatch (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\node_modules\\regenerator-runtime\\runtime.js:45:40)\n' +
+    '    at Generator.invoke [as _invoke] (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\node_modules\\regenerator-runtime\\runtime.js:274:22)\n' +
+    '    at Generator.prototype.<computed> [as next] (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\node_modules\\regenerator-runtime\\runtime.js:97:21)\n' +
+    '    at asyncGeneratorStep (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\src\\graphql\\resolvers\\user\\index.js:16:103)\n' +
+    '    at _next (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\src\\graphql\\resolvers\\user\\index.js:18:194)\n' +
+    '    at C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\src\\graphql\\resolvers\\user\\index.js:18:364\n' +
+    '    at new Promise (<anonymous>)\n' +
+    '    at C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\src\\graphql\\resolvers\\user\\index.js:18:97\n' +
+    '    at C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\src\\graphql\\resolvers\\user\\/index.js:7:10\n' +
+    '    at new Promise (<anonymous>)\n' +
+    '    at getUserByToken (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\src\\graphql\\resolvers\\user\\/index.js:7:10)\n' +
+    '    at field.resolve (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\node_modules\\graphql-extensions\\src\\index.ts:274:18)\n' +
+    '    at field.resolve (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\node_modules\\apollo-server-core\\src\\utils\\schemaInstrumentation.ts:103:18)\n' +
+    '    at resolveFieldValueOrError (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\node_modules\\graphql\\execution\\execute.js:467:18)\n' +
+    '    at resolveField (C:\\Users\\KingsBD\\Documents\\Daniel\\Programas\\Github\\Base proyects\\BaseNodeGraphqlProyect\\node_modules\\graphql\\execution\\execute.js:434:16)',
+  [message]: 'obUser is not defined'
+}"
+[2020-07-02T01:59:07.839Z] - [info]: "Begin createUser"
+[2020-07-02T01:59:07.842Z] - [info]: "Method: createUser. FilterJson: undefined"
+[2020-07-02T01:59:07.938Z] - [info]: "End createUser"
+[2020-07-02T01:59:25.705Z] - [info]: "Begin createUser"
+[2020-07-02T01:59:25.707Z] - [info]: "Method: createUser. FilterJson: undefined"
+[2020-07-02T01:59:25.779Z] - [info]: "End createUser"
+[2020-07-02T01:59:43.377Z] - [info]: "Begin createUser"
+[2020-07-02T01:59:43.379Z] - [info]: "Method: createUser. FilterJson: undefined"
+[2020-07-02T01:59:43.392Z] - [info]: "End createUser"
+[2020-07-02T02:00:38.283Z] - [info]: "Begin getUserByToken"
+[2020-07-02T02:00:38.285Z] - [info]: "Method: getUserByToken. FilterJson: undefined"
+[2020-07-02T02:00:38.299Z] - [info]: "End getUserByToken"
+[2020-07-02T02:06:14.115Z] - [info]: "Begin getUsers"
+[2020-07-02T02:06:14.131Z] - [info]: "End getUsers"
+[2020-07-02T02:07:03.432Z] - [info]: "Begin getUsers"
+[2020-07-02T02:07:03.434Z] - [info]: "End getUsers"
+[2020-07-02T02:07:21.178Z] - [info]: "Begin createUser"
+[2020-07-02T02:07:21.181Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:07:21.193Z] - [info]: "End createUser"
+[2020-07-02T02:07:21.694Z] - [info]: "Begin createUser"
+[2020-07-02T02:07:21.695Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:07:21.703Z] - [info]: "End createUser"
+[2020-07-02T02:07:21.869Z] - [info]: "Begin createUser"
+[2020-07-02T02:07:21.870Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:07:21.878Z] - [info]: "End createUser"
+[2020-07-02T02:07:22.037Z] - [info]: "Begin createUser"
+[2020-07-02T02:07:22.038Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:07:22.045Z] - [info]: "End createUser"
+[2020-07-02T02:07:22.381Z] - [info]: "Begin createUser"
+[2020-07-02T02:07:22.381Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:07:22.389Z] - [info]: "End createUser"
+[2020-07-02T02:07:22.605Z] - [info]: "Begin createUser"
+[2020-07-02T02:07:22.606Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:07:22.613Z] - [info]: "End createUser"
+[2020-07-02T02:08:03.850Z] - [info]: "Begin createUser"
+[2020-07-02T02:08:03.853Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:08:03.883Z] - [info]: "End createUser"
+[2020-07-02T02:08:08.021Z] - [info]: "Begin getUsers"
+[2020-07-02T02:08:08.021Z] - [info]: "End getUsers"
+[2020-07-02T02:08:29.422Z] - [info]: "Begin createUser"
+[2020-07-02T02:08:29.423Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:08:29.432Z] - [info]: "End createUser"
+[2020-07-02T02:08:29.565Z] - [info]: "Begin createUser"
+[2020-07-02T02:08:29.566Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:08:29.577Z] - [info]: "End createUser"
+[2020-07-02T02:08:29.733Z] - [info]: "Begin createUser"
+[2020-07-02T02:08:29.734Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:08:29.744Z] - [info]: "End createUser"
+[2020-07-02T02:08:29.910Z] - [info]: "Begin createUser"
+[2020-07-02T02:08:29.911Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2020-07-02T02:08:29.923Z] - [info]: "End createUser"
+[2020-07-02T02:08:31.597Z] - [info]: "Begin getUsers"
+[2020-07-02T02:08:31.598Z] - [info]: "End getUsers"
+[2021-05-04T18:55:42.665Z] - [info]: "Begin createUser"
+[2021-05-04T18:55:42.683Z] - [info]: "Method: createUser. FilterJson: [Object: null prototype] {
+  firstname: 'Prueba',
+  secondname: 'Prueba',
+  gender: 'Prueba',
+  birthday: 'Prueba'
+}"
+[2021-05-04T21:10:09.408Z] - [info]: "Begin getUsers"
+[2021-05-04T21:10:09.415Z] - [info]: "End getUsers"
+[2021-05-04T21:11:05.559Z] - [info]: "Begin getUsers"
+[2021-05-04T21:11:05.566Z] - [info]: "End getUsers"
+[2021-05-04T21:11:58.569Z] - [info]: "Begin getUsers"
+[2021-05-04T21:11:58.578Z] - [info]: "End getUsers"
+[2021-05-04T21:16:48.041Z] - [info]: "Begin getUsers"
+[2021-05-04T21:16:48.043Z] - [info]: "End getUsers"
