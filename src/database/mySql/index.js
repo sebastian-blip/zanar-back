@@ -1,4 +1,6 @@
-import Sequelize from 'sequelize';
+import Sequelize, { DataTypes } from 'sequelize';
+import ConsultingRooms from './models/consultingRooms';
+import OfficeSchedules from './models/officeSchedules';
 
 const sequelize = new Sequelize(
 	process.env.DATABASE,
@@ -9,6 +11,17 @@ const sequelize = new Sequelize(
 		dialect: 'mysql'
 	}
 );
+
+const models = {
+	ConsultingRooms: ConsultingRooms(sequelize, DataTypes),
+	OfficeSchedules: OfficeSchedules(sequelize, DataTypes)
+};
+
+Object.keys(models).forEach(key => {
+	if ('associate' in models[key]) {
+		models[key].associate(sequelize.models);
+	}
+});
 
 // eslint-disable-next-line import/prefer-default-export
 export { sequelize };
