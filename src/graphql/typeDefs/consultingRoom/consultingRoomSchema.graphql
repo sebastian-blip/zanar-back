@@ -1,0 +1,44 @@
+#Types
+type consultingRoomType {
+	id: String
+	doctor_id: String
+	name: String
+	phone: String
+	address: String
+	type_address: String
+	city: String
+	name_assistant: String
+	phone_assistant: String
+	duration_of_appointment: String
+	morning: String
+	affternon: String
+	night: String
+}
+
+#Inputs
+input consultingRoomInput {
+	doctor_id: String
+	name: String
+	phone: String
+	address: String
+	type_address: String
+	city: String
+	name_assistant: String
+	phone_assistant: String
+	duration_of_appointment: String
+	morning: String
+	affternon: String
+	night: String
+}
+
+#Queries
+type Query {
+	getConsultingRoomsByDoctor(doctorId: ID!): [consultingRoomType]
+}
+
+#Mutations
+type Mutation {
+	createConsultingRoom(consultingRoomData: consultingRoomInput): String
+	updateConsultingRoom(id: ID!, consultingRoomData: consultingRoomInput): String
+	deleteRowConsultingRoom(id: ID!): String
+}

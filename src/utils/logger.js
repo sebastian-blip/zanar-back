@@ -25,7 +25,7 @@ const logger = createLogger({
 		new transports.File({
 			maxsize: 5120000,
 			maxFile: 10,
-			filename: `${__dirname}/../logs/log-gana.log`
+			filename: `${__dirname}/../../logs/zanar.log`
 		})
 	]
 });

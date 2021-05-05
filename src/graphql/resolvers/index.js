@@ -1,14 +1,17 @@
-import { UserQueries, UserMutations } from './user';
+import { dateScalar } from './customTypes';
+import { consultingRoomMutations, consultingRoomQueries } from './consultingRoom';
+import { officeScheduleMutations, officeScheduleQueries } from './officeSchedule';
 
 const resolvers = {
 	Query: {
-		// Users queries
-		...UserQueries
+		...consultingRoomQueries,
+		...officeScheduleQueries
 	},
 	Mutation: {
-		// Users mutations
-		...UserMutations
-	}
+		...consultingRoomMutations,
+		...officeScheduleMutations
+	},
+	Date: dateScalar
 };
 
 export default resolvers;
