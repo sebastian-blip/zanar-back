@@ -6,9 +6,8 @@ const getOfficeSchedulesByConsultingRoom = (root, { consultingRoomId }) => {
 	return officeScheduleDao.getOfficeSchedulesByConsultingRoom(consultingRoomId);
 };
 
-const create = async (root, { officeScheduleData }) => {
-	const record = await officeScheduleDao.create(officeScheduleData);
-	return record.id;
+const create = (root, { officeScheduleData }) => {
+	return officeScheduleDao.create(officeScheduleData);
 };
 
 const update = async (root, { id, officeScheduleData }) => {

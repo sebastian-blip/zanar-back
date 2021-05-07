@@ -1,0 +1,37 @@
+scalar Date
+
+#Types
+type milesByDoctorType {
+	sale: Int
+	notConfirmed: Int
+	exchange: Int
+	total: Int
+	lastPoints: Int
+	lastPointsMonth: String
+	maxPoint: Int
+	maxPointMonth: String
+}
+
+type milesHistoryByDoctor {
+	total: Int
+	date: String
+	order: String
+}
+
+type milesPercentByDoctorAndMonth {
+	sale: Int
+	notConfirmed: Int
+	exchange: Int
+	total: Int
+	salePercent: Int
+	notConfirmedPercent: Int
+	exchangePercen: Int
+	month: String
+}
+
+#Queries
+type Query {
+	getMilesByDoctor(doctorId: ID!, date: Date!): milesByDoctorType
+	getMilesHistoryByDoctor(doctorId: ID!, initDate: Date!, finalDate: Date!): [milesHistoryByDoctor]
+	getMilesPercentByDoctorAndMonth(doctorId: ID!, date: Date!): milesPercentByDoctorAndMonth
+}

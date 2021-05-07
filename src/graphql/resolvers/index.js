@@ -1,11 +1,13 @@
 import { dateScalar } from './customTypes';
 import { consultingRoomMutations, consultingRoomQueries } from './consultingRoom';
 import { officeScheduleMutations, officeScheduleQueries } from './officeSchedule';
+import { mileQueries } from './mile';
 
 const resolvers = {
 	Query: {
 		...consultingRoomQueries,
-		...officeScheduleQueries
+		...officeScheduleQueries,
+		...mileQueries
 	},
 	Mutation: {
 		...consultingRoomMutations,
