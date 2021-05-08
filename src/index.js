@@ -47,7 +47,8 @@ sequelize
 	.sync()
 	.then(() => {
 		try {
-			app.listen({ port: 4500 }, () => {
+			const port = process.env.PORT || 4500;
+			app.listen({ port }, () => {
 				console.log(`Server is working on localhost:4500${server.graphqlPath}`);
 			});
 		} catch (errServer) {
