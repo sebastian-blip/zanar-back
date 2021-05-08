@@ -43,34 +43,23 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-// const populate = process.env.POPULATE_BD;
-const sbMongoDB = process.env.MONGODB_URL_CONNECT;
-
 sequelize
 	.sync()
 	.then(() => {
-		mongoose.connect(sbMongoDB, { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
-			if (err) {
-				console.log('se ha presentado un error al conectarse al MongoDB.');
-				console.log(`El error es ${err}`);
-				throw err;
-			} else {
-				try {
-					app.listen({ port: 4500 }, () => {
-						console.log(`Server is working on localhost:4500${server.graphqlPath}`);
-					});
-				} catch (errServer) {
-					console.log('se ha presentado un error al encender la Aplicación.');
-					console.log(`El error es ${errServer}`);
-					throw errServer;
-				}
-			}
-		});
+		try {
+			const port = process.env.PORT || 4500;
+			app.listen({ port }, () => {
+				console.log(`Server is working on localhost:4500${server.graphqlPath}`);
+			});
+		} catch (errServer) {
+			console.log('se ha presentado un error al encender la Aplicación.');
+			console.log(`El error es ${errServer}`);
+			throw errServer;
+		}
 	})
 	.catch(err => {
 		if (err) {
-			console.log('se ha presentado un error al conectarse a Postgress.');
-			console.log(`El error es ${err}`);
+			console.log(`Mysql error: ${err}`);
 			throw err;
 		}
 	});
@@ -95,3 +84,32 @@ sequelize
 // 		}
 // 	}
 // });
+
+// sequelize
+// 	.sync()
+// 	.then(() => {
+// 		mongoose.connect(sbMongoDB, { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
+// 			if (err) {
+// 				console.log('se ha presentado un error al conectarse al MongoDB.');
+// 				console.log(`El error es ${err}`);
+// 				throw err;
+// 			} else {
+// 				try {
+// 					app.listen({ port: 4500 }, () => {
+// 						console.log(`Server is working on localhost:4500${server.graphqlPath}`);
+// 					});
+// 				} catch (errServer) {
+// 					console.log('se ha presentado un error al encender la Aplicación.');
+// 					console.log(`El error es ${errServer}`);
+// 					throw errServer;
+// 				}
+// 			}
+// 		});
+// 	})
+// 	.catch(err => {
+// 		if (err) {
+// 			console.log('se ha presentado un error al conectarse a Postgress.');
+// 			console.log(`El error es ${err}`);
+// 			throw err;
+// 		}
+// 	});
