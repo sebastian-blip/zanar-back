@@ -1,3 +1,4 @@
+# import Query.*, Mutation.* from './doctor/doctorSchema.graphql';
 # import Query.*, Mutation.* from './consultingRoom/consultingRoomSchema.graphql';
 # import Query.*, Mutation.* from './officeSchedule/officeScheduleSchema.graphql';
 # import Query.* from './mile/mileSchema.graphql';

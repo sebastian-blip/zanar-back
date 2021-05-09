@@ -1,0 +1,31 @@
+type AdditionalFieldType {
+	additional_field_key_id: String,
+	additional_field_key_name: String
+	additional_field_values: String
+}
+
+type DoctorType{
+	id: ID!
+	name: String
+	additionalFields: [AdditionalFieldType]
+}
+
+type DoctorList {
+	total: Int,
+	count: Int,
+	page: Int,
+	records: [DoctorType]
+}
+
+#Queries
+type Query {
+	getDoctor(doctorId: ID!): DoctorType
+	getDoctors: DoctorList
+}
+
+#Mutations
+type Mutation {
+	createDoctor(data: ID!): DoctorType
+	updateDoctor(consultingRoomId: ID!): DoctorType
+	deleteDoctor(consultingRoomId: ID!): DoctorType
+}
