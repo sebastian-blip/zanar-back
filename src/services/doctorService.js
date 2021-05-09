@@ -21,8 +21,8 @@ class DoctorService extends ResourceService {
     }
 
     async get(doctorId, opts) {
-        const doctor = (await super.get(doctorId)).toJSON();
-        if (doctor && !doctor.contact.is_doctor) throw new ApolloError(`${this.modelLabel} not found`, `${this.modelLabel}FindError`);
+        const doctor = (await super.get(doctorId))?.toJSON();
+        if (!doctor || !doctor?.contact?.is_doctor) throw new ApolloError(`${this.modelLabel} not found`, `${this.modelLabel}FindError`);
         if (opts?.includeAdditionalFields) {
             doctor.additionalFields = await this.getAdditionalFields(doctorId);
         }
