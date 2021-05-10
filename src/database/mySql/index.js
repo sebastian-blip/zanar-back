@@ -1,29 +1,20 @@
-import Sequelize, { DataTypes } from 'sequelize';
-import ConsultingRooms from './models/consultingRooms';
-import OfficeSchedules from './models/officeSchedules';
-import Miles from './models/miles';
+import Sequelize from 'sequelize';
+import { database as DatabaseConfig } from '../../config';
+import { initializeModels } from './models'
 
 const sequelize = new Sequelize(
-	process.env.DATABASE,
-	process.env.DATABASE_USER,
-	process.env.DATABASE_PASSWORD,
+	DatabaseConfig.DATABASE,
+	DatabaseConfig.USER,
+	DatabaseConfig.PASSWORD,
 	{
-		host: process.env.DATABASE_HOST,
-		dialect: 'mysql'
+		host: DatabaseConfig.HOST,
+		dialect: DatabaseConfig.DIALECT
 	}
 );
 
-const models = {
-	ConsultingRooms: ConsultingRooms(sequelize, DataTypes),
-	OfficeSchedules: OfficeSchedules(sequelize, DataTypes),
-	Miles: Miles(sequelize, DataTypes)
-};
+initializeModels(sequelize);
 
-Object.keys(models).forEach(key => {
-	if ('associate' in models[key]) {
-		models[key].associate(sequelize.models);
-	}
-});
-
-// eslint-disable-next-line import/prefer-default-export
+const models = sequelize.models;
 export { sequelize };
+export { models };
+export default models;
