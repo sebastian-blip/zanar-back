@@ -16,11 +16,11 @@ function initializeModels(sequelize) {
         .forEach(file => {
             const modelPath = path.join(__dirname, file);
             const importModelFunction = require(modelPath).default;
-            if(typeof importModelFunction === 'function' && importModelFunction.name == "_default"){
+            if (typeof importModelFunction === 'function' && importModelFunction.name == "_default") {
                 const model = importModelFunction(sequelize, Sequelize.DataTypes);
                 db[model.name] = model;
             }
-            
+
         });
 
     Object.keys(db).forEach(modelName => {

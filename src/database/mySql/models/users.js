@@ -101,10 +101,10 @@ export default function (sequelize, DataTypes) {
     calendar_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'calendars',
         key: 'id'
-      }
+      } */
     },
     user_signature: {
       type: DataTypes.STRING(255),
@@ -180,13 +180,13 @@ export default function (sequelize, DataTypes) {
           { name: "id" },
         ]
       },
-      {
+      /* {
         name: "users_calendar_id_foreign",
         using: "BTREE",
         fields: [
           { name: "calendar_id" },
         ]
-      },
+      }, */
       {
         name: "users_eps_foreign",
         using: "BTREE",

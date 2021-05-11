@@ -30,10 +30,10 @@ export default function (sequelize, DataTypes) {
     account_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'accounts',
         key: 'id'
-      }
+      } */
     },
     contact_id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -46,34 +46,34 @@ export default function (sequelize, DataTypes) {
     lead_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'leads',
         key: 'id'
-      }
+      } */
     },
     inventory_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'inventories',
         key: 'id'
-      }
+      } */
     },
     opportunity_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'opportunities',
         key: 'id'
-      }
+      } */
     },
     binnacle_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'binnacle_calls',
         key: 'id'
-      }
+      } */
     },
     doctor_id: {
       type: DataTypes.INTEGER,
@@ -99,13 +99,13 @@ export default function (sequelize, DataTypes) {
           { name: "additional_field_key_id" },
         ]
       },
-      {
+      /* {
         name: "additional_field_values_account_id_foreign",
         using: "BTREE",
         fields: [
           { name: "account_id" },
         ]
-      },
+      }, */
       {
         name: "additional_field_values_contact_id_foreign",
         using: "BTREE",
@@ -113,7 +113,7 @@ export default function (sequelize, DataTypes) {
           { name: "contact_id" },
         ]
       },
-      {
+      /* {
         name: "additional_field_values_lead_id_foreign",
         using: "BTREE",
         fields: [
@@ -140,7 +140,7 @@ export default function (sequelize, DataTypes) {
         fields: [
           { name: "binnacle_id" },
         ]
-      },
+      }, */
     ]
   });
 
