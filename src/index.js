@@ -1,11 +1,11 @@
-import {} from 'dotenv/config';
+import { } from 'dotenv/config';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
 import cors from 'cors';
-import { sequelize } from './database/mySql';
+import { sequelize, syncTableProcess } from './database/mySql';
 import typeDefs from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
 

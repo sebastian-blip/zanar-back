@@ -15,10 +15,10 @@ export default function (sequelize, DataTypes) {
     account_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'accounts',
         key: 'id'
-      }
+      } */
     },
     user_id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -52,26 +52,26 @@ export default function (sequelize, DataTypes) {
     customer_color_badge_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'customer_color_badges',
         key: 'id'
-      }
+      } */
     },
     technician_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'technicians',
         key: 'id'
-      }
+      } */
     },
     opportunity_source_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
+      /* references: {
         model: 'opportunity_sources',
         key: 'id'
-      }
+      } */
     },
     is_doctor: {
       type: DataTypes.BOOLEAN,
@@ -91,13 +91,13 @@ export default function (sequelize, DataTypes) {
           { name: "id" },
         ]
       },
-      {
+      /* {
         name: "contacts_account_id_foreign",
         using: "BTREE",
         fields: [
           { name: "account_id" },
         ]
-      },
+      }, */
       {
         name: "contacts_user_id_foreign",
         using: "BTREE",
@@ -105,27 +105,27 @@ export default function (sequelize, DataTypes) {
           { name: "user_id" },
         ]
       },
-      {
+      /* {
         name: "contacts_customer_color_badge_id_foreign",
         using: "BTREE",
         fields: [
           { name: "customer_color_badge_id" },
         ]
-      },
-      {
+      }, */
+      /* {
         name: "contacts_technician_id_foreign",
         using: "BTREE",
         fields: [
           { name: "technician_id" },
         ]
-      },
-      {
+      }, */
+      /* {
         name: "contacts_opportunity_source_id_foreign",
         using: "BTREE",
         fields: [
           { name: "opportunity_source_id" },
         ]
-      },
+      }, */
     ]
   });
 
