@@ -2,20 +2,20 @@
 import * as officeScheduleDao from '../../dao/officeSchedule';
 import * as DefaultMessages from '../../utils/messages/default/default.json';
 
-const getOfficeSchedulesByConsultingRoom = (root, { consultingRoomId }) => {
+const getOfficeSchedulesByConsultingRoom = consultingRoomId => {
 	return officeScheduleDao.getOfficeSchedulesByConsultingRoom(consultingRoomId);
 };
 
-const create = (root, { officeScheduleData }) => {
+const create = officeScheduleData => {
 	return officeScheduleDao.create(officeScheduleData);
 };
 
-const update = async (root, { id, officeScheduleData }) => {
+const update = async (id, officeScheduleData) => {
 	await officeScheduleDao.update(id, officeScheduleData);
 	return DefaultMessages.updateMessage;
 };
 
-const deleteRow = async (root, { id }) => {
+const deleteRow = async id => {
 	await officeScheduleDao.deleteRow(id);
 	return DefaultMessages.deleteMessage;
 };

@@ -1,4 +1,4 @@
-const OfficeSchedules = (sequelize, DataTypes) => {
+export default function(sequelize, DataTypes) {
 	const officeSchedules = sequelize.define('office_schedules', {
 		date: {
 			type: DataTypes.DATE,
@@ -22,6 +22,4 @@ const OfficeSchedules = (sequelize, DataTypes) => {
 	};
 
 	return officeSchedules;
-};
-
-export default OfficeSchedules;
+}

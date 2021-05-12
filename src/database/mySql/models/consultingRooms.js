@@ -1,4 +1,4 @@
-const ConsultingRooms = (sequelize, DataTypes) => {
+export default function(sequelize, DataTypes) {
 	const consultingRooms = sequelize.define('consulting_rooms', {
 		doctor_id: {
 			type: DataTypes.STRING,
@@ -54,6 +54,4 @@ const ConsultingRooms = (sequelize, DataTypes) => {
 	};
 
 	return consultingRooms;
-};
-
-export default ConsultingRooms;
+}

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { database as DatabaseConfig } from '../../config';
-import { initializeModels } from './models'
+import { initializeModels } from './models';
 
 const sequelize = new Sequelize(
 	DatabaseConfig.DATABASE,
@@ -15,7 +15,7 @@ const sequelize = new Sequelize(
 
 initializeModels(sequelize);
 
-const models = sequelize.models;
+const { models } = sequelize;
 export { sequelize };
 export { models };
 export default models;

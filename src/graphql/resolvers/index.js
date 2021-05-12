@@ -1,6 +1,7 @@
 import { dateScalar } from './customTypes';
 import { consultingRoomMutations, consultingRoomQueries } from './consultingRoom';
 import { officeScheduleMutations, officeScheduleQueries } from './officeSchedule';
+import { authenticationMutations } from './authentication';
 import { mileQueries } from './mile';
 import DoctorResolvers from './doctor';
 
@@ -14,7 +15,8 @@ const resolvers = {
 	Mutation: {
 		...consultingRoomMutations,
 		...officeScheduleMutations,
-		...DoctorResolvers.Mutations
+		...DoctorResolvers.Mutations,
+		...authenticationMutations
 	},
 	Date: dateScalar
 };
