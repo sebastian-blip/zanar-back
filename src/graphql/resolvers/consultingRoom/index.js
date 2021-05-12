@@ -6,13 +6,13 @@ import {
 } from '../../../services/consultingRoom';
 
 const consultingRoomQueries = {
-	getConsultingRoomsByDoctor
+	getConsultingRoomsByDoctor: (root, { doctorId }) => getConsultingRoomsByDoctor(doctorId)
 };
 
 const consultingRoomMutations = {
-	createConsultingRoom: create,
-	updateConsultingRoom: update,
-	deleteRowConsultingRoom: deleteRow
+	createConsultingRoom: (root, { consultingRoomData }) => create(consultingRoomData),
+	updateConsultingRoom: (root, { id, consultingRoomData }) => deleteRow(id, consultingRoomData),
+	deleteRowConsultingRoom: (root, { id }) => update(id)
 };
 
 export { consultingRoomQueries, consultingRoomMutations };

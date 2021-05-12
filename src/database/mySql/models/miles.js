@@ -1,4 +1,4 @@
-const MilesForSales = (sequelize, DataTypes) => {
+export default function(sequelize, DataTypes) {
 	const milesForSales = sequelize.define('miles_for_sales', {
 		doctor_id: {
 			type: DataTypes.STRING
@@ -21,6 +21,4 @@ const MilesForSales = (sequelize, DataTypes) => {
 	});
 
 	return milesForSales;
-};
-
-export default MilesForSales;
+}

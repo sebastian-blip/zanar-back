@@ -1,0 +1,18 @@
+#Types
+type User {
+	id: String
+	user_type: String
+}
+
+type AuthenticationType {
+	token: String
+	user: User
+}
+
+#Queries
+# type Query {}
+
+#Mutations
+type Mutation {
+	login(	username: String!, password: String!): AuthenticationType
+}
