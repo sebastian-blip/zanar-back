@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
 	DatabaseConfig.USER,
 	DatabaseConfig.PASSWORD,
 	{
-		logging: DatabaseConfig.LOGGING,
+		// logging: DatabaseConfig.LOGGING,
 		host: DatabaseConfig.HOST,
 		dialect: DatabaseConfig.DIALECT
 	}
