@@ -1,5 +1,5 @@
-# import Query.*, Mutation.* from './doctor/doctorSchema.graphql';
-# import Query.*, Mutation.* from './consultingRoom/consultingRoomSchema.graphql';
-# import Query.*, Mutation.* from './officeSchedule/officeScheduleSchema.graphql';
-# import Query.* from './mile/mileSchema.graphql';
-# import Mutation.* from './authentication/authenticationSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/doctor/graphql/typeDefs/doctorSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/consultingRoom/graphql/typeDefs/consultingRoomSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/officeSchedule/graphql/typeDefs/officeScheduleSchema.graphql';
+# import Query.* from '../../modules/mile/graphql/typeDefs/mileSchema.graphql';
+# import Mutation.* from '../../modules/authentication/graphql/typeDefs/authenticationSchema.graphql';

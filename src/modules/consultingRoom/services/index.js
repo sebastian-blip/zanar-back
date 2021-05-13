@@ -1,5 +1,5 @@
-import { models } from '../../database/mySql';
-import * as DefaultMessages from '../../utils/messages/default/default.json';
+import { models } from '../../../database/mySql';
+import * as DefaultMessages from '../../../utils/messages/default/default.json';
 
 // eslint-disable-next-line camelcase
 const { consulting_rooms } = models;

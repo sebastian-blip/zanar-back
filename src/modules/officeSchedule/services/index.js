@@ -1,6 +1,6 @@
 // import moment from 'moment';
-import * as officeScheduleDao from '../../dao/officeSchedule';
-import * as DefaultMessages from '../../utils/messages/default/default.json';
+import * as officeScheduleDao from '../../../dao/officeSchedule';
+import * as DefaultMessages from '../../../utils/messages/default/default.json';
 
 const getOfficeSchedulesByConsultingRoom = consultingRoomId => {
 	return officeScheduleDao.getOfficeSchedulesByConsultingRoom(consultingRoomId);

@@ -1,5 +1,5 @@
 
-import { doctorService } from '../../../services/doctorService';
+import { doctorService } from '../../services/doctorService';
 
 const getDoctor = async (root, { doctorId }) => {
     return await doctorService.get(doctorId, { includeAdditionalFields: true });

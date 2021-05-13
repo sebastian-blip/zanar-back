@@ -8,13 +8,13 @@ import cors from 'cors';
 import { sequelize } from './database/mySql';
 import typeDefs from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
-import { getUser } from './services/authentication';
+import { getUser } from './modules/authentication/services';
 
 mongoose.Promise = global.Promise;
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:3000', 'https://zanar-prescriptor-ui.herokuapp.com/'];
+const allowedOrigins = ['http://localhost:3000', 'https://zanar-prescriptor-ui.herokuapp.com/', 'http://localhost:4500'];
 
 const corsOptions = {
 	origin(origin, callback) {

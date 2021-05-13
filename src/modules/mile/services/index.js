@@ -1,4 +1,4 @@
-import * as milesDao from '../../dao/miles';
+import * as milesDao from '../../../dao/miles';
 
 const getMilesByDoctor = (doctorId, date) => {
 	return milesDao.getMilesByDoctor(doctorId, date);
