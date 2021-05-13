@@ -3,7 +3,7 @@ import {
 	create,
 	deleteRow,
 	update
-} from '../../../services/consultingRoom';
+} from '../../services';
 
 const consultingRoomQueries = {
 	getConsultingRoomsByDoctor: (root, { doctorId }) => getConsultingRoomsByDoctor(doctorId)

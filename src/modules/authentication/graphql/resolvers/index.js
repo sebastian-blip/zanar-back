@@ -1,4 +1,4 @@
-import * as authentication from '../../../services/authentication';
+import * as authentication from '../../services';
 
 const authenticationMutations = {
 	login: (root, { username, password }) => authentication.login(username, password)

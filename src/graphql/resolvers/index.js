@@ -1,9 +1,9 @@
 import { dateScalar } from './customTypes';
-import { consultingRoomMutations, consultingRoomQueries } from './consultingRoom';
-import { officeScheduleMutations, officeScheduleQueries } from './officeSchedule';
-import { authenticationMutations } from './authentication';
-import { mileQueries } from './mile';
-import DoctorResolvers from './doctor';
+import { consultingRoomMutations, consultingRoomQueries } from '../../modules/consultingRoom/graphql/resolvers';
+import { officeScheduleMutations, officeScheduleQueries } from '../../modules/officeSchedule/graphql/resolvers';
+import { authenticationMutations } from '../../modules/authentication/graphql/resolvers';
+import { mileQueries } from '../../modules/mile/graphql/resolvers';
+import DoctorResolvers from '../../modules/doctor/graphql/resolvers';
 
 const resolvers = {
 	Query: {

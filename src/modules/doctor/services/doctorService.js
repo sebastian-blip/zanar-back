@@ -1,8 +1,8 @@
 import { ApolloError } from 'apollo-server-errors';
-import ResourceService from './resourceService';
+import ResourceService from '../../../services/resourceService';
 import Sequelize from 'sequelize';
-import Models, { sequelize as Connection, sequelize } from '../database/mySql';
-import { contactService } from './contactService';
+import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
+import { contactService } from '../../contact/services/contactService';
 
 class DoctorService extends ResourceService {
     constructor() {

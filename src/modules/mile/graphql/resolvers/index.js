@@ -1,4 +1,4 @@
-import * as mileService from '../../../services/mile';
+import * as mileService from '../../services';
 
 const mileQueries = {
 	getMilesByDoctor: (root, { doctorId, date }) => mileService.getMilesByDoctor(doctorId, date),
