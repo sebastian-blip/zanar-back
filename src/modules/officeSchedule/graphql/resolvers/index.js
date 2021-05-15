@@ -2,7 +2,9 @@ import * as officeService from '../../services/officeScheduleService';
 
 const officeScheduleQueries = {
 	getOfficeSchedulesByConsultingRoom: (root, { consultingRoomId }) =>
-		officeService.getOfficeSchedulesByConsultingRoom(consultingRoomId)
+		officeService.getOfficeSchedulesByConsultingRoom(consultingRoomId),
+	getOfficeSchedulesByDoctor: (root, { doctorId }) =>
+		officeService.getOfficeSchedulesByDoctor(doctorId)
 };
 
 const officeScheduleMutations = {
