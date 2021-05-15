@@ -6,6 +6,7 @@ type officeScheduleType {
 	date: Date
 	morning: String
 	afternoon: String
+	night: String
 	consulting_rooms_id: ID
 }
 
@@ -21,6 +22,7 @@ input officeScheduleInput {
 #Queries
 type Query {
 	getOfficeSchedulesByConsultingRoom(consultingRoomId: ID!): [officeScheduleType]
+	getOfficeSchedulesByDoctor(doctorId: ID!): [officeScheduleType]
 }
 
 #Mutations

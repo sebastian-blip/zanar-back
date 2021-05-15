@@ -7,6 +7,10 @@ const getOfficeSchedulesByConsultingRoom = async consultingRoomId => {
 	return result.records;
 };
 
+const getOfficeSchedulesByDoctor = async doctorId => {
+	return officeScheduleDao.getOfficeSchedulesByDoctor(doctorId);
+};
+
 const create = async officeScheduleData => {
 	const record = await officeScheduleDao.create(officeScheduleData);
 	return record.id;
@@ -22,4 +26,10 @@ const deleteRow = async id => {
 	return DefaultMessages.deleteMessage;
 };
 
-export { getOfficeSchedulesByConsultingRoom, create, update, deleteRow };
+export {
+	getOfficeSchedulesByConsultingRoom,
+	getOfficeSchedulesByDoctor,
+	create,
+	update,
+	deleteRow
+};
