@@ -5,17 +5,17 @@ type officeScheduleType {
 	id: String
 	date: Date
 	morning: String
-	affternon: String
-	consulting_rooms_id: String
+	afternoon: String
+	consulting_rooms_id: ID
 }
 
 #Inputs
 input officeScheduleInput {
-	date: Date
+	date: Date!
 	morning: String
-	affternon: String
+	afternoon: String
 	night: String
-	consulting_rooms_id: String
+	consulting_rooms_id: ID!
 }
 
 #Queries

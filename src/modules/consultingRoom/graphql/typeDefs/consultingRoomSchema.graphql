@@ -11,7 +11,7 @@ type consultingRoomType {
 	phone_assistant: String
 	duration_of_appointment: String
 	morning: String
-	affternon: String
+	afternoon: String
 	night: String
 }
 
@@ -27,7 +27,7 @@ input consultingRoomInput {
 	phone_assistant: String
 	duration_of_appointment: String
 	morning: String
-	affternon: String
+	afternoon: String
 	night: String
 }
 

@@ -1,6 +1,5 @@
 import { ApolloError } from 'apollo-server-errors';
-import ResourceService from '../../../services/resourceService';
-import Sequelize from 'sequelize';
+import ResourceService from '../../../database/mySql/resourceService/resourceService';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { contactService } from '../../contact/services/contactService';
 

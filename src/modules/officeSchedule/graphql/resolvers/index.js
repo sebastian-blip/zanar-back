@@ -1,4 +1,4 @@
-import * as officeService from '../../services';
+import * as officeService from '../../services/officeScheduleService';
 
 const officeScheduleQueries = {
 	getOfficeSchedulesByConsultingRoom: (root, { consultingRoomId }) =>
