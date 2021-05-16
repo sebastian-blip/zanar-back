@@ -1,6 +1,6 @@
 export default function(sequelize, DataTypes) {
-	const manualMedications = sequelize.define(
-		'ManualMedications',
+	const manualProcedureLaboratory = sequelize.define(
+		'ManualProcedureLaboratory',
 		{
 			description: {
 				type: DataTypes.STRING
@@ -14,11 +14,11 @@ export default function(sequelize, DataTypes) {
 		}
 	);
 
-	manualMedications.associate = models => {
-		manualMedications.belongsTo(models.MedicalFormulas, {
+	manualProcedureLaboratory.associate = models => {
+		manualProcedureLaboratory.belongsTo(models.MedicalFormulas, {
 			foreignKey: 'formula_id'
 		});
 	};
 
-	return manualMedications;
+	return manualProcedureLaboratory;
 }

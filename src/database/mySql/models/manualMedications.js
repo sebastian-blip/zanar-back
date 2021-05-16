@@ -10,7 +10,7 @@ export default function(sequelize, DataTypes) {
 			}
 		},
 		{
-			tableName: 'medical_medications'
+			tableName: 'manual_medications'
 		}
 	);
 

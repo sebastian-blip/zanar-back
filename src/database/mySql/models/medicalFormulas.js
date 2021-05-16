@@ -2,9 +2,6 @@ export default function(sequelize, DataTypes) {
 	const medicalFormulas = sequelize.define(
 		'MedicalFormulas',
 		{
-			expedition_date: {
-				type: DataTypes.DATE
-			},
 			diagnosis: {
 				type: DataTypes.STRING
 			},
@@ -12,31 +9,33 @@ export default function(sequelize, DataTypes) {
 				type: DataTypes.STRING
 			},
 			query_type: {
-				type: DataTypes.STRING
+				type: DataTypes.ENUM('FACE-TO-FACE', 'ONLINE')
 			},
 			recomendations: {
 				type: DataTypes.STRING
 			},
 			send_mail: {
-				type: DataTypes.BOOLEAN
+				type: DataTypes.BOOLEAN,
+				defaultValue: false
 			},
 			send_whatsapp: {
-				type: DataTypes.BOOLEAN
+				type: DataTypes.BOOLEAN,
+				defaultValue: false
 			},
 			is_edited: {
-				type: DataTypes.BOOLEAN
+				type: DataTypes.BOOLEAN,
+				defaultValue: false
 			},
 			is_saved: {
-				type: DataTypes.BOOLEAN
+				type: DataTypes.BOOLEAN,
+				defaultValue: false
 			},
 			sent_notification: {
-				type: DataTypes.BOOLEAN
+				type: DataTypes.BOOLEAN,
+				defaultValue: false
 			},
 			crypt_id: {
-				type: DataTypes.STRING
-			},
-			eps_id: {
-				type: DataTypes.STRING
+				type: DataTypes.STRING 
 			}
 		},
 		{
@@ -50,6 +49,9 @@ export default function(sequelize, DataTypes) {
 		});
 		medicalFormulas.belongsTo(models.User, {
 			foreignKey: 'patient_id'
+		});
+		medicalFormulas.belongsTo(models.ServiceProviderEPS, {
+			foreignKey: 'eps_id'
 		});
 	};
 
