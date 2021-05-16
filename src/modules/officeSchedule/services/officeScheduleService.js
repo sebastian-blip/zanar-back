@@ -2,13 +2,12 @@
 import { officeScheduleDao } from '../dao/officeScheduleDao';
 import * as DefaultMessages from '../../../utils/messages/default/default.json';
 
-const getOfficeSchedulesByConsultingRoom = async consultingRoomId => {
-	const result = await officeScheduleDao.getAll({ consulting_rooms_id: consultingRoomId });
-	return result.records;
+const getOfficeScheduleDatesByMonth = (doctorId, date) => {
+	return officeScheduleDao.getOfficeScheduleDatesByMonth(doctorId, date);
 };
 
-const getOfficeSchedulesByDoctor = async doctorId => {
-	return officeScheduleDao.getOfficeSchedulesByDoctor(doctorId);
+const getOfficeSchedulesByDoctor = (doctorId, date) => {
+	return officeScheduleDao.getOfficeSchedulesByDoctor(doctorId, date);
 };
 
 const create = async officeScheduleData => {
@@ -22,14 +21,8 @@ const update = async (id, officeScheduleData) => {
 };
 
 const deleteRow = async id => {
-	await officeScheduleDao.deleteRow(id);
+	await officeScheduleDao.delete(id);
 	return DefaultMessages.deleteMessage;
 };
 
-export {
-	getOfficeSchedulesByConsultingRoom,
-	getOfficeSchedulesByDoctor,
-	create,
-	update,
-	deleteRow
-};
+export { getOfficeScheduleDatesByMonth, getOfficeSchedulesByDoctor, create, update, deleteRow };
