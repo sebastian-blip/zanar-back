@@ -20,6 +20,13 @@ class DoctorService extends ResourceService {
 		];
 	}
 
+	getAdditionalFieldByKeyName(additionalFields, name) {
+		const additionalField = additionalFields.find(
+			additionalField => additionalField.additional_field_key_name === name
+		);
+		return additionalField.additional_field_values || '';
+	}
+
 	async get(doctorId, opts) {
 		const doctor = await super.get(doctorId);
 		if (!doctor || !doctor?.contact?.is_doctor)
@@ -27,7 +34,67 @@ class DoctorService extends ResourceService {
 		if (opts?.includeAdditionalFields) {
 			doctor.additionalFields = await this.getAdditionalFieldsByContactId(doctor.contact.id);
 		}
-		return doctor;
+		const additionalFields = doctor.additionalFields || [];
+
+		const sex = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_gender');
+		const birthday = this.getAdditionalFieldByKeyName(additionalFields, 'date_Doctor_birthday');
+		const instagram = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_instagram');
+		const facebook = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_facebook');
+		const twitter = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_twitter');
+
+		const specialization = this.getAdditionalFieldByKeyName(
+			additionalFields,
+			'text_Doctor_specialty'
+		);
+		const specializationUniversity = this.getAdditionalFieldByKeyName(
+			additionalFields,
+			'text_Doctor_university'
+		);
+		const specializationYear = this.getAdditionalFieldByKeyName(
+			additionalFields,
+			'text_Doctor_year_degree'
+		);
+		const subspecialization = this.getAdditionalFieldByKeyName(
+			additionalFields,
+			'text_Doctor_subspecialty'
+		);
+		const subspecializationUniversity = this.getAdditionalFieldByKeyName(
+			additionalFields,
+			'text_Doctor_university_subspecialty'
+		);
+		const subspecializationYear = this.getAdditionalFieldByKeyName(
+			additionalFields,
+			'text_Doctor_year_degree_subspecialty'
+		);
+
+		return {
+			name: doctor.name,
+			lastNames: '',
+			sex,
+			phone: doctor.phone,
+			birthday,
+			email: doctor.email,
+			address: doctor.address,
+			education: [
+				{
+					type: 'specialization',
+					title: specialization,
+					univeristy: specializationUniversity,
+					year: specializationYear
+				},
+				{
+					type: 'subSpecialization',
+					title: subspecialization,
+					univeristy: subspecializationUniversity,
+					year: subspecializationYear
+				}
+			],
+			social: [
+				{ name: 'instagram', value: instagram },
+				{ name: 'facebook', value: facebook },
+				{ name: 'twitter', value: twitter }
+			]
+		};
 	}
 
 	async create(data, opts) {
@@ -166,7 +233,7 @@ class DoctorService extends ResourceService {
 				},
 				transaction: opts.transaction
 			});
-			
+
 			addFieldValue.additional_field_values = additionalField.additional_field_values;
 			await addFieldValue.save({ transaction: opts.transaction });
 		}
