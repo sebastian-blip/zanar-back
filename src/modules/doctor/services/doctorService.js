@@ -85,13 +85,13 @@ class DoctorService extends ResourceService {
 				{
 					type: 'specialization',
 					title: specialization,
-					univeristy: specializationUniversity,
+					university: specializationUniversity,
 					year: specializationYear
 				},
 				{
 					type: 'subSpecialization',
 					title: subspecialization,
-					univeristy: subspecializationUniversity,
+					university: subspecializationUniversity,
 					year: subspecializationYear
 				}
 			],
