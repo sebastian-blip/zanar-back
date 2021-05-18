@@ -1,12 +1,59 @@
 type AdditionalFieldType {
-	additional_field_key_id: String,
+	additional_field_key_id: String
 	additional_field_key_name: String
 	additional_field_values: String
 }
 
-type DoctorType{
+type ContactType {
+	id: ID
+    status: Boolean
+    account_id: ID
+    user_id: ID
+    lead_id: ID
+    is_purchased: Boolean
+    customer_color_badge_id: ID
+    technician_id: ID
+    opportunity_source_id: ID
+    is_doctor: Boolean
+}
+
+type DoctorType {
 	id: ID!
 	name: String
+	status: Int
+	email: String
+	password: String
+	remember_token: String
+	mobile: String
+	username: String
+	domain_name: String
+	family: String
+	phone: String
+	city: String
+	province: String
+	address: String
+	national_id: String
+	avatar: String
+	job_title: String
+	gender: String
+	sms_value: Int
+	user_type: Int
+	lang: String
+	calendar_id: ID
+	user_signature: String
+	user_extension: String
+	document: String
+	token_syn_calendar: String
+	accept_data: String
+	companion: Int
+	signature_digital: String
+	eps: String
+	document_type: String
+	neighborhood: String
+	is_campaing: Boolean
+	omni_user: String
+	omni_pass: String
+  	contact: ContactType
 	additionalFields: [AdditionalFieldType]
 }
 
