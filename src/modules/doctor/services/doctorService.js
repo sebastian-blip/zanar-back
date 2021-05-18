@@ -34,6 +34,12 @@ class DoctorService extends ResourceService {
 		if (opts?.includeAdditionalFields) {
 			doctor.additionalFields = await this.getAdditionalFieldsByContactId(doctor.contact.id);
 		}
+
+		return doctor;
+	}
+
+	async getCustom(doctorId) {
+		const doctor = await this.get(doctorId, { includeAdditionalFields: true });
 		const additionalFields = doctor.additionalFields || [];
 
 		const sex = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_gender');
