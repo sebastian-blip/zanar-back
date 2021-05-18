@@ -1,22 +1,28 @@
 export default function(sequelize, DataTypes) {
-	const officeSchedules = sequelize.define('office_schedules', {
-		date: {
-			type: DataTypes.DATE,
-			allowNull: false
+	const officeSchedules = sequelize.define(
+		'OfficeSchedules',
+		{
+			date: {
+				type: DataTypes.DATE,
+				allowNull: false
+			},
+			morning: {
+				type: DataTypes.STRING
+			},
+			afternoon: {
+				type: DataTypes.STRING
+			},
+			night: {
+				type: DataTypes.STRING
+			}
 		},
-		morning: {
-			type: DataTypes.STRING
-		},
-		affternon: {
-			type: DataTypes.STRING
-		},
-		night: {
-			type: DataTypes.STRING
+		{
+			tableName: 'office_schedules'
 		}
-	});
+	);
 
 	officeSchedules.associate = models => {
-		officeSchedules.belongsTo(models.consulting_rooms, {
+		officeSchedules.belongsTo(models.ConsultingRooms, {
 			foreignKey: 'consulting_rooms_id'
 		});
 	};

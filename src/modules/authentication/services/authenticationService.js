@@ -1,4 +1,4 @@
-import * as userDao from '../../../dao/user';
+import { userDao } from '../../user/dao/userDao';
 import { generateToken, verifyToken } from '../../../utils/security/token';
 
 const getUser = (req, authToken) => {

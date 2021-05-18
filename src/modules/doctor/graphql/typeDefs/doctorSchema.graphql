@@ -10,7 +10,20 @@ input AdditionalFieldInput {
 	additional_field_values: String
 }
 
-type DoctorType{
+type ContactType {
+	id: ID
+    status: Boolean
+    account_id: ID
+    user_id: ID
+    lead_id: ID
+    is_purchased: Boolean
+    customer_color_badge_id: ID
+    technician_id: ID
+    opportunity_source_id: ID
+    is_doctor: Boolean
+}
+
+type DoctorType {
 	id: ID!
 	name: String
 	status: Int
@@ -47,6 +60,7 @@ type DoctorType{
 	is_campaing: Boolean
 	omni_user: String
 	omni_pass: String
+  	contact: ContactType
 	additionalFields: [AdditionalFieldType]
 }
 

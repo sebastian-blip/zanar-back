@@ -1,15 +1,14 @@
-import { ApolloError } from 'apollo-server-errors';
-import ResourceService from '../../../services/resourceService';
-import Models, { sequelize as Connection } from '../../../database/mySql';
+import ResourceService from '../../../database/mySql/resourceService/resourceService';
+import Models from '../../../database/mySql';
 
 class ContactService extends ResourceService {
-    constructor() {
-        super(Models.Contact, 'contact');
-    }
+	constructor() {
+		super(Models.Contact, 'contact');
+	}
 }
 
-const contactService = new ContactService;
+const contactService = new ContactService();
 
-export { contactService }
+export { contactService };
 export { ContactService };
 export default ContactService;

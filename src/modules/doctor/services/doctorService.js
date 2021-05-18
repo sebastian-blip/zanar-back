@@ -1,6 +1,6 @@
-import { ApolloError } from 'apollo-server-errors';
-import ResourceService from '../../../services/resourceService';
 import Sequelize from 'sequelize';
+import { ApolloError } from 'apollo-server-errors';
+import ResourceService from '../../../database/mySql/resourceService/resourceService';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { contactService } from '../../contact/services/contactService';
 
@@ -153,7 +153,6 @@ class DoctorService extends ResourceService {
 	}
 
 	async updateOrCreateAdditionalFields(contactId, additionalFields, opts) {
-		console.log(contactId, additionalFields, opts);
 		for (let additionalField of additionalFields) {
 			const [addFieldValue, isNew] = await Models.AdditionalFieldValue.findOrCreate({
 				where: {
@@ -167,11 +166,9 @@ class DoctorService extends ResourceService {
 				},
 				transaction: opts.transaction
 			});
-			console.log(addFieldValue, isNew);
-			if (!isNew) {
-				addFieldValue.additional_field_values = additionalField.additional_field_values;
-				await addFieldValue.save({ transaction: opts.transaction });
-			}
+			
+			addFieldValue.additional_field_values = additionalField.additional_field_values;
+			await addFieldValue.save({ transaction: opts.transaction });
 		}
 	}
 }

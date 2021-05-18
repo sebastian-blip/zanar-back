@@ -3,7 +3,7 @@ import {
 	create,
 	deleteRow,
 	update
-} from '../../services';
+} from '../../services/consultingRoomService';
 
 const consultingRoomQueries = {
 	getConsultingRoomsByDoctor: (root, { doctorId }) => getConsultingRoomsByDoctor(doctorId)
@@ -11,8 +11,8 @@ const consultingRoomQueries = {
 
 const consultingRoomMutations = {
 	createConsultingRoom: (root, { consultingRoomData }) => create(consultingRoomData),
-	updateConsultingRoom: (root, { id, consultingRoomData }) => deleteRow(id, consultingRoomData),
-	deleteRowConsultingRoom: (root, { id }) => update(id)
+	updateConsultingRoom: (root, { id, consultingRoomData }) => update(id, consultingRoomData),
+	deleteRowConsultingRoom: (root, { id }) => deleteRow(id)
 };
 
 export { consultingRoomQueries, consultingRoomMutations };

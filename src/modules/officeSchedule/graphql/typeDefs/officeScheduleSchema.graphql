@@ -1,26 +1,37 @@
 scalar Date
 
 #Types
+type ConsultingRoom {
+	name: String
+}
+
+type StringDate {
+	date: String
+}
+
 type officeScheduleType {
 	id: String
 	date: Date
 	morning: String
-	affternon: String
-	consulting_rooms_id: String
+	afternoon: String
+	night: String
+	consulting_rooms_id: ID
+	ConsultingRoom: ConsultingRoom
 }
 
 #Inputs
 input officeScheduleInput {
 	date: Date
 	morning: String
-	affternon: String
+	afternoon: String
 	night: String
-	consulting_rooms_id: String
+	consulting_rooms_id: ID
 }
 
 #Queries
 type Query {
-	getOfficeSchedulesByConsultingRoom(consultingRoomId: ID!): [officeScheduleType]
+	getOfficeScheduleDatesByMonth(doctorId: ID!, date: Date!): [StringDate]
+	getOfficeSchedulesByDoctor(doctorId: ID!, date: Date!): [officeScheduleType]
 }
 
 #Mutations
