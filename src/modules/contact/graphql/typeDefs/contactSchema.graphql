@@ -1,0 +1,30 @@
+type ContactType {
+    id: ID!
+    status: Int
+    account_id: Int
+    user_id: Int
+    lead_id: Int
+    is_purchased: Int
+    created_at: Date
+    updated_at: Date
+    deleted_at: Date
+    customer_color_badge_id: Int
+    technician_id: Int
+    opportunity_source_id: Int
+    is_doctor: Boolean
+}
+
+input ContactInput {
+    status: Int
+    account_id: Int
+    user_id: Int
+    lead_id: Int
+    is_purchased: Int
+    created_at: Date
+    updated_at: Date
+    deleted_at: Date
+    customer_color_badge_id: Int
+    technician_id: Int
+    opportunity_source_id: Int
+    is_doctor: Boolean
+}

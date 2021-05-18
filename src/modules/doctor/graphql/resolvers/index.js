@@ -1,7 +1,8 @@
 import Queries from './queries';
 import Mutations from './mutations';
-
+import DoctorType from './doctor'
 export default {
-    Queries,
-    Mutations
-}
+	Query: Queries,
+	Mutation: Mutations,
+	DoctorType
+};
