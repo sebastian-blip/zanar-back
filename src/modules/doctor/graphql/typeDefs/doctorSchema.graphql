@@ -67,7 +67,7 @@ type DoctorType {
 type EducationType {
 	type: String
 	title: String
-	univeristy: String
+	university: String
 	year: String
 }
 
