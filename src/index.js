@@ -16,7 +16,7 @@ const app = express();
 
 const allowedOrigins = [
 	'http://localhost:3000',
-	'https://zanar-prescriptor-ui.herokuapp.com/',
+	'https://zanar-prescriptor-ui.herokuapp.com',
 	'http://localhost:4500'
 ];
 

@@ -1,3 +1,4 @@
+# import ContactType, ContactInput from '../../modules/contact/graphql/typeDefs/contactSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/doctor/graphql/typeDefs/doctorSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/consultingRoom/graphql/typeDefs/consultingRoomSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/officeSchedule/graphql/typeDefs/officeScheduleSchema.graphql';

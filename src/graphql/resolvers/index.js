@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { dateScalar } from './customTypes';
 import {
 	consultingRoomMutations,
@@ -16,15 +17,16 @@ const resolvers = {
 		...consultingRoomQueries,
 		...officeScheduleQueries,
 		...mileQueries,
-		...DoctorResolvers.Queries
 	},
 	Mutation: {
 		...consultingRoomMutations,
 		...officeScheduleMutations,
-		...DoctorResolvers.Mutations,
 		...authenticationMutations
 	},
 	Date: dateScalar
 };
 
-export default resolvers;
+export default _.merge(
+	resolvers,
+	DoctorResolvers
+);
