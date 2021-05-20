@@ -3,7 +3,7 @@ export default function(sequelize, DataTypes) {
 		'MedicalFormulaLaboratory',
 		{
 			code: {
-				type: DataTypes.DATE
+				type: DataTypes.STRING
 			},
 			description: {
 				type: DataTypes.STRING

@@ -1,4 +1,3 @@
-// import moment from 'moment';
 import { officeScheduleDao } from '../dao/officeScheduleDao';
 import * as DefaultMessages from '../../../utils/messages/default/default.json';
 

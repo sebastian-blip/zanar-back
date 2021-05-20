@@ -7,6 +7,9 @@ export default function(sequelize, DataTypes) {
 			},
 			type: {
 				type: DataTypes.ENUM('procedure', 'laboratory')
+			},
+			recomendations: {
+				type: DataTypes.STRING
 			}
 		},
 		{

@@ -35,7 +35,7 @@ export default function(sequelize, DataTypes) {
 				defaultValue: false
 			},
 			crypt_id: {
-				type: DataTypes.STRING 
+				type: DataTypes.STRING
 			}
 		},
 		{

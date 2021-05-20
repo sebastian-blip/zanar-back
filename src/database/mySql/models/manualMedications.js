@@ -7,6 +7,9 @@ export default function(sequelize, DataTypes) {
 			},
 			is_controlled: {
 				type: DataTypes.BOOLEAN
+			},
+			posology: {
+				type: DataTypes.STRING
 			}
 		},
 		{

@@ -4,3 +4,5 @@
 # import Query.*, Mutation.* from '../../modules/officeSchedule/graphql/typeDefs/officeScheduleSchema.graphql';
 # import Query.* from '../../modules/mile/graphql/typeDefs/mileSchema.graphql';
 # import Mutation.* from '../../modules/authentication/graphql/typeDefs/authenticationSchema.graphql';
+# import Query.* from '../../modules\diseases\graphql\typeDefs\diseaseSchema.graphql';
+# import Query.* from '../../modules/eps/graphql/typeDefs/epsSchema.graphql';

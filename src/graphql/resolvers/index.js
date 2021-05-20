@@ -10,6 +10,8 @@ import {
 } from '../../modules/officeSchedule/graphql/resolvers';
 import { authenticationMutations } from '../../modules/authentication/graphql/resolvers';
 import { mileQueries } from '../../modules/mile/graphql/resolvers';
+import { diseasesQueries } from '../../modules/diseases/graphql/resolvers';
+import { epsQueries } from '../../modules/eps/graphql/resolvers';
 import DoctorResolvers from '../../modules/doctor/graphql/resolvers';
 
 const resolvers = {
@@ -17,16 +19,17 @@ const resolvers = {
 		...consultingRoomQueries,
 		...officeScheduleQueries,
 		...mileQueries,
+		...diseasesQueries,
+		...epsQueries
 	},
 	Mutation: {
 		...consultingRoomMutations,
 		...officeScheduleMutations,
 		...authenticationMutations
+		// ...epsMutations,
+		// ...diseasesMutations
 	},
 	Date: dateScalar
 };
 
-export default _.merge(
-	resolvers,
-	DoctorResolvers
-);
+export default _.merge(resolvers, DoctorResolvers);
