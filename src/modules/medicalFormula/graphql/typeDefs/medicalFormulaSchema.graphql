@@ -1,0 +1,117 @@
+# import PaginationInput, SortByEnum from '../../../../graphql/typeDefs/paginationTypeDef/pagination.graphql';
+
+scalar Date
+
+#Types
+type MedicalFormulaType {
+	id: String
+	diagnosis: String
+	query_reason: String
+	query_type: String
+	recomendations: String
+}
+
+type MedicalFormulaDetailType {
+	id: String
+	diagnosis: String
+	query_reason: String
+	query_type: String
+	# recomendations: String
+	# manualMedications: [ManualMedicationsType] 
+	# manualProceduresLaboratories: [ManualProceduresLaboratoriesType] 
+	# medicalFormulaLaboratories: [MedicalFormulaLaboratoriesType] 
+	# medicalFormulaMedicines: MedicalFormulaMedicinesType 
+	# medicalFormulaProcedures: MedicalFormulaProceduresType 
+	# diagnosisDiseases: DiagnosisDiseasesType 
+}
+
+type MedicalFormulaResultType {
+	total: String
+	count: String
+	page: String
+	records: [MedicalFormulaType]
+}
+
+#Inputs
+input MedicalFormulaFilterInput {
+	code: String
+	initialDate: Date
+	finalDate: Date
+}
+
+enum MedicalFormulaOrderByEnum {
+	DATE
+}
+
+input MedicalFormulaInput {
+	diagnosis: String
+	query_reason: String
+	query_type: String
+	recomendations: String
+	send_mail: Boolean
+}
+
+input ManualMedicationsInput {
+	description: String
+	is_controlled: String
+	posology: String
+}
+
+input ManualProceduresLaboratoriesInput {
+	description: String
+	type: String
+	recomendations: String
+}
+
+input MedicalFormulaMedicinesInput {
+	code: String
+	description: String
+	presentation: String
+	dose: Int
+	hours: Int
+	days: Int
+	start_time: Int
+	quantity: Int
+	posology: String
+	recomendations: String
+	recurring: Boolean
+	frecuency: Int
+	n_frecuency: String
+	is_controlled: Boolean
+}
+
+input MedicalFormulaLaboratoriesInput {
+	code: String
+	description: String
+	recomendations: String
+}
+
+input MedicalFormulaProceduresInput {
+	code: String
+	description: String
+	recomendations: String
+}
+
+#Queries
+type Query {
+	getMedicalFormulas(
+		filter: MedicalFormulaFilterInput
+		pagination: PaginationInput
+		orderBy: MedicalFormulaOrderByEnum
+		sortBy: SortByEnum
+	): MedicalFormulaResultType
+	getMedicalFormulaDetail(id: ID): MedicalFormulaDetailType
+}
+
+#Mutations
+type Mutation {
+	createMedicalFormula(
+		medicalFormula: MedicalFormulaInput!
+		manualMedications: [ManualMedicationsInput]
+		manualProceduresLaboratories: [ManualProceduresLaboratoriesInput]
+		medicalFormulaLaboratories: [MedicalFormulaLaboratoriesInput]
+		medicalFormulaMedicines: [MedicalFormulaMedicinesInput]
+		medicalFormulaProcedures: [MedicalFormulaProceduresInput]
+		diagnosisDiseases: [ID]
+	): String
+}

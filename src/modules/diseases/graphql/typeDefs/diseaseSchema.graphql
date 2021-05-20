@@ -1,0 +1,29 @@
+# import PaginationInput from '../../../../graphql/typeDefs/paginationTypeDef/pagination.graphql';
+
+#Types
+type DiseaseType {
+	id: String
+	description: String
+	CIE10_4D: String
+}
+
+type DiseaseResultType {
+	total: String
+	count: String
+	page: String
+	records: [DiseaseType]
+}
+
+#Inputs
+input DiseaseFilterInput {
+	description: String
+	CIE10_4D: String
+}
+
+#Queries
+type Query {
+	getDiseases(filter: DiseaseFilterInput, pagination: PaginationInput): DiseaseResultType
+}
+
+#Mutations
+# type Mutation {}
