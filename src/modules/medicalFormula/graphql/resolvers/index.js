@@ -9,7 +9,7 @@ const medicalFormulaQueries = {
 	}
 };
 
-const diseasesMutations = {
+const medicalFormulaMutations = {
 	createMedicalFormula: (
 		root,
 		{
@@ -34,4 +34,4 @@ const diseasesMutations = {
 	}
 };
 
-export { medicalFormulaQueries, diseasesMutations };
+export { medicalFormulaQueries, medicalFormulaMutations };

@@ -12,6 +12,10 @@ import { authenticationMutations } from '../../modules/authentication/graphql/re
 import { mileQueries } from '../../modules/mile/graphql/resolvers';
 import { diseasesQueries } from '../../modules/diseases/graphql/resolvers';
 import { epsQueries } from '../../modules/eps/graphql/resolvers';
+import {
+	medicalFormulaMutations,
+	medicalFormulaQueries
+} from '../../modules/medicalFormula/graphql/resolvers';
 import DoctorResolvers from '../../modules/doctor/graphql/resolvers';
 
 const resolvers = {
@@ -20,14 +24,14 @@ const resolvers = {
 		...officeScheduleQueries,
 		...mileQueries,
 		...diseasesQueries,
-		...epsQueries
+		...epsQueries,
+		...medicalFormulaQueries
 	},
 	Mutation: {
 		...consultingRoomMutations,
 		...officeScheduleMutations,
-		...authenticationMutations
-		// ...epsMutations,
-		// ...diseasesMutations
+		...authenticationMutations,
+		...medicalFormulaMutations
 	},
 	Date: dateScalar
 };

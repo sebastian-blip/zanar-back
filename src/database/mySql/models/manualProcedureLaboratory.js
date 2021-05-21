@@ -6,7 +6,7 @@ export default function(sequelize, DataTypes) {
 				type: DataTypes.STRING
 			},
 			type: {
-				type: DataTypes.ENUM('procedure', 'laboratory')
+				type: DataTypes.ENUM('PROCEDURE', 'LABORATORY')
 			},
 			recomendations: {
 				type: DataTypes.STRING

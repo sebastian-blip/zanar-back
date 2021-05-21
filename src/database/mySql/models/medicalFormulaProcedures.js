@@ -27,9 +27,6 @@ export default function(sequelize, DataTypes) {
 		medicalFormulaProcedures.belongsTo(models.MedicalFormulas, {
 			foreignKey: 'formula_id'
 		});
-		medicalFormulaProcedures.belongsTo(models.User, {
-			foreignKey: 'patient_id'
-		});
 	};
 
 	return medicalFormulaProcedures;

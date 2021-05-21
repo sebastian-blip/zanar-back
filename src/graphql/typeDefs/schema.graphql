@@ -2,6 +2,7 @@
 # import Query.*, Mutation.* from '../../modules/doctor/graphql/typeDefs/doctorSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/consultingRoom/graphql/typeDefs/consultingRoomSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/officeSchedule/graphql/typeDefs/officeScheduleSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/medicalFormula/graphql/typeDefs/medicalFormulaSchema.graphql';
 # import Query.* from '../../modules/mile/graphql/typeDefs/mileSchema.graphql';
 # import Mutation.* from '../../modules/authentication/graphql/typeDefs/authenticationSchema.graphql';
 # import Query.* from '../../modules\diseases\graphql\typeDefs\diseaseSchema.graphql';

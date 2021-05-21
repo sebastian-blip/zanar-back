@@ -21,7 +21,7 @@ export default function(sequelize, DataTypes) {
 				type: DataTypes.INTEGER
 			},
 			start_time: {
-				type: DataTypes.INTEGER
+				type: DataTypes.DATE
 			},
 			quantity: {
 				type: DataTypes.INTEGER

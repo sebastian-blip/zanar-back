@@ -73,25 +73,25 @@ const createMedicalFormula = async (
 		}
 		// eslint-disable-next-line no-plusplus
 		for (let i = 0; i < diagnosisDiseases.length; i++) {
-			const diagnosisDisease = diagnosisDiseases[i];
+			// eslint-disable-next-line camelcase
+			const disease_id = diagnosisDiseases[i];
 			// eslint-disable-next-line no-await-in-loop
-			await diagnosisDiseasesDao.create({ ...diagnosisDisease, formula_id }, transaction);
+			await diagnosisDiseasesDao.create({ disease_id, formula_id }, transaction);
 		}
-		await transaction.commit();
+
+		// The notification procedure is missing
+
+		await transaction.transaction.commit();
+		// eslint-disable-next-line camelcase
+		return formula_id;
 	} catch (error) {
-		await transaction.rollback();
+		await transaction.transaction.rollback();
 		throw error;
 	}
 };
 
-const getMedicalFormulas = (patientId, doctorId, pagination) => {
-	const filter = {};
-	if (patientId) {
-		filter.patient_id = patientId;
-	} else if (doctorId) {
-		filter.doctor_id = doctorId;
-	}
-	return medicalFormulaDao.getAll(filter, pagination);
+const getMedicalFormulas = (filter, pagination, orderBy, sortBy) => {
+	return medicalFormulaDao.getMedicalFormulaList(filter, pagination, orderBy, sortBy);
 };
 
 const getMedicalFormulaDetail = id => {

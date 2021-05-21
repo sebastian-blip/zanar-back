@@ -1,11 +1,7 @@
-export default function(sequelize, DataTypes) {
+export default function(sequelize) {
 	const diagnosisDiseases = sequelize.define(
 		'DiagnosisDiseases',
-		{
-			description: {
-				type: DataTypes.STRING
-			}
-		},
+		{},
 		{
 			tableName: 'diagnosis_diseases'
 		}

@@ -1,16 +1,17 @@
 import { ApolloError } from 'apollo-server-errors';
 
-function calcPagination(page = 0, pageSize = 20) {
-	return {
-		limit: pageSize,
-		offset: page * pageSize
-	};
-}
-
 export default class ResourceDao {
 	constructor(model, modelLabel) {
 		this.model = model;
 		this.modelLabel = modelLabel;
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	calcPagination(page = 0, pageSize = 20) {
+		return {
+			limit: pageSize,
+			offset: page * pageSize
+		};
 	}
 
 	setModel(model, modelLabel) {
@@ -88,7 +89,7 @@ export default class ResourceDao {
 		if (pagination)
 			query = {
 				...query,
-				...calcPagination(pagination.page, pagination.pageSize)
+				...this.calcPagination(pagination.page, pagination.pageSize)
 			};
 		const total = await this.model.count(query);
 		const records = await this.model.findAll(query);

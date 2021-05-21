@@ -9,7 +9,7 @@ export default function(sequelize, DataTypes) {
 				type: DataTypes.STRING
 			},
 			query_type: {
-				type: DataTypes.ENUM('FACE-TO-FACE', 'ONLINE')
+				type: DataTypes.ENUM('FACETOFACE', 'ONLINE')
 			},
 			recomendations: {
 				type: DataTypes.STRING
@@ -45,13 +45,33 @@ export default function(sequelize, DataTypes) {
 
 	medicalFormulas.associate = models => {
 		medicalFormulas.belongsTo(models.User, {
-			foreignKey: 'doctor_id'
+			foreignKey: 'doctor_id',
+			as: 'Doctor'
 		});
 		medicalFormulas.belongsTo(models.User, {
-			foreignKey: 'patient_id'
+			foreignKey: 'patient_id',
+			as: 'Patient'
 		});
 		medicalFormulas.belongsTo(models.ServiceProviderEPS, {
 			foreignKey: 'eps_id'
+		});
+		medicalFormulas.hasMany(models.ManualMedications, {
+			foreignKey: 'formula_id'
+		});
+		medicalFormulas.hasMany(models.ManualProcedureLaboratory, {
+			foreignKey: 'formula_id'
+		});
+		medicalFormulas.hasMany(models.MedicalFormulaMedicines, {
+			foreignKey: 'formula_id'
+		});
+		medicalFormulas.hasMany(models.MedicalFormulaLaboratory, {
+			foreignKey: 'formula_id'
+		});
+		medicalFormulas.hasMany(models.MedicalFormulaProcedures, {
+			foreignKey: 'formula_id'
+		});
+		medicalFormulas.hasMany(models.DiagnosisDiseases, {
+			foreignKey: 'formula_id'
 		});
 	};
 
