@@ -1,0 +1,24 @@
+###### ERP Service ######
+type Service {
+    name: String,
+	code: String,
+	cups: String
+}
+
+input ServiceListFilters {
+    name: String,
+	code: String,
+	cups: String
+}
+
+type ServiceList {
+    total: Int
+	count: Int
+	page: Int
+    records: [Service]
+}
+
+type Query {
+	getService(code: String!): Service
+	getServiceList(filters: ServiceListFilters): ServiceList
+}
