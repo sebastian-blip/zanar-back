@@ -17,6 +17,7 @@ import {
 	medicalFormulaQueries
 } from '../../modules/medicalFormula/graphql/resolvers';
 import DoctorResolvers from '../../modules/doctor/graphql/resolvers';
+import ERPResolvers from '../../modules/erp/graphql/resolvers';
 
 const resolvers = {
 	Query: {
@@ -36,4 +37,4 @@ const resolvers = {
 	Date: dateScalar
 };
 
-export default _.merge(resolvers, DoctorResolvers);
+export default _.merge(resolvers, DoctorResolvers, ERPResolvers);
