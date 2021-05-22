@@ -11,6 +11,7 @@ import {
 import { authenticationMutations } from '../../modules/authentication/graphql/resolvers';
 import { mileQueries } from '../../modules/mile/graphql/resolvers';
 import DoctorResolvers from '../../modules/doctor/graphql/resolvers';
+import ERPResolvers from '../../modules/erp/graphql/resolvers';
 
 const resolvers = {
 	Query: {
@@ -28,5 +29,6 @@ const resolvers = {
 
 export default _.merge(
 	resolvers,
-	DoctorResolvers
+	DoctorResolvers,
+	ERPResolvers
 );
