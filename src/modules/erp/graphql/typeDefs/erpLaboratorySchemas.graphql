@@ -20,5 +20,5 @@ type LaboratoryList {
 
 type Query {
 	getLaboratory(code: String!): Laboratory
-	getLaboratoryList(filters: LaboratoryListFilters): LaboratoryList
+	getLaboratoryList(filters: LaboratoryListFilters, pagination: PaginationInput): LaboratoryList
 }

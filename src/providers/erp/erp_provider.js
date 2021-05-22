@@ -82,13 +82,21 @@ export class ERPProvider {
 		return this.parseResponse(itemsResult);
 	}
 
-	async getList(filters = {}) {
+	async getList(filters = {}, pagination = {}) {
 		await this.checkToken();
 		const parsedFilters = this.parseFilters(filters);
+		const { page, pageSize } = pagination;
 
-		const itemsResult = await this.httpClient.post(this.urlResource, undefined, {
+		let headers = {
 			filters: JSON.stringify(parsedFilters)
-		});
+		};
+
+		if (pagination) {
+			headers['current-page'] = page || 0;
+			headers['records-per-page'] = pageSize || 20;
+		}
+
+		const itemsResult = await this.httpClient.post(this.urlResource, undefined, headers);
 
 		return this.parseResponse(itemsResult, undefined, false);
 	}

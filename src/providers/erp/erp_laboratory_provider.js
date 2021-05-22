@@ -16,8 +16,8 @@ export class ERPLaboratoryProvider extends ERPProvider {
 		return this.parseResponse(itemsResult);
 	}
 
-	async getLaboratoryList(filters = {}) {
-		return await this.getList(filters);
+	async getLaboratoryList(filters = {}, pagination) {
+		return await this.getList(filters, pagination);
 	}
 }
 
