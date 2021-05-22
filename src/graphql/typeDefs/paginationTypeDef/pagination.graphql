@@ -1,0 +1,9 @@
+input PaginationInput {
+	page: Int
+	pageSize: Int
+}
+
+enum SortByEnum {
+    ASC
+    DESC
+}
