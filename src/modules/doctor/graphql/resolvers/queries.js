@@ -1,7 +1,7 @@
 import { doctorService } from '../../services/doctorService';
 
 const getDoctor = async (root, { doctorId }) => {
-	const doctor = await doctorService.getCustom(doctorId, { includeAdditionalFields: true });
+	const doctor = await doctorService.get(doctorId, { includeAdditionalFields: true });
     return doctor;
 };
 

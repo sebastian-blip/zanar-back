@@ -1,5 +1,7 @@
 # import ContactType, ContactInput from '../../modules/contact/graphql/typeDefs/contactSchema.graphql';
+# import AdditionalFieldType, AdditionalFieldInput, ServiceProviderEPSType, AcceptDataOption from '../../modules/user/graphql/typeDefs/userSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/doctor/graphql/typeDefs/doctorSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/patient/graphql/typeDefs/patientSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/consultingRoom/graphql/typeDefs/consultingRoomSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/officeSchedule/graphql/typeDefs/officeScheduleSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/medicalFormula/graphql/typeDefs/medicalFormulaSchema.graphql';

@@ -1,0 +1,63 @@
+type AdditionalFieldType {
+	additional_field_key_id: String
+	additional_field_key_name: String
+	additional_field_values: String
+}
+
+input AdditionalFieldInput {
+	additional_field_key_id: String
+	additional_field_key_name: String
+	additional_field_values: String
+}
+
+type ServiceProviderEPSType {
+	id: ID
+	title: String
+}
+
+type UserType {
+	id: ID!
+	name: String
+	status: Int
+	email: String
+	remember_token: String
+	created_at: Date
+	updated_at: Date
+	mobile: String
+	username: String
+	domain_name: String
+	family: String
+	phone: String
+	city: String
+	province: String
+	address: String
+	national_id: String
+	avatar: String
+	job_title: String
+	gender: String
+	sms_value: Int
+	user_type: Int
+	lang: String
+	calendar_id: Int
+	user_signature: String
+	user_extension: String
+	document: String
+	token_syn_calendar: String
+	accept_data: String
+	companion: Int
+	signature_digital: String
+	eps: Int
+	document_type: Int
+	neighborhood: String
+	is_campaing: Boolean
+	omni_user: String
+	omni_pass: String
+	contact: ContactType
+	serviceProviderEPS: ServiceProviderEPS
+	additionalFields: [AdditionalFieldType]
+}
+
+enum AcceptDataOption {
+	not_accept
+	acepta
+}
