@@ -16,8 +16,8 @@ export class ERPServiceProvider extends ERPProvider {
 		return this.parseResponse(itemsResult);
 	}
 
-	async getServiceList(filters = {}) {
-		return await this.getList(filters);
+	async getServiceList(filters = {}, pagination) {
+		return await this.getList(filters, pagination);
 	}
 }
 

@@ -40,8 +40,8 @@ export class ERPItemProvider extends ERPProvider {
 		return await this.getFirst(id);
 	}
 
-	async getMedicineList(filters = {}) {
-		return await this.getList(filters);
+	async getMedicineList(filters = {}, pagination) {
+		return await this.getList(filters, pagination);
 	}
 }
 

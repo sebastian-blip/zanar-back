@@ -20,5 +20,5 @@ type ServiceList {
 
 type Query {
 	getService(code: String!): Service
-	getServiceList(filters: ServiceListFilters): ServiceList
+	getServiceList(filters: ServiceListFilters, pagination: PaginationInput): ServiceList
 }
