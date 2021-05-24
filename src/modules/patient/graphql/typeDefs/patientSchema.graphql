@@ -1,0 +1,63 @@
+input PatientInput {
+    name: String
+    email: String
+    mobile: String
+    username: String
+    domain_name: String
+    family: String
+    phone: String
+    city: String
+    province: String
+    address: String
+    national_id: String
+    job_title: String
+    gender: String
+    birthday: Date
+    eps: Int
+    accept_data: AcceptDataOption
+}
+
+type PatientType {
+    id: ID
+    name: String
+    email: String
+    mobile: String
+    username: String
+    domain_name: String
+    family: String
+    phone: String
+    city: String
+    province: String
+    address: String
+    national_id: String
+    job_title: String
+    gender: String
+    birthday: Date
+    eps: Int
+	serviceProviderEPS: ServiceProviderEPSType
+    accept_data: AcceptDataOption
+}
+
+input PatientFilters {
+    national_id: String
+}
+
+type PatientList {
+	total: Int
+	count: Int
+	page: Int
+	records: [PatientType]
+}
+
+#Queries
+type Query {
+	getPatient(patientId: ID!): PatientType
+	getPatients(filters: PatientFilters, , pagination: PaginationInput): PatientList
+}
+
+#Mutations
+type Mutation {
+	createPatient(data: PatientInput!): PatientType
+	updatePatient(patientId: ID!, data:PatientInput!): PatientType
+	#deletePatient(consultingRoomId: ID!): PatientType
+}

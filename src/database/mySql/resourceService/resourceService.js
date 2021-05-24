@@ -8,10 +8,9 @@ function calcPagination(page = 0, pageSize = 20) {
 }
 
 export default class ResourceService {
-	constructor(Model, modelLabel, upportModule) {
+	constructor(Model, modelLabel) {
 		this.Model = Model;
 		this.modelLabel = modelLabel;
-		this.upportModule = upportModule;
 	}
 
 	setModel(Model, modelLabel) {

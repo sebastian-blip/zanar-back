@@ -9,7 +9,9 @@ const sequelize = new Sequelize(
 	{
 		// logging: DatabaseConfig.LOGGING,
 		host: DatabaseConfig.HOST,
-		dialect: DatabaseConfig.DIALECT
+		dialect: DatabaseConfig.DIALECT,
+		underscored: true,
+		timestamps: false
 	}
 );
 
