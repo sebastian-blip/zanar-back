@@ -54,7 +54,7 @@ export class DoctorService extends UserService {
 
 		return {
 			name: doctor.name,
-			lastNames: '',
+			lastNames: doctor.family,
 			sex,
 			phone: doctor.phone,
 			birthday,
