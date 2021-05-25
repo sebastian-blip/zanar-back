@@ -32,7 +32,8 @@ export class ERPItemProvider extends ERPProvider {
 			nombre_laboratorio: item['x_farma_nombre_laboratorio'],
 			segundo_nombre_laboratorio: item['x_farma_tercero_laboratorio'],
 			forma_farmaceutica: item['x_farma_forma_farmaceutica'],
-			price: item['price']
+			price: item['price'],
+			x_farma_controlado: item['x_farma_controlado']
 		};
 	}
 

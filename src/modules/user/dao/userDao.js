@@ -9,7 +9,7 @@ export default class UserDao extends ResourceDao {
 	login(username, password) {
 		return this.model.findOne({
 			attributes: ['id', 'user_type'],
-			where: { document: username },
+			where: { username },
 			raw: true
 		});
 	}

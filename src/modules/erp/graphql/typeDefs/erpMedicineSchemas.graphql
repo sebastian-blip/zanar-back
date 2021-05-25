@@ -8,6 +8,7 @@ type Medicine {
 	segundo_nombre_laboratorio: String,
 	forma_farmaceutica: String
 	price: String
+	x_farma_controlado: String
 }
 
 input MedicineListFilters {
