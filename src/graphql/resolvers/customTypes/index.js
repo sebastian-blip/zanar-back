@@ -1,30 +1,41 @@
-import { GraphQLScalarType, Kind } from 'graphql';
+import { GraphQLScalarType } from 'graphql';
+
+const validDateFormat = date => {
+	const dateRegex = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]/;
+	return dateRegex.test(date);
+};
 
 const dateScalar = new GraphQLScalarType({
 	name: 'Date',
 	description: 'Date custom scalar type',
 	serialize(value) {
-		return value; // Convert outgoing Date to integer for JSON
+		return value;
 	},
 	parseValue(value) {
-		return new Date(value); // Convert incoming integer to Date
+		return validDateFormat(value) ? new Date(value) : null;
 	},
 	parseLiteral(ast) {
-		try {
-			let date;
-			if (ast.kind === Kind.INT) {
-				date = new Date(parseInt(ast.value, 10)); // Convert hard-coded AST string to integer and then to Date
-			} else {
-				date = new Date(ast.value);
-			}
-			// eslint-disable-next-line no-restricted-globals
-			if (isNaN(date)) throw new Error();
-			return date;
-		} catch (error) {
-			return null;
-		}
+		return validDateFormat(ast.value) ? new Date(ast.value) : null;
 	}
 });
 
-// eslint-disable-next-line import/prefer-default-export
-export { dateScalar };
+const validHourFormat = date => {
+	const dateRegex = /(2[0-3]|[01][0-9]):[0-5][0-9]-(2[0-3]|[01][0-9]):[0-5][0-9]/;
+	return dateRegex.test(date);
+};
+
+const hourScalar = new GraphQLScalarType({
+	name: 'Hour',
+	description: 'Hour custom scalar type',
+	serialize(value) {
+		return value;
+	},
+	parseValue(value) {
+		return validHourFormat(value) ? value : null;
+	},
+	parseLiteral(ast) {
+		return validHourFormat(ast.value) ? ast.value : null;
+	}
+});
+
+export { dateScalar, hourScalar };

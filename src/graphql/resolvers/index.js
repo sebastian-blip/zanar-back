@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { dateScalar } from './customTypes';
+import { dateScalar, hourScalar } from './customTypes';
 import {
 	consultingRoomMutations,
 	consultingRoomQueries
@@ -35,7 +35,8 @@ const resolvers = {
 		...authenticationMutations,
 		...medicalFormulaMutations
 	},
-	Date: dateScalar
+	Date: dateScalar,
+	Hour: hourScalar
 };
 
 export default _.merge(resolvers, DoctorResolvers, ERPResolvers, PatientResolvers);

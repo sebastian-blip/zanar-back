@@ -31,7 +31,7 @@ export default function(sequelize, DataTypes) {
 				allowNull: false
 			},
 			duration_of_appointment: {
-				type: DataTypes.STRING,
+				type: DataTypes.INTEGER,
 				allowNull: false
 			},
 			morning: {
