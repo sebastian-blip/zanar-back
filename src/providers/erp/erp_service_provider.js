@@ -1,5 +1,5 @@
 import { ERPProvider } from './erp_provider';
-import { URLS } from './utils/constants';
+import { URLS, defaultResponse } from './utils/constants';
 
 export class ERPServiceProvider extends ERPProvider {
 	constructor() {
@@ -17,7 +17,8 @@ export class ERPServiceProvider extends ERPProvider {
 	}
 
 	async getServiceList(filters = {}, pagination) {
-		return await this.getList(filters, pagination);
+		const result = await this.getList(filters, pagination);
+		return result || defaultResponse;
 	}
 }
 

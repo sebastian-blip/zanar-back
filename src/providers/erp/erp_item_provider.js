@@ -1,5 +1,5 @@
 import { ERPProvider } from './erp_provider';
-import { URLS } from './utils/constants';
+import { URLS, defaultResponse } from './utils/constants';
 
 export class ERPItemProvider extends ERPProvider {
 	constructor() {
@@ -42,7 +42,8 @@ export class ERPItemProvider extends ERPProvider {
 	}
 
 	async getMedicineList(filters = {}, pagination) {
-		return await this.getList(filters, pagination);
+		const result = await this.getList(filters, pagination);
+		return result || defaultResponse;
 	}
 }
 
