@@ -12,6 +12,7 @@ import { authenticationMutations } from '../../modules/authentication/graphql/re
 import { mileQueries } from '../../modules/mile/graphql/resolvers';
 import { diseasesQueries } from '../../modules/diseases/graphql/resolvers';
 import { epsQueries } from '../../modules/eps/graphql/resolvers';
+import { typeDocumentQueries } from '../../modules/typeDocument/graphql/resolvers';
 import {
 	medicalFormulaMutations,
 	medicalFormulaQueries
@@ -27,7 +28,8 @@ const resolvers = {
 		...mileQueries,
 		...diseasesQueries,
 		...epsQueries,
-		...medicalFormulaQueries
+		...medicalFormulaQueries,
+		...typeDocumentQueries
 	},
 	Mutation: {
 		...consultingRoomMutations,

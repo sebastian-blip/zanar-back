@@ -1,7 +1,7 @@
-import ResourceService from '../../../database/mySql/resourceService/resourceService';
+import resourceDao from '../../../database/mySql/resourceDao/resourceDao';
 import Models from '../../../database/mySql';
 
-class ContactService extends ResourceService {
+class ContactService extends resourceDao {
 	constructor() {
 		super(Models.Contact, 'contact');
 	}

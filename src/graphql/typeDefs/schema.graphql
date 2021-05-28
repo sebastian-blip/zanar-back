@@ -12,3 +12,4 @@
 # import Query.* from '../../modules/erp/graphql/typeDefs/erpMedicineSchemas.graphql';
 # import Query.* from '../../modules/erp/graphql/typeDefs/erpServiceSchemas.graphql';
 # import Query.* from '../../modules/erp/graphql/typeDefs/erpLaboratorySchemas.graphql';
+# import Query.* from '../../modules/typeDocument/graphql/typeDefs/typeDocumentSchema.graphql';
