@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { dateScalar } from './customTypes';
+import { dateScalar, timeScalar } from './customTypes';
 import {
 	consultingRoomMutations,
 	consultingRoomQueries
@@ -17,6 +17,7 @@ import {
 	medicalFormulaMutations,
 	medicalFormulaQueries
 } from '../../modules/medicalFormula/graphql/resolvers';
+import MedicalAppoitment from '../../modules/medicalAppoitment/graphql/resolvers';
 import PatientResolvers from '../../modules/patient/graphql/resolvers';
 import DoctorResolvers from '../../modules/doctor/graphql/resolvers';
 import ERPResolvers from '../../modules/erp/graphql/resolvers';
@@ -37,7 +38,14 @@ const resolvers = {
 		...authenticationMutations,
 		...medicalFormulaMutations
 	},
-	Date: dateScalar
+	Date: dateScalar,
+	Time: timeScalar
 };
 
-export default _.merge(resolvers, DoctorResolvers, ERPResolvers, PatientResolvers);
+export default _.merge(
+	resolvers,
+	DoctorResolvers,
+	ERPResolvers,
+	PatientResolvers,
+	MedicalAppoitment
+);

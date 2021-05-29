@@ -3,7 +3,7 @@ export default function(sequelize, DataTypes) {
 		'OfficeSchedules',
 		{
 			date: {
-				type: DataTypes.DATE,
+				type: DataTypes.DATEONLY,
 				allowNull: false
 			},
 			morning: {
