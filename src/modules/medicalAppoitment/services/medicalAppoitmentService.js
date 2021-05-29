@@ -228,6 +228,11 @@ export class MedicalAppoitmentService extends ResourceService {
 			delete newFilters.status;
 		}
 
+		if(filters.date){
+			newFilters.reminder_date = moment(filters.date).format(this.dateFormat);
+			delete newFilters.date;
+		}
+
 		return newFilters;
 	}
 
