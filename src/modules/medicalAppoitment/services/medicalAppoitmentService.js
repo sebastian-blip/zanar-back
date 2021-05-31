@@ -2,16 +2,18 @@ import Sequelize from 'sequelize';
 import moment from 'moment';
 import { ApolloError } from 'apollo-server-errors';
 import ResourceService from '../../../database/mySql/resourceDao/resourceDao';
+import { getOfficeSchedulesByDoctor } from '../../officeSchedule/services/officeScheduleService';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { MESSAGES } from '../utils/messages';
-import { TURN_ARRAY } from '../utils/constants';
+import { TURN_ARRAY, TURNS } from '../utils/constants';
 import _ from 'lodash';
 
 export class MedicalAppoitmentService extends ResourceService {
 	constructor() {
 		super(Models.MedicalReminder, 'Medical Appoitment');
 		this.dateFormat = 'YYYY-MM-DD';
-		this.timeFormat = 'HH:mm';
+		this.timeFormat = 'HH:mm:ss';
+		this.timeSeparator = '-';
 		this.datetimeFormat = `${this.dateFormat} ${this.timeFormat}`;
 	}
 
@@ -60,10 +62,117 @@ export class MedicalAppoitmentService extends ResourceService {
 		};
 	}
 
-	async generateTimes(date, strStartTime, strEndTime) {
-		let startTime = moment(`${date} ${strStartTime}`);
-		let endTime = moment(`${date} ${strEndTime}`);
-		let timeArray = [];
+	generateTimeWindows(date, turns) {
+		let timeWindowArray = [];
+
+		for (let turn of turns) {
+			const startTime = moment(`${date} ${turn.start_time}`);
+			const endTime = moment(`${date} ${turn.end_time}`);
+
+			let time = startTime.clone();
+
+			while (time.isBefore(endTime)) {
+				const timeWindow = {
+					is_available: true,
+					turn: turn.turn,
+					ConsultingRoom: turn.ConsultingRoom
+				};
+
+				timeWindow.start_time = time.format(this.timeFormat);
+				time.add(turn.ConsultingRoom.duration_of_appointment, 'minutes');
+				timeWindow.end_time = time.format(this.timeFormat);
+
+				timeWindowArray.push(timeWindow);
+			}
+		}
+
+		return timeWindowArray;
+	}
+
+	async getDoctorScheduleByDay(doctorId, date) {
+		const _this = this;
+		let officeSchedules = (await getOfficeSchedulesByDoctor(doctorId, date)).map(r => r.toJSON());
+		let turns = [];
+		let allSchedule = [];
+		let medicalAppoitments = [];
+		let result = [];
+
+		let parseTime = times => {
+			const [start_time, end_time] = times.split(this.timeSeparator).map(t => t.trim());
+			if (!(start_time && end_time))
+				throw new Error(MESSAGES.ERROR.office_schedule_data_is_not_valid);
+			return {
+				start_time,
+				end_time
+			};
+		};
+
+		for (let officeSchedule of officeSchedules) {
+			let turn = undefined;
+
+			if (officeSchedule.morning) {
+				turn = TURNS.MORNING;
+			} else if (officeSchedule.afternoon) {
+				turn = TURNS.AFTERNOON;
+			} else if (officeSchedule.night) {
+				turn = TURNS.NIGHT;
+			}
+
+			if (!turn) throw new Error(MESSAGES.ERROR.office_schedule_data_is_not_valid);
+
+			turns.push({
+				turn,
+				ConsultingRoom: officeSchedule.ConsultingRoom,
+				...parseTime(officeSchedule[turn])
+			});
+		}
+
+		//Generate all time window of turns.
+		allSchedule = this.generateTimeWindows(moment(date).format(this.dateFormat), turns);
+
+		//Medical Appoitments of doctor on this day.
+		medicalAppoitments = (
+			await this.model.findAll({
+				attributes: [
+					'id',
+					'reminder_time',
+					'reminder_duration',
+					'reminder_date',
+					'reminder_status',
+					'turn'
+				],
+				include: this.getIncludeQuery(),
+				where: {
+					doctor_id: doctorId,
+					reminder_date: moment(date).format(this.dateFormat),
+					reminder_status: true
+				},
+				paranoid: false
+			})
+		).map(r => {
+			const newR = _this.outputAdapter(r.toJSON());
+			newR.medical_appoitment_id = r.id;
+			newR.is_available = false;
+			return newR;
+		});
+
+		//Delete all time window where there is appointment scheduled.
+		allSchedule = _.differenceWith(allSchedule, medicalAppoitments, (a, b) => {
+			return (
+				a.turn == b.turn &&
+				a.start_time == b.start_time &&
+				a.ConsultingRoom.id == b.ConsultingRoom.id
+			);
+		});
+
+		//Merge both array and sort the result by start_time and end_time.
+		result = _.orderBy(
+			_.union(allSchedule, medicalAppoitments),
+			['start_time', 'end_time'],
+			['asc', 'asc']
+		);
+
+		return result;
 	}
 
 	async checkAvailableSchedule(appoitmentData, opts = {}) {
@@ -100,7 +209,7 @@ export class MedicalAppoitmentService extends ResourceService {
 
 		if (scheduleDay) {
 			const schedule = scheduleDay[appoitmentData.turn.toLowerCase()];
-			const [strStartTime, strEndTime] = schedule.split('a').map(e => e.trim());
+			const [strStartTime, strEndTime] = schedule.split(this.timeSeparator).map(e => e.trim());
 
 			if (strStartTime && strEndTime) {
 				const duration = Number.parseInt(scheduleDay.ConsultingRoom.duration_of_appointment);
@@ -109,6 +218,7 @@ export class MedicalAppoitmentService extends ResourceService {
 				const appoitmentStartTime = moment(`${strDate} ${appoitmentData.reminder_time}`);
 				const appoitmentEndTime = appoitmentStartTime.clone().add(duration, 'minutes');
 
+				//Add appoitment end time
 				appoitmentData.reminder_duration = appoitmentEndTime.format(this.timeFormat);
 
 				if (
@@ -140,7 +250,6 @@ export class MedicalAppoitmentService extends ResourceService {
 				});
 
 				if (appoitmentTotal > 0) throw new Error(MESSAGES.ERROR.schedule_is_not_available);
-				//Add appoitment end time
 			}
 		} else {
 			throw new Error(MESSAGES.ERROR.consulting_room_is_not_available);
@@ -189,7 +298,6 @@ export class MedicalAppoitmentService extends ResourceService {
 				...medicalAppoitment.toJSON(),
 				...this.inputAdapter(data)
 			};
-			console.log('>>>>>>>>>>>>>>>>>', inputData);
 			await this.checkAvailableSchedule(inputData, { transaction });
 
 			medicalAppoitment = await super.update(appoitmentId, inputData, { transaction });
@@ -228,7 +336,7 @@ export class MedicalAppoitmentService extends ResourceService {
 			delete newFilters.status;
 		}
 
-		if(filters.date){
+		if (filters.date) {
 			newFilters.reminder_date = moment(filters.date).format(this.dateFormat);
 			delete newFilters.date;
 		}
