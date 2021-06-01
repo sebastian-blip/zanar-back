@@ -8,7 +8,12 @@ const getMedicalAppoitments = async (root, { filters, pagination }) => {
 	return await medicalAppoitmentService.getAll(filters, pagination);
 };
 
+const getDoctorScheduleByDay = async (root, { doctorId, date }) => {
+	return await medicalAppoitmentService.getDoctorScheduleByDay(doctorId, date);
+};
+
 export default {
 	getMedicalAppoitment,
-	getMedicalAppoitments
+	getMedicalAppoitments,
+	getDoctorScheduleByDay
 };

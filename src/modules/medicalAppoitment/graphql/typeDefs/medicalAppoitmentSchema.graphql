@@ -47,6 +47,16 @@ type MedicalAppoitmentType{
 	turn: String
 }
 
+type MedicalScheduleItemType{
+	start_time: Time!
+	end_time: Time!
+	turn: String!
+	ConsultingRoom: consultingRoomType!
+	Patient: PatientType
+	medical_appoitment_id: ID
+	is_available: Boolean
+}
+
 type MedicalAppoitmentList {
 	total: Int
 	count: Int
@@ -58,6 +68,7 @@ type MedicalAppoitmentList {
 type Query {
 	getMedicalAppoitment(id:ID!): MedicalAppoitmentType
 	getMedicalAppoitments(filters:MedicalAppoitmentFilterInput, pagination: PaginationInput): MedicalAppoitmentList
+	getDoctorScheduleByDay(doctorId: ID!, date: Date!): [MedicalScheduleItemType]
 }
 
 #Mutations
