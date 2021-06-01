@@ -1,5 +1,5 @@
 scalar Date
-scalar Hour
+scalar Time
 
 #Types
 type ConsultingRoom {
@@ -13,9 +13,9 @@ type StringDate {
 type officeScheduleType {
 	id: String
 	date: Date
-	morning: Hour
-	afternoon: Hour
-	night: Hour
+	morning: Time
+	afternoon: Time
+	night: Time
 	consulting_rooms_id: ID
 	ConsultingRoom: ConsultingRoom
 }
@@ -23,9 +23,9 @@ type officeScheduleType {
 #Inputs
 input officeScheduleInput {
 	date: Date
-	morning: Hour
-	afternoon: Hour
-	night: Hour
+	morning: Time
+	afternoon: Time
+	night: Time
 	consulting_rooms_id: ID
 }
 

@@ -1,10 +1,10 @@
 import Sequelize from 'sequelize';
 import { ApolloError } from 'apollo-server-errors';
-import ResourceService from '../../../database/mySql/resourceService/resourceService';
+import resourceDao from '../../../database/mySql/resourceDao/resourceDao';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import _ from 'lodash';
 
-export class RoleService extends ResourceService {
+export class RoleService extends resourceDao {
 	constructor() {
 		super(Models.Role, 'Role');
 	}
@@ -18,7 +18,7 @@ export class RoleService extends ResourceService {
 			paranoid: false,
 			...optQuery
 		};
-		const record = this.Model.findOne(query);
+		const record = this.model.findOne(query);
 		return record;
 	}
 }

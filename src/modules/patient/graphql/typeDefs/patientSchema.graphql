@@ -14,6 +14,7 @@ input PatientInput {
     gender: String
     birthday: Date
     eps: Int
+    document_type: ID
     accept_data: AcceptDataOption
 }
 
@@ -52,7 +53,7 @@ type PatientList {
 #Queries
 type Query {
 	getPatient(patientId: ID!): PatientType
-	getPatients(filters: PatientFilters, , pagination: PaginationInput): PatientList
+	getPatients(filters: PatientFilters, pagination: PaginationInput): PatientList
 }
 
 #Mutations

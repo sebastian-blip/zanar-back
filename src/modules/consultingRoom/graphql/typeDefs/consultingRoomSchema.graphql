@@ -1,4 +1,4 @@
-scalar Hour
+scalar Time
 
 #Types
 type consultingRoomType {
@@ -12,9 +12,9 @@ type consultingRoomType {
 	name_assistant: String
 	phone_assistant: String
 	duration_of_appointment: Int
-	morning: Hour
-	afternoon: Hour
-	night: Hour
+	morning: Time
+	afternoon: Time
+	night: Time
 }
 
 #Inputs
@@ -28,9 +28,9 @@ input consultingRoomInput {
 	name_assistant: String
 	phone_assistant: String
 	duration_of_appointment: Int
-	morning: Hour
-	afternoon: Hour
-	night: Hour
+	morning: Time
+	afternoon: Time
+	night: Time
 }
 
 #Queries

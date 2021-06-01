@@ -1,12 +1,12 @@
 import Sequelize from 'sequelize';
 import { ApolloError } from 'apollo-server-errors';
-import ResourceService from '../../../database/mySql/resourceService/resourceService';
+import resourceDao from '../../../database/mySql/resourceDao/resourceDao';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { contactService } from '../../contact/services/contactService';
 import { roleService } from './roleService';
 import _ from 'lodash';
 
-class UserService extends ResourceService {
+class UserService extends resourceDao {
 	constructor(modelLabel = 'User', upportModule = 'contacts') {
 		super(Models.User, modelLabel);
 		this.upportModule = upportModule;

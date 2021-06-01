@@ -23,7 +23,8 @@ type MedicalFormulaType {
 	diagnosis: String
 	query_reason: String
 	query_type: String
-	recomendations: String
+	recomendations: String,
+	createdAt: Date
 }
 
 type MedicalFormulaResultType {
