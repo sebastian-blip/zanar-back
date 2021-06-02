@@ -36,7 +36,8 @@ export default class ResourceDao {
 		} catch (error) {
 			throw new ApolloError(
 				`The ${this.modelLabel} could not be created`,
-				`${this.modelLabel}CreateError`
+				`${this.modelLabel}CreateError`,
+				error
 			);
 		}
 	}

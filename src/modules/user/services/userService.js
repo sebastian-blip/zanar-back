@@ -61,7 +61,7 @@ class UserService extends resourceDao {
 				{ transaction }
 			);
 
-			await contactService.create(
+			const userContact = await contactService.create(
 				{
 					...data.contact,
 					user_id: user.id
@@ -70,6 +70,13 @@ class UserService extends resourceDao {
 			);
 
 			await user.addRole(role, { transaction });
+
+			if (data.additionalFields) {
+				await this.updateOrCreateAdditionalFields(userContact.id, data.additionalFields, {
+					...opts,
+					transaction
+				});
+			}
 
 			user = await this.get(user.id, { transaction });
 
@@ -110,7 +117,7 @@ class UserService extends resourceDao {
 
 			if (!opts.transaction) transaction.commit();
 
-			return await this.get(userId);
+			return await this.get(userId, opts);
 		} catch (error) {
 			if (transaction && !opts.transaction) {
 				transaction.rollback(error);
@@ -130,7 +137,6 @@ class UserService extends resourceDao {
 
 	async getAdditionalFieldsOfModule() {
 		const queryUpperMod = {
-			...opts,
 			attributes: ['id'],
 			where: sequelize.where(sequelize.col('upport_table_name'), this.upportModule),
 			include: [
@@ -203,7 +209,8 @@ class UserService extends resourceDao {
 
 	getAdditionalFieldByKeyName(additionalFields, name) {
 		const additionalField = additionalFields.find(
-			additionalField => additionalField.additional_field_key_name === name
+			additionalField =>
+				additionalField.additional_field_key_name.trim().toLowerCase() === name.trim().toLowerCase()
 		);
 		return additionalField?.additional_field_values || '';
 	}
