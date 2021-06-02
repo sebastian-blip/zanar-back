@@ -6,12 +6,6 @@ export default function(sequelize, DataTypes) {
 				type: DataTypes.DATEONLY,
 				allowNull: false
 			},
-			initialDate: {
-				type: DataTypes.DATE
-			},
-			finalDate: {
-				type: DataTypes.DATE
-			},
 			morning: {
 				type: DataTypes.STRING
 			},

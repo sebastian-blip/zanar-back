@@ -10,7 +10,8 @@ const getAndValidateDateByHour = hours => {
 	const minutes2 = splitHours[1].split(':')[1];
 	const initialDate = moment().set({
 		hour: hour1,
-		minute: minutes1
+		minute: minutes1,
+		second: 0
 	});
 	const finalDate = moment().set({
 		hour: hour2,
@@ -36,8 +37,6 @@ const areValidHours = (initialDatesHours, finalDatesHours) => {
 		throw new Error(DefaultMessages.timeError);
 };
 
-const isValidDate = hours => {};
-
 const validHours = ({ morning, afternoon, night }) => {
 	if (morning === null || afternoon === null || night === null)
 		throw new Error(DefaultMessages.timeError);
@@ -49,4 +48,4 @@ const validHours = ({ morning, afternoon, night }) => {
 	if (morningDate && nightDate) areValidHours(morningDate, nightDate);
 };
 
-export { areValidHours, isValidDate, validHours };
+export { areValidHours, validHours, getAndValidateDateByHour };
