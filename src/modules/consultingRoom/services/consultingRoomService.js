@@ -1,4 +1,6 @@
+import { sequelize as Connection } from '../../../database/mySql';
 import { consultingRoomsDao } from '../dao/consultingRoomDao';
+import { validHours } from '../../../utils/validate/time/timeValidate';
 import * as DefaultMessages from '../../../utils/messages/default/default.json';
 
 const getConsultingRoomsByDoctor = async doctorId => {
@@ -7,13 +9,22 @@ const getConsultingRoomsByDoctor = async doctorId => {
 };
 
 const create = async consultingRoomData => {
+	validHours(consultingRoomData);
 	const record = await consultingRoomsDao.create(consultingRoomData);
 	return record.id;
 };
 
 const update = async (id, consultingRoomData) => {
-	await consultingRoomsDao.update(id, consultingRoomData);
-	return DefaultMessages.updateMessage;
+	const transaction = { transaction: await Connection.transaction() };
+	try {
+		const record = await consultingRoomsDao.update(id, consultingRoomData, transaction);
+		validHours(record);
+		await transaction.transaction.commit();
+		return DefaultMessages.updateMessage;
+	} catch (error) {
+		await transaction.transaction.rollback();
+		throw error;
+	}
 };
 
 const deleteRow = async id => {
