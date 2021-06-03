@@ -6,6 +6,7 @@ import { medicalFormulaLaboratoryDao } from '../daos/medicalFormulaLaboratoryDao
 import { medicalFormulaMedicinesDao } from '../daos/medicalFormulaMedicinesDao';
 import { medicalFormulaProceduresDao } from '../daos/medicalFormulaProceduresDao';
 import { diagnosisDiseasesDao } from '../daos/diagnosisDiseases';
+import MedicalFormulaMailEvents from '../events/mailEvents';
 
 const createMedicalFormula = async (
 	medicalFormula,
@@ -28,7 +29,10 @@ const createMedicalFormula = async (
 
 	try {
 		// eslint-disable-next-line camelcase
-		const { id: formula_id } = await medicalFormulaDao.create(medicalFormula, transaction);
+		const { id: formula_id, send_mail } = await medicalFormulaDao.create(
+			medicalFormula,
+			transaction
+		);
 		// eslint-disable-next-line no-plusplus
 		for (let i = 0; i < manualMedications.length; i++) {
 			const manualMedication = manualMedications[i];
@@ -83,6 +87,9 @@ const createMedicalFormula = async (
 
 		await transaction.transaction.commit();
 		// eslint-disable-next-line camelcase
+
+		//Send notification
+		if (send_mail) MedicalFormulaMailEvents.medicalFormulaCreated(formula_id);
 		return formula_id;
 	} catch (error) {
 		await transaction.transaction.rollback();
