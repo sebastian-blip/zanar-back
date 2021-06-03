@@ -1,13 +1,13 @@
-import Sequelize from 'sequelize';
 import moment from 'moment';
 import { ApolloError } from 'apollo-server-errors';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import ROLES from '../../user/utils/roleConstants';
 import { UserService } from '../../user/services/userService.js';
+import { patientService } from './patientService';
 
-export class PatientService extends UserService {
+export class PatientCompanionService extends UserService {
 	constructor() {
-		super('Patient', 'contacts');
+		super('PatientCompanion', 'contacts');
 		this.patientAdditionalFields = {
 			birthday: 'date_contact_cumple',
 			gender: 'text_contact_gender'
@@ -16,11 +16,6 @@ export class PatientService extends UserService {
 
 	getIncludeQuery() {
 		return [
-			{
-				model: Models.Role,
-				as: 'roles',
-				required: true
-			},
 			{
 				model: Models.Contact,
 				as: 'contact',
@@ -50,7 +45,6 @@ export class PatientService extends UserService {
 				data.additionalFields.push(buildNewElement(key, data.gender));
 			}
 		});
-
 		return data;
 	}
 
@@ -70,61 +64,59 @@ export class PatientService extends UserService {
 		return newFormat;
 	}
 
-	async get(patientId, opts) {
-		const patient = await super.get(patientId, {
+	async get(patientCompanionId, opts) {
+		const patientCompanion = await super.get(patientCompanionId, {
 			...opts,
 			adapter: this.outputAdapter.bind(this)
 		});
-		if (!patient || (patient.contact?.is_doctor == true && patient.roles[0].name == ROLES.PATIENT))
+
+		if (!patientCompanion || patientCompanion.contact?.is_doctor == true)
 			throw new ApolloError(`${this.modelLabel} not found`, `${this.modelLabel}FindError`);
 
-		return patient;
+		return patientCompanion;
 	}
 
 	async create(data, opts) {
-		return await super.create(
-			{
-				...(await this.inputAdapter(data)),
-				roleName: ROLES.PATIENT
-			},
-			opts
-		);
+		let transaction;
+		let companion = undefined;
+		try {
+			transaction = opts.transaction || (await Connection.transaction());
+
+			const patient = await patientService.get(data.companion_of, { transaction });
+
+			if (!patient) throw new ApolloError(`Patient not found`, `${this.modelLabel}FindError`);
+
+			if (patient.companion) {
+				companion = await this.update(patient.companion, data, { ...opts, transaction });
+			} else {
+				companion = await super.create(await this.inputAdapter(data), {
+					...opts,
+					transaction
+				});
+
+				await patientService.update(
+					data.companion_of,
+					{ companion: companion.id },
+					{ transaction }
+				);
+			}
+			if (!opts.transaction) transaction.commit();
+		} catch (error) {
+			if (transaction && !opts.transaction) {
+				transaction.rollback(error);
+			}
+
+			throw error;
+		}
+
+		return companion;
 	}
 
-	async update(patientId, data, opts) {
-		return await super.update(
-			patientId,
-			{
-				...(await this.inputAdapter(data))
-			},
-			opts
-		);
-	}
-
-	parseFilters(filters) {
-		let parsedFilters = { ...filters };
-
-		if (parsedFilters.national_id)
-			parsedFilters.national_id = { [Sequelize.Op.like]: `%${filters.national_id}%` };
-
-		return parsedFilters;
-	}
-
-	async getAll(filters = {}, pagination = { page: 0, pageSize: 100 }) {
-		const result = await super.getAll(
-			{
-				[Sequelize.Op.and]: [Sequelize.where(Sequelize.col('contact.is_doctor'), false)],
-				...filters
-			},
-			pagination
-		);
-
-		result.records = result.records.map(r => this.outputAdapter(r));
-
-		return result;
+	async update(patientCompanionId, data, opts) {
+		return await super.update(patientCompanionId, await this.inputAdapter(data), opts);
 	}
 }
 
-export const patientService = new PatientService();
+export const patientCompanionService = new PatientCompanionService();
 
-export default PatientService;
+export default PatientCompanionService;

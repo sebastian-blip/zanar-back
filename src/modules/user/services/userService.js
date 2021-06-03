@@ -48,10 +48,6 @@ class UserService extends resourceDao {
 		let user = undefined;
 		try {
 			transaction = opts.transaction || (await Connection.transaction());
-			let role = await roleService.getByName(data.roleName, { transaction });
-
-			if (!role)
-				throw new ApolloError(`${roleService.modelLabel} not found`, `${this.modelLabel}FindError`);
 
 			user = await super.create(
 				{
@@ -61,6 +57,7 @@ class UserService extends resourceDao {
 				{ transaction }
 			);
 
+			//Create the contact
 			const userContact = await contactService.create(
 				{
 					...data.contact,
@@ -69,8 +66,20 @@ class UserService extends resourceDao {
 				{ transaction }
 			);
 
-			await user.addRole(role, { transaction });
+			//Associate the role
+			if (data.roleName) {
+				let role = await roleService.getByName(data.roleName, { transaction });
 
+				if (!role)
+					throw new ApolloError(
+						`${roleService.modelLabel} not found`,
+						`${this.modelLabel}FindError`
+					);
+
+				await user.addRole(role, { transaction });
+			}
+
+			//Create the additional fields
 			if (data.additionalFields) {
 				await this.updateOrCreateAdditionalFields(userContact.id, data.additionalFields, {
 					...opts,
