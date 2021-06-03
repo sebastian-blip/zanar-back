@@ -35,6 +35,7 @@ type PatientType {
     gender: String
     birthday: Date
     eps: Int
+	companion: Int
 	serviceProviderEPS: ServiceProviderEPSType
     accept_data: AcceptDataOption
 }
@@ -54,11 +55,18 @@ type PatientList {
 type Query {
 	getPatient(patientId: ID!): PatientType
 	getPatients(filters: PatientFilters, pagination: PaginationInput): PatientList
+
+	#Patient's companion
+	getPatientCompanion(patientCompanionId: ID!): PatientType
 }
 
 #Mutations
 type Mutation {
 	createPatient(data: PatientInput!): PatientType
-	updatePatient(patientId: ID!, data:PatientInput!): PatientType
+	updatePatient(patientId: ID!, data: PatientInput!): PatientType
 	#deletePatient(consultingRoomId: ID!): PatientType
+
+	#Patient's companion
+	createPatientCompanion(patientId: ID!, data: PatientInput!): PatientType
+	updatePatientCompanion(patientCompanionId: ID!, data: PatientInput!): PatientType
 }
