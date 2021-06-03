@@ -5,7 +5,7 @@ const validDateFormat = date => {
 	if (typeof date !== 'string') {
 		throw new TypeError(`Value is not string: ${date}`);
 	}
-	const dateRegex = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]/;
+	const dateRegex = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/;
 	if (!dateRegex.test(date)) throw new TypeError(`The value is not a valid date: ${date}`);
 };
 

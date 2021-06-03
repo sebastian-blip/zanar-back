@@ -59,6 +59,8 @@ type CustomDoctorType {
 	birthday: String
 	email: String
 	address: String
+	city: String
+	national_id: String
 	education: [EducationType]
 	social: [SocialType]
 }

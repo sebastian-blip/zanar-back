@@ -20,7 +20,6 @@ export class DoctorService extends UserService {
 
 	adapter(doctor) {
 		const additionalFields = doctor.additionalFields || [];
-
 		const sex = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_gender');
 		const birthday = this.getAdditionalFieldByKeyName(additionalFields, 'date_Doctor_birthday');
 		const instagram = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_instagram');
@@ -58,7 +57,9 @@ export class DoctorService extends UserService {
 			sex,
 			phone: doctor.phone,
 			birthday,
+			city: doctor.city,
 			email: doctor.email,
+			national_id: doctor.national_id,
 			address: doctor.address,
 			contact: doctor.contact,
 			education: [
