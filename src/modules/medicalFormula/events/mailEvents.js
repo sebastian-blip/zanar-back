@@ -12,8 +12,6 @@ export class MailEvents {
 		);
 		const data = medicalFormula.toJSON();
 
-		console.log(data);
-
 		data.createdAt = moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss');
 		data.hasDiagnosisDiseases = data.DiagnosisDiseases.length > 0;
 
