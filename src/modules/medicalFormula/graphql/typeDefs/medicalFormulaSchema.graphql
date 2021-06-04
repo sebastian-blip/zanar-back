@@ -43,6 +43,7 @@ type MedicalFormulaUserType {
 	city: String
 	address: String
 	document: String
+	national_id: String
 }
 
 type ManualMedicationsType {
