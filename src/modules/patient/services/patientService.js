@@ -9,8 +9,8 @@ export class PatientService extends UserService {
 	constructor() {
 		super('Patient', 'contacts');
 		this.patientAdditionalFields = {
-			birthday: 'date_Contact_cumple',
-			gender: 'text_Contact_gender'
+			birthday: 'date_contact_cumple',
+			gender: 'text_contact_gender'
 		};
 	}
 
@@ -118,7 +118,13 @@ export class PatientService extends UserService {
 			},
 			pagination
 		);
-
+		// eslint-disable-next-line no-plusplus
+		for (let i = 0; i < result.records.length; i++) {
+			// eslint-disable-next-line no-await-in-loop
+			result.records[i].additionalFields = await this.getAdditionalFieldsByContactId(
+				result.records[i].contact.id
+			);
+		}
 		result.records = result.records.map(r => this.outputAdapter(r));
 
 		return result;
