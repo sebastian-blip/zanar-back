@@ -39,7 +39,7 @@ export default function(sequelize, DataTypes) {
 			}
 		},
 		{
-			tableName: 'medical_formula'
+			tableName: 'medical_formulas'
 		}
 	);
 
