@@ -9,8 +9,8 @@ export class PatientService extends UserService {
 	constructor() {
 		super('Patient', 'contacts');
 		this.patientAdditionalFields = {
-			birthday: 'date_contact_cumple',
-			gender: 'text_contact_gender'
+			birthday: 'date_Contact_cumple',
+			gender: 'text_Contact_gender'
 		};
 	}
 
