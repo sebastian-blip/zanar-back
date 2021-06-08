@@ -28,8 +28,9 @@ export class ERPProvider {
 
 	async checkToken() {
 		if (
-			this.tokenInformation.exp_time &&
-			this.tokenInformation.exp_time.isAfter(moment().subtract(10, 'minutes'))
+			//this.tokenInformation.exp_time &&
+			//this.tokenInformation.exp_time.diff(moment(), 'ms') <= 0
+			true //Por peticion del product owner, siempre se actualiza el token.
 		) {
 			try {
 				await this.login();
