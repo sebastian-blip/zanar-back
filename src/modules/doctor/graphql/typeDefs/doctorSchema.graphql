@@ -55,6 +55,7 @@ type CustomDoctorType {
 	name: String
 	lastNames: String
 	sex: String
+	rm: String
 	phone: String
 	birthday: String
 	email: String

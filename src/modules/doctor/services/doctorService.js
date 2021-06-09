@@ -50,10 +50,12 @@ export class DoctorService extends UserService {
 			additionalFields,
 			'text_Doctor_year_degree_subspecialty'
 		);
+		const rm = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_RM');
 
 		return {
 			name: doctor.name,
 			lastNames: doctor.family,
+			rm,
 			sex,
 			phone: doctor.phone,
 			birthday,
