@@ -109,6 +109,7 @@ type MedicalFormulaDetailType {
 	diagnosis: String
 	query_reason: String
 	query_type: String
+	createdAt: Date
 	Doctor: MedicalFormulaUserType
 	Patient: MedicalFormulaUserType
 	ManualMedications: [ManualMedicationsType]
