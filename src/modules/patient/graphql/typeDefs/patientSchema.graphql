@@ -37,7 +37,8 @@ type PatientType {
     eps: Int
 	companion: Int
 	serviceProviderEPS: ServiceProviderEPSType
-    accept_data: AcceptDataOption
+    accept_data: AcceptDataOption,
+	documentType: DocumentTypeType
 }
 
 input PatientFilters {
