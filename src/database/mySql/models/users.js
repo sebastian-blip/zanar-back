@@ -173,7 +173,7 @@ export default function(sequelize, DataTypes) {
 		{
 			sequelize,
 			tableName: 'users',
-			timestamps: false,
+			timestamps: true,
 			underscored: true,
 			indexes: [
 				{
@@ -204,7 +204,7 @@ export default function(sequelize, DataTypes) {
 	);
 
 	User.associate = Models => {
-		const { Role, Contact, ServiceProviderEPS } = Models;
+		const { Role, Contact, ServiceProviderEPS, TypeDocument } = Models;
 
 		User.belongsToMany(Role, {
 			through: 'role_user',
@@ -222,6 +222,12 @@ export default function(sequelize, DataTypes) {
 			foreignKey: 'eps',
 			constraints: true,
 			as: 'serviceProviderEPS'
+		});
+
+		User.belongsTo(TypeDocument, {
+			foreignKey: 'document_type',
+			constraints: true,
+			as: 'documentType'
 		});
 	};
 

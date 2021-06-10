@@ -1,5 +1,5 @@
 #Types
-type documentsTypes {
+type DocumentTypeType {
 	id: String
 	description: String
 }
@@ -8,7 +8,7 @@ type documentsTypes {
 
 #Queries
 type Query {
-	getDocumentsTypes: [documentsTypes]
+	getDocumentsTypes: [DocumentTypeType]
 }
 
 #Mutations

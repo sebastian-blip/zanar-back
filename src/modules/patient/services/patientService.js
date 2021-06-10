@@ -24,7 +24,15 @@ export class PatientService extends UserService {
 			{
 				model: Models.Contact,
 				as: 'contact',
-				required: true
+				required: true,
+				where: {
+					is_doctor: false
+				}
+			},
+			{
+				model: Models.TypeDocument,
+				as: 'documentType',
+				required: false
 			}
 		];
 	}
@@ -75,13 +83,30 @@ export class PatientService extends UserService {
 			...opts,
 			adapter: this.outputAdapter.bind(this)
 		});
-		if (!patient || (patient.contact?.is_doctor == true && patient.roles[0].name == ROLES.PATIENT))
+		if (!patient || patient.contact?.is_doctor == true || patient.roles[0].name != ROLES.PATIENT)
 			throw new ApolloError(`${this.modelLabel} not found`, `${this.modelLabel}FindError`);
 
 		return patient;
 	}
 
+	async getByNationalId(nationalId, opts = {}) {
+		const query = {
+			...opts,
+			paranoid: false,
+			include: this.getIncludeQuery(),
+			where: {
+				national_id: nationalId,
+				[Sequelize.Op.and]: [Sequelize.where(Sequelize.col('roles.name'), ROLES.PATIENT)]
+			},
+			subQuery: false
+		};
+		return await this.model.findOne(query);
+	}
+
 	async create(data, opts) {
+		if (await this.getByNationalId(data.national_id.trim()))
+			throw new ApolloError(`${this.modelLabel} already exists`, `${this.modelLabel}FindError`);
+
 		return await super.create(
 			{
 				...(await this.inputAdapter(data)),
@@ -92,6 +117,13 @@ export class PatientService extends UserService {
 	}
 
 	async update(patientId, data, opts) {
+		const patient = await this.get(patientId);
+		const anotherPatient = await this.getByNationalId(data.national_id.trim());
+		
+		if (data.national_id && anotherPatient && patient.id != anotherPatient.id) {
+			throw new ApolloError(`${this.modelLabel} already exists`, `${this.modelLabel}FindError`);
+		}
+
 		return await super.update(
 			patientId,
 			{
