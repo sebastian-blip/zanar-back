@@ -1,0 +1,15 @@
+#Types
+type epsType {
+	id: String
+	title: String
+}
+
+#Inputs
+
+#Queries
+type Query {
+	getServiceProviderEPS: [epsType]
+}
+
+#Mutations
+# type Mutation {}

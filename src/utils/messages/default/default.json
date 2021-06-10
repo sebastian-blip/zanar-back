@@ -1,0 +1,5 @@
+{
+	"updateMessage": "Row successfully updated",
+	"deleteMessage": "Row successfully removed",
+	"timeError": "No time has been sent, or the format sent is wrong"
+}

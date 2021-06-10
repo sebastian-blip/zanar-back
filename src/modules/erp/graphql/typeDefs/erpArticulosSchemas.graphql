@@ -1,0 +1,30 @@
+###### ERP Articulo ######
+type Articulo {
+    id: ID
+    name: String,
+	name_large: String,
+	component: String,
+	value: String,
+	control: String,
+	indications: String
+	enabled: String
+}
+
+input ArticuloListFilters {
+    name: String,
+	name_large: String,
+	component: String,
+	indications: String
+}
+
+type ArticuloList {
+    total: Int
+	count: Int
+	page: Int
+    records: [Articulo]
+}
+
+type Query {
+	getErpArticulo(id: ID!): Articulo
+	getErpArticuloList(filters: ArticuloListFilters, pagination: PaginationInput): ArticuloList
+}

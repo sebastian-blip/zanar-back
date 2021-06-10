@@ -1,0 +1,127 @@
+type DoctorType {
+	id: ID!
+	name: String
+	status: Int
+	email: String
+	remember_token: String
+	created_at: Date
+	updated_at: Date
+	mobile: String
+	username: String
+	domain_name: String
+	family: String
+	phone: String
+	city: String
+	province: String
+	address: String
+	national_id: String
+	avatar: String
+	job_title: String
+	gender: String
+	sms_value: Int
+	user_type: Int
+	lang: String
+	calendar_id: Int
+	user_signature: String
+	user_extension: String
+	document: String
+	token_syn_calendar: String
+	accept_data: String
+	companion: Int
+	signature_digital: String
+	eps: Int
+	document_type: Int
+	neighborhood: String
+	is_campaing: Boolean
+	omni_user: String
+	omni_pass: String
+	contact: ContactType
+	additionalFields: [AdditionalFieldType]
+}
+
+type EducationType {
+	type: String
+	title: String
+	university: String
+	year: String
+}
+
+type SocialType {
+	name: String
+	value: String
+}
+
+type CustomDoctorType {
+	name: String
+	lastNames: String
+	sex: String
+	rm: String
+	phone: String
+	birthday: String
+	email: String
+	address: String
+	city: String
+	national_id: String
+	education: [EducationType]
+	social: [SocialType]
+}
+
+input DoctorInput{
+	name: String
+	status: Int
+	email: String
+	remember_token: String
+	created_at: Date
+	updated_at: Date
+	mobile: String
+	username: String
+	domain_name: String
+	family: String
+	phone: String
+	city: String
+	province: String
+	address: String
+	national_id: String
+	avatar: String
+	job_title: String
+	gender: String
+	sms_value: Int
+	user_type: Int
+	lang: String
+	calendar_id: Int
+	user_signature: String
+	user_extension: String
+	document: String
+	token_syn_calendar: String
+	accept_data: String
+	companion: Int
+	signature_digital: String
+	eps: Int
+	document_type: Int
+	neighborhood: String
+	is_campaing: Boolean
+	omni_user: String
+	omni_pass: String
+	contact: ContactInput
+	additionalFields: [AdditionalFieldInput]
+}
+
+type DoctorList {
+	total: Int
+	count: Int
+	page: Int
+	records: [DoctorType]
+}
+
+#Queries
+type Query {
+	getDoctor(doctorId: ID!): CustomDoctorType
+	getDoctors: DoctorList
+}
+
+#Mutations
+type Mutation {
+	#createDoctor(data: DoctorInput!): DoctorType
+	updateDoctor(doctorId: ID!, data:DoctorInput!): DoctorType
+	#deleteDoctor(consultingRoomId: ID!): DoctorType
+}

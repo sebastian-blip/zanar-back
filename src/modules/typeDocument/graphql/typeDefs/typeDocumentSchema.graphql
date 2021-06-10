@@ -1,0 +1,15 @@
+#Types
+type DocumentTypeType {
+	id: String
+	description: String
+}
+
+#Inputs
+
+#Queries
+type Query {
+	getDocumentsTypes: [DocumentTypeType]
+}
+
+#Mutations
+# type Mutation {}

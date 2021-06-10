@@ -1,14 +1,23 @@
 import Sequelize from 'sequelize';
+import { database as DatabaseConfig } from '../../config';
+import { initializeModels } from './models';
 
 const sequelize = new Sequelize(
-	process.env.DATABASE,
-	process.env.DATABASE_USER,
-	process.env.DATABASE_PASSWORD,
+	DatabaseConfig.DATABASE,
+	DatabaseConfig.USER,
+	DatabaseConfig.PASSWORD,
 	{
-		host: process.env.DATABASE_HOST,
-		dialect: 'mysql'
+		// logging: DatabaseConfig.LOGGING,
+		host: DatabaseConfig.HOST,
+		dialect: DatabaseConfig.DIALECT,
+		underscored: true,
+		timestamps: false
 	}
 );
 
-// eslint-disable-next-line import/prefer-default-export
+initializeModels(sequelize);
+
+const { models } = sequelize;
 export { sequelize };
+export { models };
+export default models;

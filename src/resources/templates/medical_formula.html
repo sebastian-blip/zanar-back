@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+		<title>Medical formula</title>
+	</head>
+	<body>
+		<p>Hola! {{ Patient.name }} {{ Patient.family }}</p>
+		<p>A continuación el resumen de:</p>
+		<table style="width:50%;">
+			<tr>
+				<td><b>Fórmula Médica</b></td>
+				<td></td>
+				<td><b>Fecha de Expendición</b></td>
+			</tr>
+			<tr>
+				<td>Uso consecutivo: {{ id }}</td>
+				<td></td>
+				<td>{{ createdAt }}</td>
+			</tr>
+		</table>
+
+		<br />
+		<table>
+			<tr>
+				<td><b>nombre del paciente:</b></td>
+				<td>{{ Patient.name }} {{ Patient.family }}</td>
+			</tr>
+			<tr>
+				<td><b>Identificación:</b></td>
+				<td>{{ Patient.national_id }}</td>
+			</tr>
+			<tr>
+				<td><b>Teléfono:</b></td>
+				<td>{{ Patient.mobile }}</td>
+			</tr>
+			<tr>
+				<td><b>Consulta:</b></td>
+				<td>{{ query_type }}</td>
+			</tr>
+		</table>
+
+		<br />
+		{{#hasDiagnosisDiseases}}
+		<table style="width:50%;">
+			<thead>
+				<td><b>Diagnóstico(s)</b></td>
+			</thead>
+			{{#DiagnosisDiseases}}
+			<tr>
+				<td>
+					{{Disease.CIE10_4D}} - {{Disease.description}}
+				</td>
+			</tr>
+			{{/DiagnosisDiseases}}
+		</table>
+
+		{{/hasDiagnosisDiseases}}
+		<br /><br />
+
+		{{#hasMedicines}}
+		<table style="width:50%;">
+			<thead>
+				<td><b>No.</b></td>
+				<td><b>Medicamento</b></td>
+				<td><b>Prescripcion</b></td>
+			</thead>
+			{{#Medicines}}
+			<tr>
+				<td>
+					{{code}}
+				</td>
+				<td>
+					{{description}}
+				</td>
+				<td>
+					{{posology}}
+				</td>
+			</tr>
+			{{/Medicines}}
+		</table>
+
+		{{/hasMedicines}}
+		<br /><br />
+
+		{{#hasLaboratories}}
+		<table style="width:50%;">
+			<thead>
+				<td><b>No.</b></td>
+				<td><b>Laboratorios</b></td>
+			</thead>
+			{{#Laboratories}}
+			<tr>
+				<td>
+					{{code}}
+				</td>
+				<td>
+					{{description}}
+				</td>
+			</tr>
+			{{/Laboratories}}
+		</table>
+
+		{{/hasLaboratories}}
+		<br /><br />
+
+		{{#hasProcedures}}
+		<table style="width:50%;">
+			<thead>
+				<td><b>No</b></td>
+				<td><b>Procedimietos, sesiones y tiempo</b></td>
+			</thead>
+			{{#Procedures}}
+			<tr>
+				<td>
+					{{code}}
+				</td>
+				<td>
+					{{description}} {{approximate_time}}
+				</td>
+			</tr>
+			{{/Procedures}}
+		</table>
+
+		{{/hasProcedures}}
+	</body>
+</html>

@@ -1,0 +1,43 @@
+scalar Date
+scalar Hour
+
+#Types
+type ConsultingRoom {
+	name: String
+}
+
+type StringDate {
+	date: String
+}
+
+type officeScheduleType {
+	id: String
+	date: Date
+	morning: Hour
+	afternoon: Hour
+	night: Hour
+	consulting_rooms_id: ID
+	ConsultingRoom: ConsultingRoom
+}
+
+#Inputs
+input officeScheduleInput {
+	date: Date
+	morning: Hour
+	afternoon: Hour
+	night: Hour
+	consulting_rooms_id: ID!
+}
+
+#Queries
+type Query {
+	getOfficeScheduleDatesByMonth(doctorId: ID!, date: Date!): [StringDate]
+	getOfficeSchedulesByDoctor(doctorId: ID!, date: Date!): [officeScheduleType]
+}
+
+#Mutations
+type Mutation {
+	createOfficeSchedule(officeScheduleData: officeScheduleInput): String
+	updateOfficeSchedule(id: ID!, officeScheduleData: officeScheduleInput): String
+	deleteRowOfficeSchedule(id: ID!): String
+}

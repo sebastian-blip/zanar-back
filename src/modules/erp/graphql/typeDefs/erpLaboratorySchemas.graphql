@@ -1,0 +1,24 @@
+###### ERP Laboratory ######
+type Laboratory {
+    name: String,
+	code: String,
+	cups: String
+}
+
+input LaboratoryListFilters {
+    name: String,
+	code: String,
+	cups: String
+}
+
+type LaboratoryList {
+    total: Int
+	count: Int
+	page: Int
+    records: [Laboratory]
+}
+
+type Query {
+	getLaboratory(code: String!): Laboratory
+	getLaboratoryList(filters: LaboratoryListFilters, pagination: PaginationInput): LaboratoryList
+}

@@ -1,0 +1,80 @@
+#Inputs
+input CreateMedicalAppoitmentInput{
+    patient_id: ID!
+    doctor_id: ID!
+	consulting_room_id: ID!
+	start_time: Time!
+	date: Date!
+	turn: TurnOptionType!
+}
+
+input UpdateMedicalAppoitmentInput{
+	consulting_room_id: ID!
+	start_time: Time
+	date: Date
+	turn: TurnOptionType
+}
+
+input MedicalAppoitmentFilterInput{
+	doctor_id: ID!
+	patient_id: ID
+	date: Date
+	consulting_room_id: ID
+	status: MedicalAppoitmentStatus
+	
+}
+
+#Types
+enum TurnOptionType {
+	morning
+	afternoon
+	night
+}
+
+enum MedicalAppoitmentStatus {
+	Active
+	Cancelled
+}
+
+type MedicalAppoitmentType{
+    id: ID!
+	Patient: PatientType
+	Doctor: DoctorType
+	ConsultingRoom: consultingRoomType
+	status: MedicalAppoitmentStatus
+	start_time: Time
+	end_time: Time
+	reminder_date: Date
+	turn: String
+}
+
+type MedicalScheduleItemType{
+	start_time: Time!
+	end_time: Time!
+	turn: String!
+	ConsultingRoom: consultingRoomType!
+	Patient: PatientType
+	medical_appoitment_id: ID
+	is_available: Boolean
+}
+
+type MedicalAppoitmentList {
+	total: Int
+	count: Int
+	page: Int
+	records: [MedicalAppoitmentType]
+}
+
+#Queries
+type Query {
+	getMedicalAppoitment(id:ID!): MedicalAppoitmentType
+	getMedicalAppoitments(filters:MedicalAppoitmentFilterInput, pagination: PaginationInput): MedicalAppoitmentList
+	getDoctorScheduleByDay(doctorId: ID!, date: Date!): [MedicalScheduleItemType]
+}
+
+#Mutations
+type Mutation {
+	createMedicalAppoitment(medicalAppoitmentData: CreateMedicalAppoitmentInput!): MedicalAppoitmentType
+	updateMedicalAppoitment(medicalAppoitmentId:ID!, medicalAppoitmentData: CreateMedicalAppoitmentInput!): MedicalAppoitmentType
+	deleteMedicalAppoitment(medicalAppoitmentId:ID!): MedicalAppoitmentType
+}

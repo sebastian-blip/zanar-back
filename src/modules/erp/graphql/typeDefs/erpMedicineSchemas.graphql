@@ -1,0 +1,33 @@
+###### ERP Medicine ######
+type Medicine {
+    id: ID
+    name: String,
+	default_code: String,
+	descripcion_generica: String,
+	nombre_laboratorio: String,
+	segundo_nombre_laboratorio: String,
+	forma_farmaceutica: String
+	price: String
+	x_farma_controlado: String
+}
+
+input MedicineListFilters {
+    name: String,
+	default_code: String,
+	descripcion_generica: String,
+	nombre_laboratorio: String,
+	segundo_nombre_laboratorio: String,
+	forma_farmaceutica: String
+}
+
+type MedicineList {
+    total: Int
+	count: Int
+	page: Int
+    records: [Medicine]
+}
+
+type Query {
+	getMedicine(id: ID!): Medicine
+	getMedicineList(filters: MedicineListFilters, pagination: PaginationInput): MedicineList
+}

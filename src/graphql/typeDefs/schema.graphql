@@ -1,1 +1,18 @@
-# import Query.*, Mutation.* from './user/userSchema.graphql';
+scalar Time
+# import ContactType, ContactInput from '../../modules/contact/graphql/typeDefs/contactSchema.graphql';
+# import AdditionalFieldType, AdditionalFieldInput, ServiceProviderEPSType, AcceptDataOption from '../../modules/user/graphql/typeDefs/userSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/doctor/graphql/typeDefs/doctorSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/patient/graphql/typeDefs/patientSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/consultingRoom/graphql/typeDefs/consultingRoomSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/officeSchedule/graphql/typeDefs/officeScheduleSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/medicalAppoitment/graphql/typeDefs/medicalAppoitmentSchema.graphql';
+# import Query.*, Mutation.* from '../../modules/medicalFormula/graphql/typeDefs/medicalFormulaSchema.graphql';
+# import Query.* from '../../modules/mile/graphql/typeDefs/mileSchema.graphql';
+# import Mutation.* from '../../modules/authentication/graphql/typeDefs/authenticationSchema.graphql';
+# import Query.* from '../../modules/diseases/graphql/typeDefs/diseaseSchema.graphql';
+# import Query.* from '../../modules/eps/graphql/typeDefs/epsSchema.graphql';
+# import Query.* from '../../modules/erp/graphql/typeDefs/erpMedicineSchemas.graphql';
+# import Query.* from '../../modules/erp/graphql/typeDefs/erpArticulosSchemas.graphql';
+# import Query.* from '../../modules/erp/graphql/typeDefs/erpServiceSchemas.graphql';
+# import Query.* from '../../modules/erp/graphql/typeDefs/erpLaboratorySchemas.graphql';
+# import Query.* from '../../modules/typeDocument/graphql/typeDefs/typeDocumentSchema.graphql';
