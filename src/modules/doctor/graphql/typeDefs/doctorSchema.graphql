@@ -36,7 +36,7 @@ type DoctorType {
 	omni_user: String
 	omni_pass: String
 	contact: ContactType
-	additionalFields: [AdditionalFieldType],
+	additionalFields: [AdditionalFieldType]
 	documentType: DocumentTypeType
 }
 
@@ -65,7 +65,7 @@ type CustomDoctorType {
 	city: String
 	national_id: String
 	education: [EducationType]
-	social: [SocialType],
+	social: [SocialType]
 	documentType: DocumentTypeType
 }
 
