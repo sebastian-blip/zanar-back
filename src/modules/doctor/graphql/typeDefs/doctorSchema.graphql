@@ -36,7 +36,8 @@ type DoctorType {
 	omni_user: String
 	omni_pass: String
 	contact: ContactType
-	additionalFields: [AdditionalFieldType]
+	additionalFields: [AdditionalFieldType],
+	documentType: DocumentTypeType
 }
 
 type EducationType {
@@ -52,6 +53,7 @@ type SocialType {
 }
 
 type CustomDoctorType {
+	id: ID!
 	name: String
 	lastNames: String
 	sex: String
@@ -63,11 +65,15 @@ type CustomDoctorType {
 	city: String
 	national_id: String
 	education: [EducationType]
-	social: [SocialType]
+	social: [SocialType],
+	documentType: DocumentTypeType
 }
 
 input DoctorInput{
 	name: String
+	birthday: Date
+	sex: String
+	rm: String
 	status: Int
 	email: String
 	remember_token: String
@@ -77,6 +83,7 @@ input DoctorInput{
 	username: String
 	domain_name: String
 	family: String
+	lastNames: String
 	phone: String
 	city: String
 	province: String
@@ -97,11 +104,14 @@ input DoctorInput{
 	companion: Int
 	signature_digital: String
 	eps: Int
-	document_type: Int
+	document_type: ID
 	neighborhood: String
 	is_campaing: Boolean
 	omni_user: String
 	omni_pass: String
+	instagram: String
+	facebook: String
+	twitter: String
 	contact: ContactInput
 	additionalFields: [AdditionalFieldInput]
 }
@@ -122,6 +132,6 @@ type Query {
 #Mutations
 type Mutation {
 	#createDoctor(data: DoctorInput!): DoctorType
-	updateDoctor(doctorId: ID!, data:DoctorInput!): DoctorType
+	updateDoctor(doctorId: ID!, data:DoctorInput!): CustomDoctorType
 	#deleteDoctor(consultingRoomId: ID!): DoctorType
 }

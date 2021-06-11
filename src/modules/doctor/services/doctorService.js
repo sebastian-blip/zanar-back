@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import moment from 'moment';
 import { ApolloError } from 'apollo-server-errors';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { UserService } from '../../user/services/userService.js';
@@ -6,19 +7,43 @@ import { UserService } from '../../user/services/userService.js';
 export class DoctorService extends UserService {
 	constructor() {
 		super('Doctor', 'doctors');
+		this.doctorAdditionalFields = {
+			sex: 'text_doctor_gender',
+			birthday: 'date_doctor_birthday',
+			instagram: 'text_doctor_instagram',
+			facebook: 'text_doctor_facebook',
+			twitter: 'text_doctor_twitter',
+			specialization: 'text_doctor_specialty',
+			specializationUniversity: 'text_doctor_university',
+			specializationYear: 'text_doctor_year_degree',
+			subspecialization: 'text_doctor_subspecialty',
+			subspecializationUniversity: 'text_doctor_university_subspecialty',
+			subspecializationYear: 'text_doctor_year_degree_subspecialty',
+			rm: 'text_doctor_rm'
+		};
 	}
 
 	getIncludeQuery() {
 		return [
 			{
+				model: Models.Role,
+				as: 'roles',
+				required: true
+			},
+			{
 				model: Models.Contact,
 				as: 'contact',
 				required: true
+			},
+			{
+				model: Models.TypeDocument,
+				as: 'documentType',
+				required: false
 			}
 		];
 	}
 
-	adapter(doctor) {
+	/* adapter(doctor) {
 		const additionalFields = doctor.additionalFields || [];
 		const sex = this.getAdditionalFieldByKeyName(additionalFields, 'text_Doctor_gender');
 		const birthday = this.getAdditionalFieldByKeyName(additionalFields, 'date_Doctor_birthday');
@@ -84,18 +109,109 @@ export class DoctorService extends UserService {
 				{ name: 'twitter', value: twitter }
 			]
 		};
+	} */
+
+	async inputAdapter(data) {
+		if (!data.additionalFields) data.additionalFields = [];
+
+		const allAdditionalFieldKeys = await this.getAdditionalFieldsOfModule();
+		const docAdditionalFields = {};
+		const buildNewAdditionalField = (key, value) => {
+			return {
+				additional_field_key_id: key.id,
+				additional_field_values: value
+			};
+		};
+
+		for (let key in this.doctorAdditionalFields) {
+			docAdditionalFields[this.doctorAdditionalFields[key]] = key;
+		}
+
+		allAdditionalFieldKeys.forEach(key => {
+			const keyName = key.additional_field_key_name.trim().toLowerCase();
+			const inputKey = docAdditionalFields[keyName];
+
+			if (inputKey && data[inputKey]) {
+				if (inputKey == 'birthday') {
+					data.additionalFields.push(
+						buildNewAdditionalField(key, moment(data[inputKey]).format('YYYY-MM-DD'))
+					);
+				} else {
+					data.additionalFields.push(buildNewAdditionalField(key, data[inputKey]));
+				}
+			}
+		});
+
+		if(data.lastNames) data.family = data.lastNames;
+
+		return data;
+	}
+
+	outputAdapter(doctor) {
+		let newFormat = doctor;
+
+		let addAdditionalFields = (obj, keyValues) => {
+			for (let key in keyValues) {
+				if (typeof keyValues[key] == 'string') {
+					obj[key] = this.getAdditionalFieldByKeyName(
+						doctor.additionalFields || [],
+						keyValues[key]
+					);
+				} else if (typeof keyValues[key] == 'object') {
+					obj[key] = {};
+					addAdditionalFields(obj[key], keyValues[key]);
+				}
+			}
+		};
+
+		addAdditionalFields(newFormat, this.doctorAdditionalFields);
+
+		newFormat.lastNames = newFormat.family;
+		newFormat.education = [
+			{
+				type: 'specialization',
+				title: newFormat.specialization,
+				university: newFormat.specializationUniversity,
+				year: newFormat.specializationYear
+			},
+			{
+				type: 'subSpecialization',
+				title: newFormat.subspecialization,
+				university: newFormat.subspecializationUniversity,
+				year: newFormat.subspecializationYear
+			}
+		];
+		newFormat.social = [
+			{ name: 'instagram', value: newFormat.instagram },
+			{ name: 'facebook', value: newFormat.facebook },
+			{ name: 'twitter', value: newFormat.twitter }
+		];
+
+		console.log(newFormat);
+
+		return newFormat;
 	}
 
 	async get(doctorId, opts) {
 		const doctor = await super.get(doctorId, {
 			...opts,
-			adapter: this.adapter.bind(this)
+			adapter: this.outputAdapter.bind(this)
 		});
 
 		if (!doctor || !doctor?.contact?.is_doctor)
 			throw new ApolloError(`${this.modelLabel} not found`, `${this.modelLabel}FindError`);
 
 		return doctor;
+	}
+
+	async update(doctorId, data, opts) {
+		return await super.update(
+			doctorId,
+			{
+				...(await this.inputAdapter(data))
+			},
+			opts
+		);
 	}
 
 	async getAll(filters = {}, pagination = { page: 0, pageSize: 100 }) {
