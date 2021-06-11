@@ -33,6 +33,11 @@ export class PatientService extends UserService {
 				model: Models.TypeDocument,
 				as: 'documentType',
 				required: false
+			},
+			{
+				model: Models.ServiceProviderEPS,
+				as: 'serviceProviderEPS',
+				required: false
 			}
 		];
 	}

@@ -28,6 +28,7 @@ type PatientType {
     family: String
     phone: String
     city: String
+    document_type: ID
     province: String
     address: String
     national_id: String
