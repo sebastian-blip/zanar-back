@@ -187,8 +187,6 @@ export class DoctorService extends UserService {
 			{ name: 'twitter', value: newFormat.twitter }
 		];
 
-		console.log(newFormat);
-
 		return newFormat;
 	}
 

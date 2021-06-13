@@ -1,0 +1,458 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+	<head>
+		<meta charset="UTF-8" />
+		<meta content="width=device-width, initial-scale=1" name="viewport" />
+		<meta name="x-apple-disable-message-reformatting" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>Nuevo mensaje</title>
+		<!--[if (mso 16)]>
+			<style type="text/css">
+				a {
+					text-decoration: none;
+				}
+			</style>
+		<![endif]-->
+		<!--[if gte mso 9
+			]><style>
+				sup {
+					font-size: 100% !important;
+				}
+			</style><!
+		[endif]-->
+		<!--[if gte mso 9]>
+			<xml>
+				<o:OfficeDocumentSettings>
+					<o:AllowPNG></o:AllowPNG>
+					<o:PixelsPerInch>96</o:PixelsPerInch>
+				</o:OfficeDocumentSettings>
+			</xml>
+		<![endif]-->
+		<style type="text/css">
+			.wrapper {
+				width: 100%;
+				font-family: arial, 'helvetica neue', helvetica, sans-serif;
+				-webkit-text-size-adjust: 100%;
+				-ms-text-size-adjust: 100%;
+				padding: 0;
+				margin: 0;
+				width: 700px;
+			}
+			.title {
+				line-height: 100%;
+				font-size: 20px;
+			}
+			.label {
+				color: #1964ae;
+				font-weight: bold;
+			}
+			.column_label {
+				color: #1964ae;
+				font-weight: bold;
+			}
+			.text {
+				color: #1964ae;
+			}
+			.column_text {
+				color: #1964ae;
+			}
+			.section_title {
+				line-height: 200%;
+				color: #1964ae;
+				font-size: 18px;
+				font-weight: bold;
+				border-radius: 15px;
+				background: #cbd5e0;
+			}
+
+			.esd-container-frame {
+				padding: 25px;
+			}
+		</style>
+	</head>
+	<body class="wrapper">
+		<!--[if mso]><table width="560" cellpadding="0" cellspacing="0"><tr><td width="270" valign="top"><![endif]-->
+		<table class="es-left" width="50%" cellspacing="0" cellpadding="0" align="left">
+			<tbody>
+				<tr>
+					<td class="esd-container-frame" align="left">
+						<h1 class="title label">No. Fórmula Médica</h1>
+						<h2 class="title text">{{id}}</h2>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!--[if mso]></td><td width="20"></td><td width="270" valign="top"><![endif]-->
+		<table class="es-right" width="50%" cellspacing="0" cellpadding="0" align="left">
+			<tbody>
+				<tr>
+					<td class="esd-container-frame" align="left">
+						<h1 class="title label">Fecha de Expedición</h1>
+						<h2 class="title text">{{createdAt}}</h2>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!--[if mso]></td></tr></table><![endif]-->
+
+		<!--Datos Medico-->
+		<div width="100%" cellspacing="0" cellpadding="0">
+			<table width="100%" cellspacing="0" cellpadding="0" style="padding: 25px">
+				<thead>
+					<tr>
+						<td class="label" style="padding-bottom: 15px">
+							<b>Información del Médico</b>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td class="label"><b>Nombre:</b></td>
+									<td class="text">{{ Doctor.name }} {{ Doctor.family }}</td>
+								</tr>
+								<tr>
+									<td class="label"><b>RM:</b></td>
+									<td class="text">{{ Doctor.rm }}</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!--Datos Paciente-->
+		<div width="100%" cellspacing="0" cellpadding="0">
+			<table width="100%" cellspacing="0" cellpadding="0" style="padding: 25px">
+				<thead>
+					<tr>
+						<td class="label" style="padding-bottom: 15px">
+							<b>Información del Paciente</b>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td class="label"><b>Nombre del Paciente:</b></td>
+									<td class="text">{{ Patient.name }} {{ Patient.family }}</td>
+								</tr>
+								<tr>
+									<td class="label"><b>Identificación:</b></td>
+									<td class="text">{{ Patient.national_id }}</td>
+								</tr>
+								<tr>
+									<td class="label"><b>Dirección:</b></td>
+									<td class="text">{{ Patient.address }}</td>
+								</tr>
+								<tr>
+									<td class="label"><b>Prestador:</b></td>
+									<td class="text">{{ Patient.serviceProviderEPS.title }}</td>
+								</tr>
+								<tr>
+									<td class="label"><b>Teléfono:</b></td>
+									<td class="text">{{ Patient.mobile }}</td>
+								</tr>
+								<tr>
+									<td class="label"><b>Consulta:</b></td>
+									<td class="text">{{ query_type }}</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!--Diagnostico-->
+		{{#hasDiagnosisDiseases}}
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td class="esd-container-frame" width="560" valign="top" align="center">
+						<table width="100%" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td class="esd-block-text section_title" align="center">
+										<p class="text" style="line-height: 200%">
+											Diagnóstico(s)
+										</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div width="100%" cellspacing="0" cellpadding="0">
+			<table width="100%" cellspacing="0" cellpadding="0" style="padding: 25px">
+				<thead>
+					<tr>
+						<td class="label"><b>Código</b></td>
+						<td class="label"><b>Descripción</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					{{#DiagnosisDiseases}}
+					<tr>
+						<td class="text">{{Disease.CIE10_4D}}</td>
+						<td class="text">{{Disease.description}}</td>
+					</tr>
+					{{/DiagnosisDiseases}}
+				</tbody>
+			</table>
+		</div>
+
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td class="esd-block-spacer es-p20" style="font-size: 0px" align="center">
+						<table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0">
+							<tbody>
+								<tr>
+									<td
+										style="
+                      border-bottom: 1px solid #cccccc;
+                      background: none;
+                      height: 1px;
+                      width: 100%;
+                      margin: 0px 0px 0px 0px;
+                    "
+									></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		{{/hasDiagnosisDiseases}}
+
+		<!--Medicamentos-->
+		{{#hasMedicines}}
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td class="esd-container-frame" width="560" valign="top" align="center">
+						<table width="100%" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td class="esd-block-text section_title" align="center">
+										<p class="text" style="line-height: 200%">
+											Medicamento(s)
+										</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div width="100%" cellspacing="0" cellpadding="0">
+			<table width="100%" cellspacing="0" cellpadding="0" style="padding: 25px">
+				<thead>
+					<tr>
+						<td class="label"><b>Nombre</b></td>
+						<td class="label"><b>Posología</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					{{#Medicines}}
+					<tr>
+						<td class="text">{{description}}</td>
+						<td class="text">{{posology}}</td>
+					</tr>
+					{{/Medicines}}
+				</tbody>
+			</table>
+		</div>
+
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td class="esd-block-spacer es-p20" style="font-size: 0px" align="center">
+						<table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0">
+							<tbody>
+								<tr>
+									<td
+										style="
+                      border-bottom: 1px solid #cccccc;
+                      background: none;
+                      height: 1px;
+                      width: 100%;
+                      margin: 0px 0px 0px 0px;
+                    "
+									></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		{{/hasMedicines}}
+
+		<!--Laboratorios-->
+		{{#hasLaboratories}}
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td class="esd-container-frame" width="560" valign="top" align="center">
+						<table width="100%" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td class="esd-block-text section_title" align="center">
+										<p class="text" style="line-height: 200%">
+											Laboratorio(s)
+										</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div width="100%" cellspacing="0" cellpadding="0">
+			<table width="100%" cellspacing="0" cellpadding="0" style="padding: 25px">
+				<thead>
+					<tr>
+						<td class="label"><b>No.</b></td>
+						<td class="label"><b>Laboratorio</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					{{#Laboratories}}
+					<tr>
+						<td class="text">{{code}}</td>
+						<td class="text">{{description}}</td>
+					</tr>
+					{{/Laboratories}}
+				</tbody>
+			</table>
+		</div>
+
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td class="esd-block-spacer es-p20" style="font-size: 0px" align="center">
+						<table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0">
+							<tbody>
+								<tr>
+									<td
+										style="
+                      border-bottom: 1px solid #cccccc;
+                      background: none;
+                      height: 1px;
+                      width: 100%;
+                      margin: 0px 0px 0px 0px;
+                    "
+									></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		{{/hasLaboratories}}
+
+		<!--Procedimientos y servicios-->
+		{{#hasProcedures}}
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td class="esd-container-frame" width="560" valign="top" align="center">
+						<table width="100%" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td class="esd-block-text section_title" align="center">
+										<p class="text" style="line-height: 200%">
+											Procedimiento(s)
+										</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div width="100%" cellspacing="0" cellpadding="0">
+			<table width="100%" cellspacing="0" cellpadding="0" style="padding: 25px">
+				<thead>
+					<tr>
+						<td class="label"><b>No</b></td>
+						<td class="label"><b>Procedimietos, sesiones y tiempo</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					{{#Procedures}}
+					<tr>
+						<td class="text">{{code}}</td>
+						<td class="text">{{description}} {{approximate_time}}</td>
+					</tr>
+					{{/Procedures}}
+				</tbody>
+			</table>
+		</div>
+
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td class="esd-block-spacer es-p20" style="font-size: 0px" align="center">
+						<table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0">
+							<tbody>
+								<tr>
+									<td
+										style="
+                      border-bottom: 1px solid #cccccc;
+                      background: none;
+                      height: 1px;
+                      width: 100%;
+                      margin: 0px 0px 0px 0px;
+                    "
+									></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		{{/hasProcedures}}
+
+		<!--Footer-->
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td class="esd-container-frame" width="560" valign="top" align="center">
+						<table width="100%" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td esdev-links-color="#666666" class="esd-block-text" align="left">
+										<p style="color: #666666">
+											Copyright © {{current_year}} Zanar Plus, All Rights Reserved.
+										</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

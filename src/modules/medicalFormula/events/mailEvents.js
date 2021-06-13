@@ -3,15 +3,22 @@ import { general as Config } from '../../../config';
 import Mailer from '../../../utils/aws_smtp_mailer';
 import { TemplateManager } from '../../../utils/template_manager';
 import { medicalFormulaDao } from '../daos/medicalFormulaDao';
+import { doctorService } from '../../doctor/services/doctorService'
+import { patientService } from '../../patient/services/patientService'
 
 export class MailEvents {
 	static async medicalFormulaCreated(medicalFormulaId) {
 		const medicalFormula = await medicalFormulaDao.get(medicalFormulaId);
+		const doctor = await doctorService.get(medicalFormula.Doctor.id, { includeAdditionalFields: true });
+		const patient = await patientService.get(medicalFormula.Patient.id, { includeAdditionalFields: true });
+
 		const template = new TemplateManager(
-			`${Config.APP_FOLDER}/src/resources/templates/medical_formula.html`
+			`${Config.APP_FOLDER}/src/resources/templates/medical_formula_v2.html`
 		);
 		const data = medicalFormula.toJSON();
 
+		data.Doctor = doctor;
+		data.Patient = patient;
 		data.createdAt = moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss');
 		data.hasDiagnosisDiseases = data.DiagnosisDiseases.length > 0;
 
@@ -29,6 +36,8 @@ export class MailEvents {
 			...data.MedicalFormulaProcedures
 		];
 		data.hasProcedures = data.Procedures.length > 0;
+
+		data.current_year = moment().format('yyyy');
 
 		const mailOptions = {
 			to: medicalFormula.Patient.email,
