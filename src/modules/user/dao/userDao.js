@@ -10,6 +10,16 @@ export default class UserDao extends ResourceDao {
 		return this.model.findOne({
 			attributes: ['id', 'user_type'],
 			where: { national_id: username },
+			include: [
+				{
+					attributes: [],
+					model: Models.Contact,
+					as: 'contact',
+					where: {
+						is_doctor: true
+					}
+				}
+			],
 			raw: true
 		});
 	}
