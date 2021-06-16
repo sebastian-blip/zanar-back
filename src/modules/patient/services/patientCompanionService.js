@@ -64,7 +64,14 @@ export class PatientCompanionService extends UserService {
 		return newFormat;
 	}
 
-	async get(patientCompanionId, opts) {
+	async get(id, opts) {
+		let patientCompanionId = id;
+
+		if (opts.getByPatientId) {
+			const patient = await patientService.get(id);
+			patientCompanionId = patient.companion;
+		}
+
 		const patientCompanion = await super.get(patientCompanionId, {
 			...opts,
 			adapter: this.outputAdapter.bind(this)
@@ -89,14 +96,22 @@ export class PatientCompanionService extends UserService {
 			if (patient.companion) {
 				companion = await this.update(patient.companion, data, { ...opts, transaction });
 			} else {
-				companion = await super.create(await this.inputAdapter(data), {
-					...opts,
-					transaction
-				});
+				companion = await super.create(
+					{
+						...(await this.inputAdapter(data)),
+						roleName: ROLES.PATIENT
+					},
+					{
+						...opts,
+						transaction
+					}
+				);
 
 				await patientService.update(
-					data.companion_of,
-					{ companion: companion.id },
+					patient.id,
+					{
+						companion: companion.id
+					},
 					{ transaction }
 				);
 			}

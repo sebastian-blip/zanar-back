@@ -10,9 +10,10 @@ const getPatients = async (root, { filters, pagination }) => {
 	return await patientService.getAll(filters, pagination);
 };
 
-const getPatientCompanion = async (root, { patientCompanionId }) => {
-	const patient = await patientCompanionService.get(patientCompanionId, {
-		includeAdditionalFields: true
+const getPatientCompanion = async (root, { patientId }) => {
+	const patient = await patientCompanionService.get(patientId, {
+		includeAdditionalFields: true,
+		getByPatientId: true
 	});
 	return patient;
 };

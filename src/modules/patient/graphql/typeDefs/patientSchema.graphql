@@ -59,7 +59,7 @@ type Query {
 	getPatients(filters: PatientFilters, pagination: PaginationInput): PatientList
 
 	#Patient's companion
-	getPatientCompanion(patientCompanionId: ID!): PatientType
+	getPatientCompanion(patientId: ID!): PatientType
 }
 
 #Mutations

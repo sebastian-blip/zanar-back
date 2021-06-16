@@ -123,7 +123,7 @@ export class PatientService extends UserService {
 
 	async update(patientId, data, opts) {
 		const patient = await this.get(patientId);
-		const anotherPatient = await this.getByNationalId(data.national_id.trim());
+		const anotherPatient = data.national_id ? await this.getByNationalId(data.national_id.trim()) : undefined;
 		
 		if (data.national_id && anotherPatient && patient.id != anotherPatient.id) {
 			throw new ApolloError(`${this.modelLabel} already exists`, `${this.modelLabel}FindError`);
