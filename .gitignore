@@ -2,5 +2,6 @@
 /logs
 /public
 /build
+/uploads
 .env
 package-lock.json

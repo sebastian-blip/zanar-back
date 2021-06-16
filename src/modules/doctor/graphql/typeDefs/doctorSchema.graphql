@@ -56,6 +56,7 @@ type CustomDoctorType {
 	id: ID!
 	name: String
 	lastNames: String
+	avatar: String
 	sex: String
 	rm: String
 	phone: String
@@ -70,6 +71,7 @@ type CustomDoctorType {
 }
 
 input DoctorInput{
+    avatar_file: FileUpload
 	name: String
 	birthday: Date
 	sex: String

@@ -6,7 +6,8 @@ import erp from './erp';
 import smtp from './smtp';
 
 export const general = {
-	APP_FOLDER: pkgDir.sync()
+	APP_FOLDER: pkgDir.sync(),
+	UPLOAD_FOLDER: process.env.UPLOAD_FOLDER || 'uploads'
 };
 
 export { database };

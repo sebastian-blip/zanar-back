@@ -1,4 +1,5 @@
 scalar Time
+scalar FileUpload
 # import ContactType, ContactInput from '../../modules/contact/graphql/typeDefs/contactSchema.graphql';
 # import AdditionalFieldType, AdditionalFieldInput, ServiceProviderEPSType, AcceptDataOption from '../../modules/user/graphql/typeDefs/userSchema.graphql';
 # import Query.*, Mutation.* from '../../modules/doctor/graphql/typeDefs/doctorSchema.graphql';

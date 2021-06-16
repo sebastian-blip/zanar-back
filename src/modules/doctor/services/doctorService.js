@@ -3,6 +3,7 @@ import moment from 'moment';
 import { ApolloError } from 'apollo-server-errors';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { UserService } from '../../user/services/userService.js';
+import { FileManager } from '../../../utils/fileUploader';
 
 export class DoctorService extends UserService {
 	constructor() {
@@ -21,6 +22,8 @@ export class DoctorService extends UserService {
 			subspecializationYear: 'text_doctor_year_degree_subspecialty',
 			rm: 'text_doctor_rm'
 		};
+		this.avatarFolder = 'avatar_files';
+		this.FileManager = new FileManager(this.avatarFolder);
 	}
 
 	getIncludeQuery() {
@@ -142,7 +145,7 @@ export class DoctorService extends UserService {
 			}
 		});
 
-		if(data.lastNames) data.family = data.lastNames;
+		if (data.lastNames) data.family = data.lastNames;
 
 		return data;
 	}
@@ -203,13 +206,20 @@ export class DoctorService extends UserService {
 	}
 
 	async update(doctorId, data, opts) {
-		return await super.update(
-			doctorId,
-			{
-				...(await this.inputAdapter(data))
-			},
-			opts
-		);
+		let doctorData = await this.inputAdapter(data);
+
+		if (data.avatar_file) {
+			let avatarFile = await data.avatar_file;
+
+			avatarFile = await this.FileManager.put({
+				filename: avatarFile.filename,
+				stream: avatarFile.createReadStream()
+			});
+
+			doctorData.avatar = avatarFile.filename;
+		}
+
+		return await super.update(doctorId, doctorData, opts);
 	}
 
 	async getAll(filters = {}, pagination = { page: 0, pageSize: 100 }) {
