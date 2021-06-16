@@ -20,6 +20,16 @@ export class PatientCompanionService extends UserService {
 				model: Models.Contact,
 				as: 'contact',
 				required: true
+			},
+			{
+				model: Models.TypeDocument,
+				as: 'documentType',
+				required: false
+			},
+			{
+				model: Models.ServiceProviderEPS,
+				as: 'serviceProviderEPS',
+				required: false
 			}
 		];
 	}
