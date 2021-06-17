@@ -210,10 +210,11 @@ export class DoctorService extends UserService {
 	async update(doctorId, data, opts) {
 		let transaction;
 		let avatarFile = await data.avatar_file;
-		avatarFile = await this.FileManager.put({
-			filename: avatarFile.filename,
-			stream: avatarFile.createReadStream()
-		});
+		if (data.avatar_file)
+			avatarFile = await this.FileManager.put({
+				filename: avatarFile.filename,
+				stream: avatarFile.createReadStream()
+			});
 
 		let doctor;
 		try {
@@ -247,7 +248,7 @@ export class DoctorService extends UserService {
 			}
 			throw error;
 		} finally {
-			await this.FileManager.delete(avatarFile.fileName);
+			if (data.avatar_file) await this.FileManager.delete(avatarFile.fileName);
 		}
 
 		return doctor;
