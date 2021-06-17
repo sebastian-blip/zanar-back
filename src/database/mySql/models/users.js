@@ -75,7 +75,7 @@ export default function(sequelize, DataTypes) {
 				allowNull: true
 			},
 			avatar: {
-				type: DataTypes.STRING(35),
+				type: DataTypes.STRING(100),
 				allowNull: true
 			},
 			job_title: {

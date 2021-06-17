@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { createReadStream, createWriteStream, mkdirSync, existsSync, ReadStream } from 'fs';
+import { createReadStream, createWriteStream, mkdirSync, existsSync, unlinkSync } from 'fs';
 import { general as Config } from '../config/index';
 
 export class FileManager {
@@ -26,7 +26,7 @@ export class FileManager {
 				.on('finish', () =>
 					resolve({
 						path: filePath,
-						filename: newFileName,
+						fileName: newFileName,
 						originalFileName: file.filename,
 						mimetype: file.mimetype
 					})
@@ -40,8 +40,19 @@ export class FileManager {
 
 		const filePath = `${this.path}/${filename}`;
 
-		if (!existsSync(filePath)) throw new Error('File not found');
+		if (!existsSync(filePath)) throw new Error(`File ${filename} not found`);
 
 		return createReadStream(filePath);
+	}
+
+	async delete(filename) {
+		const filePath = `${this.path}/${filename}`;
+		if (existsSync(filePath)) {
+			unlinkSync(filePath);
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

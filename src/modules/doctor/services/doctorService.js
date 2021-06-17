@@ -4,6 +4,7 @@ import { ApolloError } from 'apollo-server-errors';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { UserService } from '../../user/services/userService.js';
 import { FileManager } from '../../../utils/fileUploader';
+import { S3Manager } from '../../../utils/s3Manager';
 
 export class DoctorService extends UserService {
 	constructor() {
@@ -24,6 +25,7 @@ export class DoctorService extends UserService {
 		};
 		this.avatarFolder = 'avatar_files';
 		this.FileManager = new FileManager(this.avatarFolder);
+		this.S3Manager = new S3Manager();
 	}
 
 	getIncludeQuery() {
@@ -206,20 +208,49 @@ export class DoctorService extends UserService {
 	}
 
 	async update(doctorId, data, opts) {
-		let doctorData = await this.inputAdapter(data);
+		let transaction;
+		let avatarFile = await data.avatar_file;
+		avatarFile = await this.FileManager.put({
+			filename: avatarFile.filename,
+			stream: avatarFile.createReadStream()
+		});
 
-		if (data.avatar_file) {
-			let avatarFile = await data.avatar_file;
+		let doctor;
+		try {
+			transaction = opts.transaction || (await Connection.transaction());
 
-			avatarFile = await this.FileManager.put({
-				filename: avatarFile.filename,
-				stream: avatarFile.createReadStream()
+			let doctorData = await this.inputAdapter(data);
+			doctor = await this.get(doctorId, { transaction });
+
+			if (data.avatar_file) {
+				const { path, fileName } = avatarFile;
+				const s3FilePath = `${this.avatarFolder}/${fileName}`;
+
+				await this.S3Manager.move(path, s3FilePath);
+
+				doctorData.avatar = s3FilePath;
+
+				if (doctor.avatar) {
+					await this.S3Manager.delete(doctor.avatar);
+				}
+			}
+
+			doctor = await super.update(doctorId, doctorData, {
+				...opts,
+				transaction
 			});
 
-			doctorData.avatar = avatarFile.filename;
+			if (!opts.transaction) transaction.commit();
+		} catch (error) {
+			if (transaction && !opts.transaction) {
+				transaction.rollback(error);
+			}
+			throw error;
+		} finally {
+			await this.FileManager.delete(avatarFile.fileName);
 		}
 
-		return await super.update(doctorId, doctorData, opts);
+		return doctor;
 	}
 
 	async getAll(filters = {}, pagination = { page: 0, pageSize: 100 }) {
