@@ -208,13 +208,16 @@ export class DoctorService extends UserService {
 	}
 
 	async update(doctorId, data, opts) {
+		console.log('Try update doctor profile');
 		let transaction;
 		let avatarFile = await data.avatar_file;
-		if (data.avatar_file)
+		if (data.avatar_file) {
+			console.log('Try update doctor profile -> upload file');
 			avatarFile = await this.FileManager.put({
 				filename: avatarFile.filename,
 				stream: avatarFile.createReadStream()
 			});
+		}
 
 		let doctor;
 		try {
@@ -227,11 +230,13 @@ export class DoctorService extends UserService {
 				const { path, fileName } = avatarFile;
 				const s3FilePath = `${this.avatarFolder}/${fileName}`;
 
+				console.log('Try update doctor profile -> move file to S3');
 				await this.S3Manager.move(path, s3FilePath);
 
 				doctorData.avatar = s3FilePath;
 
 				if (doctor.avatar) {
+					console.log('Try update doctor profile -> delete oldFile in S3');
 					await this.S3Manager.delete(doctor.avatar);
 				}
 			}
@@ -241,6 +246,8 @@ export class DoctorService extends UserService {
 				transaction
 			});
 
+			console.log('Try update doctor profile -> Save all data');
+
 			if (!opts.transaction) transaction.commit();
 		} catch (error) {
 			if (transaction && !opts.transaction) {
@@ -248,7 +255,10 @@ export class DoctorService extends UserService {
 			}
 			throw error;
 		} finally {
-			if (data.avatar_file) await this.FileManager.delete(avatarFile.fileName);
+			if (data.avatar_file) {
+				console.log('Try update doctor profile -> delete temp file');
+				await this.FileManager.delete(avatarFile.fileName);
+			}
 		}
 
 		return doctor;
