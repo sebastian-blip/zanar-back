@@ -207,10 +207,14 @@ export class DoctorService extends UserService {
 		return doctor;
 	}
 
+	isPromise(p) {
+		return p && Object.prototype.toString.call(p) === '[object Promise]';
+	}
+
 	async update(doctorId, data, opts) {
 		console.log('Try update doctor profile');
 		let transaction;
-		let avatarFile = await data.avatar_file;
+		let avatarFile = await (this.isPromise(data.avatar_file) ? data.avatar_file : data.avatar_file.promise);
 		if (data.avatar_file) {
 			console.log('Try update doctor profile -> upload file');
 			avatarFile = await this.FileManager.put({

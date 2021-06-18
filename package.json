@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "start": "node build/index",
     "devStart": "nodemon --exec babel-node src/index",
     "build": "babel ./src -d build --copy-files",
@@ -61,5 +62,9 @@
   },
   "engines": {
     "node": "12.14.0"
+  },
+  "resolutions": {
+    "fs-capacitor": "^6.2.0",
+    "graphql-upload": "^11.0.0"
   }
 }
