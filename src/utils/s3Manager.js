@@ -33,6 +33,6 @@ export class S3Manager {
 
 	async delete(s3FilePath) {
 		if(!s3.BUCKET) return false;
-        return await this.executeCommand(`aws s3 rm s3://${this.bucket}/${s3FilePath} --recursive`)
+        return await this.executeCommand(`aws s3 rm s3://${this.bucket}/${s3FilePath}`)
     }
 }
