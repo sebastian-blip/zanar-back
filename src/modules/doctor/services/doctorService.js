@@ -214,8 +214,9 @@ export class DoctorService extends UserService {
 	async update(doctorId, data, opts) {
 		console.log('Try update doctor profile');
 		let transaction;
-		let avatarFile = await (this.isPromise(data.avatar_file) ? data.avatar_file : data.avatar_file.promise);
+		let avatarFile = undefined;
 		if (data.avatar_file) {
+			avatarFile = await (this.isPromise(data.avatar_file) ? data.avatar_file : data.avatar_file.promise);
 			console.log('Try update doctor profile -> upload file');
 			avatarFile = await this.FileManager.put({
 				filename: avatarFile.filename,
