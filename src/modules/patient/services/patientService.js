@@ -166,6 +166,54 @@ export class PatientService extends UserService {
 
 		return result;
 	}
+
+	async getAllPatientByDocumentAndName(filters = {}, pagination = { page: 0, pageSize: 100 }) {
+		const { national_id: nationalId } = filters;
+		let result;
+		if (nationalId) {
+			result = await super.getAll(
+				{
+					[Sequelize.Op.and]: [Sequelize.where(Sequelize.col('contact.is_doctor'), false)],
+					[Sequelize.Op.or]: [
+						{
+							national_id: {
+								[Sequelize.Op.like]: `%${nationalId}%`
+							}
+						},
+						{
+							name: {
+								[Sequelize.Op.like]: `%${nationalId}%`
+							}
+						},
+						{
+							family: {
+								[Sequelize.Op.like]: `%${nationalId}%`
+							}
+						}
+					]
+				},
+				pagination
+			);
+		} else {
+			result = await super.getAll(
+				{
+					[Sequelize.Op.and]: [Sequelize.where(Sequelize.col('contact.is_doctor'), false)],
+					...filters
+				},
+				pagination
+			);
+		}
+		// eslint-disable-next-line no-plusplus
+		for (let i = 0; i < result.records.length; i++) {
+			// eslint-disable-next-line no-await-in-loop
+			result.records[i].additionalFields = await this.getAdditionalFieldsByContactId(
+				result.records[i].contact.id
+			);
+		}
+		result.records = result.records.map(r => this.outputAdapter(r));
+
+		return result;
+	}
 }
 
 export const patientService = new PatientService();

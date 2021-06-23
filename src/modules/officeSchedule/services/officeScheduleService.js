@@ -6,7 +6,9 @@ import * as DefaultMessages from '../../../utils/messages/default/default.json';
 const isBetween = (date, dateToCompare) => {
 	if (
 		date.initialDate.isBetween(dateToCompare.initialDate, dateToCompare.finalDate) ||
-		date.finalDate.isBetween(dateToCompare.initialDate, dateToCompare.finalDate)
+		date.finalDate.isBetween(dateToCompare.initialDate, dateToCompare.finalDate) ||
+		(date.initialDate.isSame(dateToCompare.initialDate) &&
+			date.finalDate.isSame(dateToCompare.finalDate))
 	)
 		throw new Error(DefaultMessages.timeError);
 };
