@@ -204,7 +204,7 @@ export default function(sequelize, DataTypes) {
 	);
 
 	User.associate = Models => {
-		const { Role, Contact, ServiceProviderEPS, TypeDocument } = Models;
+		const { Role, Contact, ServiceProviderEPS, TypeDocument, MileForSale } = Models;
 
 		User.belongsToMany(Role, {
 			through: 'role_user',
@@ -228,6 +228,12 @@ export default function(sequelize, DataTypes) {
 			foreignKey: 'document_type',
 			constraints: true,
 			as: 'documentType'
+		});
+
+		User.hasMany(MileForSale, {
+			foreignKey: 'doctor_id',
+			constraints: true,
+			as: 'miles'
 		});
 	};
 

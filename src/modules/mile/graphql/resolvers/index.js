@@ -1,12 +1,4 @@
-import * as mileService from '../../services/mileService';
-
-const mileQueries = {
-	getMilesByDoctor: (root, { doctorId, date }) => mileService.getMilesByDoctor(doctorId, date),
-	getMilesHistoryByDoctor: (root, { doctorId, initDate, finalDate }) =>
-		mileService.getMilesHistoryByDoctor(doctorId, initDate, finalDate),
-	getMilesPercentByDoctorAndMonth: (root, { doctorId, date }) =>
-		mileService.getMilesPercentByDoctorAndMonth(doctorId, date)
+import Queries from './queries';
+export default {
+	Query: Queries
 };
-
-// eslint-disable-next-line import/prefer-default-export
-export { mileQueries };

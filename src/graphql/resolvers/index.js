@@ -9,7 +9,6 @@ import {
 	officeScheduleQueries
 } from '../../modules/officeSchedule/graphql/resolvers';
 import { authenticationMutations } from '../../modules/authentication/graphql/resolvers';
-import { mileQueries } from '../../modules/mile/graphql/resolvers';
 import { diseasesQueries } from '../../modules/diseases/graphql/resolvers';
 import { epsQueries } from '../../modules/eps/graphql/resolvers';
 import { typeDocumentQueries } from '../../modules/typeDocument/graphql/resolvers';
@@ -21,12 +20,12 @@ import MedicalAppoitment from '../../modules/medicalAppoitment/graphql/resolvers
 import PatientResolvers from '../../modules/patient/graphql/resolvers';
 import DoctorResolvers from '../../modules/doctor/graphql/resolvers';
 import ERPResolvers from '../../modules/erp/graphql/resolvers';
+import MileResolvers from '../../modules/mile/graphql/resolvers';
 
 const resolvers = {
 	Query: {
 		...consultingRoomQueries,
 		...officeScheduleQueries,
-		...mileQueries,
 		...diseasesQueries,
 		...epsQueries,
 		...medicalFormulaQueries,
@@ -48,5 +47,6 @@ export default _.merge(
 	DoctorResolvers,
 	ERPResolvers,
 	PatientResolvers,
-	MedicalAppoitment
+	MedicalAppoitment,
+	MileResolvers
 );

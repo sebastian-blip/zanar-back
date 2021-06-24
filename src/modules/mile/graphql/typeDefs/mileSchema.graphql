@@ -1,37 +1,70 @@
-scalar Date
+#Inputs
+input DateRangeInput {
+	init_date: Date!
+	end_date: Date!
+}
+
+input MileReportFilterInput{
+	doctor_id: ID!
+	exchange: Boolean
+	created_year: Int
+	created_month: Int
+	created_at: DateRangeInput
+}
+
+input MilesListFilterInput{
+	doctor_id: ID!
+	formula_id: ID
+	exchange: Boolean
+	created_at: DateRangeInput
+
+}
 
 #Types
-type milesByDoctorType {
-	sale: Int
-	notConfirmed: Int
-	exchange: Int
-	total: Int
-	lastPoints: Int
-	lastPointsMonth: String
-	maxPoint: Int
-	maxPointMonth: String
+type MileReportType {
+	medicalFormulaAmount: Int
+	medicalFormulaOrderAmount: Int
+	mileAmount: Int
 }
 
-type milesHistoryByDoctor {
-	total: Int
-	date: String
-	order: String
+type MileType{
+    id: ID!
+	doctor: DoctorType
+	medicalFormula: MedicalFormulaType
+	mile: Int!
+	exchange: Boolean!
+	exchange_date: Date
 }
 
-type milesPercentByDoctorAndMonth {
-	sale: Int
-	notConfirmed: Int
-	exchange: Int
+type FormulaMileType{
+	doctor: DoctorType
+	medicalFormula: MedicalFormulaType
+	mileAmount: Int!
+}
+
+type MilesList {
 	total: Int
-	salePercent: Int
-	notConfirmedPercent: Int
-	exchangePercen: Int
-	month: String
+	count: Int
+	page: Int
+	records: [MileType]
+}
+
+type FormulaMilesList {
+	total: Int
+	count: Int
+	page: Int
+	records: [FormulaMileType]
 }
 
 #Queries
 type Query {
-	getMilesByDoctor(doctorId: ID!, date: Date!): milesByDoctorType
-	getMilesHistoryByDoctor(doctorId: ID!, initDate: Date!, finalDate: Date!): [milesHistoryByDoctor]
-	getMilesPercentByDoctorAndMonth(doctorId: ID!, date: Date!): milesPercentByDoctorAndMonth
+	#Obtener un registro de MileForSale
+	getMile(id:ID!): MileType
+	#Obtener una lista de registros de MileForSale
+	getMiles(filters:MilesListFilterInput, pagination: PaginationInput): MilesList
+	#Obtener un listado de millas agrupado por formula id
+	getFormulaMiles(filters:MilesListFilterInput, pagination: PaginationInput): FormulaMilesList
+	
+	#Obtener un reporte de totales (millas, formulas, ordenes) en un periodo de tiempo
+	getMileReport(filters: MileReportFilterInput!): MileReportType
 }

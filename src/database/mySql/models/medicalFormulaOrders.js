@@ -1,13 +1,34 @@
 export default function(sequelize, DataTypes) {
 	const medicalFormulaOrders = sequelize.define(
-		'MedicalFormulas',
+		'MedicalFormulaOrder',
 		{
-			order_erp_id: {
-				type: DataTypes.INTEGER
-			}
+			id: {
+				autoIncrement: true,
+				type: DataTypes.INTEGER.UNSIGNED,
+				allowNull: false,
+				primaryKey: true
+			},
+			formula_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'medical_formulas',
+					key: 'id'
+				}
+			},
+			is_invoiced: {
+				type: DataTypes.BOOLEAN,
+				allowNull: true,
+				defaultValue: 0
+			},
+			client_id: {
+				type: DataTypes.INTEGER.UNSIGNED,
+				allowNull: false
+			},
 		},
 		{
-			tableName: 'medical_formula_orders'
+			tableName: 'medical_formula_orders',
+			underscored: true,
 		}
 	);
 
