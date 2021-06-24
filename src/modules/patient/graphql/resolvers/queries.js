@@ -7,7 +7,7 @@ const getPatient = async (root, { patientId }) => {
 };
 
 const getPatients = async (root, { filters, pagination }) => {
-	return await patientService.getAll(filters, pagination);
+	return patientService.getAllPatientByDocumentAndName(filters, pagination);
 };
 
 const getPatientCompanion = async (root, { patientId }) => {

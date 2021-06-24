@@ -11,12 +11,14 @@ const getAndValidateDateByHour = hours => {
 	const initialDate = moment().set({
 		hour: hour1,
 		minute: minutes1,
-		second: 0
+		second: 0,
+		millisecond: 0
 	});
 	const finalDate = moment().set({
 		hour: hour2,
 		minute: minutes2,
-		second: 0
+		second: 0,
+		millisecond: 0
 	});
 	if (finalDate.isBefore(initialDate)) throw new Error(DefaultMessages.timeError);
 	return {
