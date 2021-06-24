@@ -123,13 +123,11 @@ export class MileForSaleService extends ResourceService {
 		});
 		const records = (await this.model.findAll(query)).map(r => r.toJSON());
 		const response = {
-			total: total.toJSON().total,
+			total: total ? total.toJSON().total : null,
 			count: records.length,
 			page: pagination ? pagination.page : 0,
 			records
 		};
-
-		console.log(total.toJSON().total);
 
 		return response;
 	}
@@ -210,7 +208,11 @@ export class MileForSaleService extends ResourceService {
 			group: [Sequelize.col('doctor.id')]
 		});
 
-		return total.toJSON();
+		return total ? total.toJSON() : {
+			medicalFormulaAmount: 0,
+			medicalFormulaOrderAmount: 0,
+			mileAmount: 0
+		};
 	}
 }
 
