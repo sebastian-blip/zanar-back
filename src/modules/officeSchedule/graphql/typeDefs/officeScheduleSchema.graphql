@@ -29,6 +29,13 @@ input officeScheduleInput {
 	consulting_rooms_id: ID!
 }
 
+input officeScheduleRangeInput {
+	doctorId: ID!
+	pivotDate: Date!
+	initialDate: Date!
+	finalDate: Date!
+}
+
 #Queries
 type Query {
 	getOfficeScheduleDatesByMonth(doctorId: ID!, date: Date!): [StringDate]
@@ -38,6 +45,7 @@ type Query {
 #Mutations
 type Mutation {
 	createOfficeSchedule(officeScheduleData: officeScheduleInput): String
+	createOfficeScheduleByRange(officeScheduleRange: officeScheduleRangeInput!): String
 	updateOfficeSchedule(id: ID!, officeScheduleData: officeScheduleInput): String
 	deleteRowOfficeSchedule(id: ID!): String
 }

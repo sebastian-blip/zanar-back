@@ -1,7 +1,9 @@
+import moment from 'moment';
 import { officeScheduleDao } from '../dao/officeScheduleDao';
 import { consultingRoomsDao } from '../../consultingRoom/dao/consultingRoomDao';
 import { getAndValidateDateByHour } from '../../../utils/validate/time/timeValidate';
 import * as DefaultMessages from '../../../utils/messages/default/default.json';
+import { sequelize as Connection } from '../../../database/mySql';
 
 const isBetween = (date, dateToCompare) => {
 	if (
@@ -94,6 +96,51 @@ const create = async officeScheduleData => {
 	return record.id;
 };
 
+const createOfficeScheduleByRange = async ({ pivotDate, initialDate, finalDate, doctorId }) => {
+	const today = moment().format('YYYY-MM-DD');
+	const pivoteScheduleDates = await getOfficeSchedulesByDoctor(doctorId, pivotDate);
+	if (!pivoteScheduleDates.length > 0) throw new Error('No pivote date was provided.');
+
+	let invalidDates = await getOfficeScheduleDatesByMonth(doctorId, pivotDate);
+	invalidDates = invalidDates.filter(invalidDate =>
+		moment(invalidDate.date).isBetween(initialDate, finalDate)
+	);
+
+	const transaction = { transaction: await Connection.transaction() };
+	try {
+		for (
+			const date = moment(initialDate);
+			date.isBefore(finalDate) || date.isSame(finalDate);
+			date.add(1, 'days')
+		) {
+			const dateFormat = date.format('YYYY-MM-DD');
+			const isNotInvalidDate = !invalidDates.find(invalidDate => invalidDate.date === dateFormat);
+			const isValidDate = date.isAfter(today) || date.isSame(today);
+			if (isNotInvalidDate && isValidDate)
+				// eslint-disable-next-line no-plusplus
+				for (let index = 0; index < pivoteScheduleDates.length; index++) {
+					// eslint-disable-next-line camelcase
+					const { morning, afternoon, night, consulting_rooms_id } = JSON.parse(
+						JSON.stringify(pivoteScheduleDates[index])
+					);
+					// eslint-disable-next-line no-await-in-loop
+					await officeScheduleDao.create({
+						morning,
+						afternoon,
+						night,
+						consulting_rooms_id,
+						date: dateFormat
+					});
+				}
+		}
+		await transaction.transaction.commit();
+		return DefaultMessages.createMessage;
+	} catch (error) {
+		await transaction.transaction.rollback();
+		throw error;
+	}
+};
+
 const update = async (id, officeScheduleData) => {
 	await validTime(officeScheduleData);
 	await officeScheduleDao.update(id, officeScheduleData);
@@ -105,4 +152,11 @@ const deleteRow = async id => {
 	return DefaultMessages.deleteMessage;
 };
 
-export { getOfficeScheduleDatesByMonth, getOfficeSchedulesByDoctor, create, update, deleteRow };
+export {
+	getOfficeScheduleDatesByMonth,
+	getOfficeSchedulesByDoctor,
+	create,
+	update,
+	deleteRow,
+	createOfficeScheduleByRange
+};

@@ -24,7 +24,10 @@ export default class OfficeScheduleDao extends ResourceDao {
 
 	getOfficeScheduleDatesByMonth(doctorId, date) {
 		const monthNumber = moment(date).format('M');
-		const where = sequelize.literal(`MONTH(DATE(OfficeSchedules.date)) = ${monthNumber}`);
+		const yearNumber = moment(date).format('YYYY');
+		const where = sequelize.literal(
+			`MONTH(DATE(OfficeSchedules.date)) = ${monthNumber} AND YEAR(DATE(OfficeSchedules.date)) = ${yearNumber}`
+		);
 		return this.model.findAll({
 			attributes: [
 				[sequelize.fn('DISTINCT', sequelize.literal('DATE(OfficeSchedules.date)')), 'date']

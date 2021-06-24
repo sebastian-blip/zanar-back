@@ -1,5 +1,6 @@
 {
-	"updateMessage": "Row successfully updated",
-	"deleteMessage": "Row successfully removed",
+	"createMessage": "Row(s) successfully created",
+	"updateMessage": "Row(s) successfully updated",
+	"deleteMessage": "Row(s) successfully removed",
 	"timeError": "No time has been sent, or the format sent is wrong"
 }

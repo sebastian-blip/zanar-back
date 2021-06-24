@@ -9,6 +9,8 @@ const officeScheduleQueries = {
 
 const officeScheduleMutations = {
 	createOfficeSchedule: (root, { officeScheduleData }) => officeService.create(officeScheduleData),
+	createOfficeScheduleByRange: (root, { officeScheduleRange }) =>
+		officeService.createOfficeScheduleByRange(officeScheduleRange),
 	updateOfficeSchedule: (root, { id, officeScheduleData }) =>
 		officeService.update(id, officeScheduleData),
 	deleteRowOfficeSchedule: async (root, { id }) => officeService.deleteRow(id)
