@@ -13,7 +13,9 @@ const dateScalar = new GraphQLScalarType({
 	name: 'Date',
 	description: 'Date custom scalar type',
 	serialize(value) {
-		return moment(value).format('YYYY-MM-DD');
+		return moment(value)
+			.utc()
+			.format('YYYY-MM-DD');
 	},
 	parseValue(value) {
 		validDateFormat(value);

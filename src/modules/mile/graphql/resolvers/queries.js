@@ -6,15 +6,15 @@ const getMile = async (root, { id }) => {
 };
 
 const getMiles = async (root, { filters, pagination }) => {
-	return await mileForSaleService.getAll(filters, pagination);
+	return mileForSaleService.getAll(filters, pagination);
 };
 
 const getFormulaMiles = async (root, { filters, pagination }) => {
-	return await mileForSaleService.getMilesGroupedByMedicalFormula(filters, pagination);
+	return mileForSaleService.getMilesGroupedByMedicalFormula(filters, pagination);
 };
 
-const getMileReport = async (root, { doctorId, date }) => {
-	return await mileForSaleService.getReport(doctorId, date);
+const getMileReport = async (root, { filters }) => {
+	return mileForSaleService.getReport(filters);
 };
 
 export default {

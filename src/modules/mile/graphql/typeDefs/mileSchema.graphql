@@ -34,6 +34,7 @@ type MileType{
 	mile: Int!
 	exchange: Boolean!
 	exchange_date: Date
+	createdAt: Date
 }
 
 type FormulaMileType{

@@ -2,9 +2,7 @@ import Sequelize from 'sequelize';
 import moment from 'moment';
 import { ApolloError } from 'apollo-server-errors';
 import ResourceService from '../../../database/mySql/resourceDao/resourceDao';
-import { getOfficeSchedulesByDoctor } from '../../officeSchedule/services/officeScheduleService';
-import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
-import _, { orderBy } from 'lodash';
+import Models, { sequelize } from '../../../database/mySql';
 
 export class MileForSaleService extends ResourceService {
 	constructor() {
@@ -132,7 +130,7 @@ export class MileForSaleService extends ResourceService {
 		return response;
 	}
 
-	//REPORT
+	// REPORT
 	parseReportFilters(filters) {
 		const conditions = [];
 
@@ -168,6 +166,7 @@ export class MileForSaleService extends ResourceService {
 			[Sequelize.Op.and]: conditions
 		};
 	}
+
 	async getReport(filters = {}) {
 		const total = await this.model.findOne({
 			include: [
@@ -208,11 +207,13 @@ export class MileForSaleService extends ResourceService {
 			group: [Sequelize.col('doctor.id')]
 		});
 
-		return total ? total.toJSON() : {
-			medicalFormulaAmount: 0,
-			medicalFormulaOrderAmount: 0,
-			mileAmount: 0
-		};
+		return total
+			? total.toJSON()
+			: {
+					medicalFormulaAmount: 0,
+					medicalFormulaOrderAmount: 0,
+					mileAmount: 0
+			  };
 	}
 }
 
