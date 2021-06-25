@@ -32,11 +32,9 @@ const areValidHours = (initialDatesHours, finalDatesHours) => {
 	let time = moment(initialDatesHours.initialDate, hourFormat);
 	const beforeTime = moment(finalDatesHours.initialDate, hourFormat);
 	const afterTime = moment(finalDatesHours.finalDate, hourFormat);
-	if (time.isBetween(beforeTime, afterTime) || time.isSame(afterTime) || time.isSame(beforeTime))
-		throw new Error(DefaultMessages.timeError);
+	if (time.isBetween(beforeTime, afterTime)) throw new Error(DefaultMessages.timeError);
 	time = moment(initialDatesHours.finalDate, hourFormat);
-	if (time.isBetween(beforeTime, afterTime) || time.isSame(afterTime) || time.isSame(beforeTime))
-		throw new Error(DefaultMessages.timeError);
+	if (time.isBetween(beforeTime, afterTime)) throw new Error(DefaultMessages.timeError);
 };
 
 const validHours = ({ morning, afternoon, night }) => {
