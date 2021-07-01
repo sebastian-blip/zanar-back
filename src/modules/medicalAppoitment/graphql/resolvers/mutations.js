@@ -1,15 +1,19 @@
 import { medicalAppoitmentService } from '../../services/medicalAppoitmentService';
+import { isAuthenticate } from '../../../authentication/services/authenticationService';
 
-const createMedicalAppoitment = async (root, { medicalAppoitmentData }) => {
-	return await medicalAppoitmentService.create(medicalAppoitmentData);
+const createMedicalAppoitment = (root, { medicalAppoitmentData }, context) => {
+	isAuthenticate(context);
+	return medicalAppoitmentService.create(medicalAppoitmentData);
 };
 
-const updateMedicalAppoitment = async (root, { medicalAppoitmentId, medicalAppoitmentData }) => {
-	return await medicalAppoitmentService.update(medicalAppoitmentId, medicalAppoitmentData);
+const updateMedicalAppoitment = (root, { medicalAppoitmentId, medicalAppoitmentData }, context) => {
+	isAuthenticate(context);
+	return medicalAppoitmentService.update(medicalAppoitmentId, medicalAppoitmentData);
 };
 
-const deleteMedicalAppoitment = async (root, { medicalAppoitmentId }) => {
-	return await medicalAppoitmentService.delete(medicalAppoitmentId);
+const deleteMedicalAppoitment = (root, { medicalAppoitmentId }, context) => {
+	isAuthenticate(context);
+	return medicalAppoitmentService.delete(medicalAppoitmentId);
 };
 
 export default {

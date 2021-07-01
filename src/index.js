@@ -8,7 +8,7 @@ import cors from 'cors';
 import { sequelize } from './database/mySql';
 import typeDefs from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
-import { getUser } from './modules/authentication/services/authenticationService';
+import { getAndValidateUser } from './modules/authentication/services/authenticationService';
 
 mongoose.Promise = global.Promise;
 
@@ -42,7 +42,8 @@ const server = new ApolloServer({
 	context: ({ req }) => {
 		return {
 			...req,
-			user: req?.headers?.authorization ? getUser(req) : null
+			user: req?.headers?.authorization ? getAndValidateUser(req) : null,
+			refresh: req?.headers?.refresh
 		};
 	}
 });

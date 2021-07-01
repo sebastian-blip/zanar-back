@@ -1,7 +1,11 @@
 import * as epsService from '../../service/epsService';
+import { isAuthenticate } from '../../../authentication/services/authenticationService';
 
 const epsQueries = {
-	getServiceProviderEPS: () => epsService.getServiceProviderEPS()
+	getServiceProviderEPS: (root, values, context) => {
+		isAuthenticate(context);
+		return epsService.getServiceProviderEPS();
+	}
 };
 
 const epsMutations = {};

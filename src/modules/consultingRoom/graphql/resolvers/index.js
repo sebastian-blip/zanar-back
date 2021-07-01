@@ -4,15 +4,28 @@ import {
 	deleteRow,
 	update
 } from '../../services/consultingRoomService';
+import { isAuthenticate } from '../../../authentication/services/authenticationService';
 
 const consultingRoomQueries = {
-	getConsultingRoomsByDoctor: (root, { doctorId }) => getConsultingRoomsByDoctor(doctorId)
+	getConsultingRoomsByDoctor: (root, { doctorId }, context) => {
+		isAuthenticate(context);
+		return getConsultingRoomsByDoctor(doctorId);
+	}
 };
 
 const consultingRoomMutations = {
-	createConsultingRoom: (root, { consultingRoomData }) => create(consultingRoomData),
-	updateConsultingRoom: (root, { id, consultingRoomData }) => update(id, consultingRoomData),
-	deleteRowConsultingRoom: (root, { id }) => deleteRow(id)
+	createConsultingRoom: (root, { consultingRoomData }, context) => {
+		isAuthenticate(context);
+		return create(consultingRoomData);
+	},
+	updateConsultingRoom: (root, { id, consultingRoomData }, context) => {
+		isAuthenticate(context);
+		return update(id, consultingRoomData);
+	},
+	deleteRowConsultingRoom: (root, { id }, context) => {
+		isAuthenticate(context);
+		return deleteRow(id);
+	}
 };
 
 export { consultingRoomQueries, consultingRoomMutations };
