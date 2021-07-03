@@ -13,7 +13,7 @@ export class MailEvents {
 		const patient = await patientService.get(medicalFormula.Patient.id, { includeAdditionalFields: true });
 
 		const template = new TemplateManager(
-			`${Config.APP_FOLDER}/src/resources/templates/medical_formula_v2.html`
+			`${Config.APP_FOLDER}/src/resources/templates/medical_formula_v3.html`
 		);
 		const data = medicalFormula.toJSON();
 
