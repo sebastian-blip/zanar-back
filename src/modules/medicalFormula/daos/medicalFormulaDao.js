@@ -63,7 +63,7 @@ export default class MedicalFormulaDao extends ResourceDao {
 		let where = '1 = 1 ';
 		if (code) where += `AND MedicalFormulas.code LIKE '%${code}%'`;
 		if (initialDate && finalDate)
-			where += `AND MedicalFormulas.createdAt BETWEEN
+			where += `AND MedicalFormulas.created_at BETWEEN
 			CAST('${moment(initialDate).format('YYYY-MM-DD')}' AS DATE) AND
 			CAST('${moment(finalDate).format('YYYY-MM-DD')}' AS DATE) `;
 		// eslint-disable-next-line camelcase
