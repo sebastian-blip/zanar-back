@@ -35,6 +35,7 @@ type PatientType {
     job_title: String
     gender: String
     birthday: Date
+    avatar: String
     eps: Int
 	companion: Int
 	serviceProviderEPS: ServiceProviderEPSType
