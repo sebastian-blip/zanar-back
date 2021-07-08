@@ -20,6 +20,7 @@ const getMileReport = async (root, { filters }) => {
 export default {
 	getMile,
 	getMiles,
+	
 	getFormulaMiles,
 	getMileReport
 };

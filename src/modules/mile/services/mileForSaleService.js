@@ -2,7 +2,8 @@ import Sequelize from 'sequelize';
 import moment from 'moment';
 import { ApolloError } from 'apollo-server-errors';
 import ResourceService from '../../../database/mySql/resourceDao/resourceDao';
-import Models, { sequelize } from '../../../database/mySql';
+import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
+import _ from 'lodash';
 
 export class MileForSaleService extends ResourceService {
 	constructor() {
@@ -130,37 +131,43 @@ export class MileForSaleService extends ResourceService {
 		return response;
 	}
 
-	// REPORT
-	parseReportFilters(filters) {
+	//REPORT
+	parseReportFilters(filters, entityName = 'MileForSale') {
 		const conditions = [];
+		let objFilters = _.cloneDeep(filters);
 
-		if (filters.created_year || filters.created_month) {
-			if (filters.created_at && filters.created_month) {
+		if (objFilters.created_year || objFilters.created_month) {
+			if (objFilters.created_at && objFilters.created_month) {
 				conditions.push(
-					Sequelize.literal(`YEAR(MileForSale.created_at) = ${filters.created_year} `)
+					Sequelize.literal(`YEAR(${entityName}.created_at) = ${objFilters.created_year} `)
 				);
 				conditions.push(
-					Sequelize.literal(`MONTH(MileForSale.created_at) = ${filters.created_month} `)
+					Sequelize.literal(`MONTH(${entityName}.created_at) = ${objFilters.created_month} `)
 				);
 
-				delete filters.created_year;
-				delete filters.created_month;
+				delete objFilters.created_year;
+				delete objFilters.created_month;
 			} else {
 				throw new ApolloError(`You have to send both parameters, created_year and created_month`);
 			}
 		}
 
-		if (filters.created_at) {
-			const initDate = moment(filters.created_at.init_date).format(this.dateFormat);
-			const endDate = moment(filters.created_at.end_date).format(this.dateFormat);
+		if (objFilters.created_at) {
+			const initDate = moment(objFilters.created_at.init_date).format(this.dateFormat);
+			const endDate = moment(objFilters.created_at.end_date).format(this.dateFormat);
 
 			conditions.push(
-				Sequelize.literal(`Date(MileForSale.created_at) BETWEEN '${initDate}' AND '${endDate}' `)
+				Sequelize.literal(`Date(${entityName}.created_at) BETWEEN '${initDate}' AND '${endDate}' `)
 			);
 
-			delete filters.created_at;
+			delete objFilters.created_at;
 		}
-		conditions.push(filters);
+
+		if (entityName != 'MileForSale') {
+			delete objFilters.exchange;
+		}
+
+		conditions.push(objFilters);
 
 		return {
 			[Sequelize.Op.and]: conditions
@@ -168,18 +175,13 @@ export class MileForSaleService extends ResourceService {
 	}
 
 	async getReport(filters = {}) {
-		const total = await this.model.findOne({
+		let result = {};
+		const milesAndOrderTotals = await this.model.findOne({
 			include: [
 				{
 					model: Models.User,
 					attributes: [],
 					as: 'doctor',
-					required: true
-				},
-				{
-					model: Models.MedicalFormulas,
-					attributes: [],
-					as: 'medicalFormula',
 					required: true
 				},
 				{
@@ -194,10 +196,6 @@ export class MileForSaleService extends ResourceService {
 			],
 			attributes: [
 				[
-					sequelize.fn('COUNT', sequelize.literal(`DISTINCT medicalFormula.id`)),
-					'medicalFormulaAmount'
-				],
-				[
 					sequelize.fn('COUNT', sequelize.literal(`DISTINCT medicalFormulaOrder.id`)),
 					'medicalFormulaOrderAmount'
 				],
@@ -207,13 +205,25 @@ export class MileForSaleService extends ResourceService {
 			group: [Sequelize.col('doctor.id')]
 		});
 
-		return total
-			? total.toJSON()
-			: {
-					medicalFormulaAmount: 0,
-					medicalFormulaOrderAmount: 0,
-					mileAmount: 0
-			  };
+		const formulaTotal = await Models.MedicalFormulas.findOne({
+			attributes: [
+				[sequelize.fn('COUNT', sequelize.literal(`DISTINCT id`)), 'medicalFormulaAmount']
+			],
+			where: this.parseReportFilters(filters, 'MedicalFormulas'),
+			group: [Sequelize.col('doctor_id')]
+		});
+
+		result = {
+			...(milesAndOrderTotals
+				? milesAndOrderTotals.toJSON()
+				: {
+						medicalFormulaOrderAmount: 0,
+						mileAmount: 0
+				  }),
+			...(formulaTotal ? formulaTotal.toJSON() : { medicalFormulaAmount: 0 })
+		};
+
+		return result;
 	}
 }
 
