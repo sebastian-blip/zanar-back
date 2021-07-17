@@ -1,10 +1,13 @@
 import * as medicalFormulaService from '../../services/medicalFormulaService';
+import { isAuthenticate } from '../../../authentication/services/authenticationService';
 
 const medicalFormulaQueries = {
-	getMedicalFormulas: (root, { filter, pagination, orderBy, sortBy }) => {
+	getMedicalFormulas: (root, { filter, pagination, orderBy, sortBy }, context) => {
+		isAuthenticate(context);
 		return medicalFormulaService.getMedicalFormulas(filter, pagination, orderBy, sortBy);
 	},
-	getMedicalFormulaDetail: (root, { id }) => {
+	getMedicalFormulaDetail: (root, { id }, context) => {
+		isAuthenticate(context);
 		return medicalFormulaService.getMedicalFormulaDetail(id);
 	}
 };
@@ -20,8 +23,10 @@ const medicalFormulaMutations = {
 			medicalFormulaMedicines,
 			medicalFormulaProcedures,
 			diagnosisDiseases
-		}
+		},
+		context
 	) => {
+		isAuthenticate(context);
 		return medicalFormulaService.createMedicalFormula(
 			medicalFormula,
 			manualMedications,
