@@ -17,6 +17,7 @@ export class MailEvents {
 		);
 		const data = medicalFormula.toJSON();
 
+		data.query_type = data.query_type === 'ONLINE' ? 'VIRTUAL' : 'PRESENCIAL';
 		data.Doctor = doctor;
 		data.Patient = patient;
 		data.createdAt = moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss');
