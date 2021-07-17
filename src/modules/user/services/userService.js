@@ -4,12 +4,17 @@ import resourceDao from '../../../database/mySql/resourceDao/resourceDao';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { contactService } from '../../contact/services/contactService';
 import { roleService } from './roleService';
+import { FileManager } from '../../../utils/fileUploader';
+import { S3Manager } from '../../../utils/s3Manager';
 import _ from 'lodash';
 
 class UserService extends resourceDao {
 	constructor(modelLabel = 'User', upportModule = 'contacts') {
 		super(Models.User, modelLabel);
 		this.upportModule = upportModule;
+		this.avatarFolder = 'avatar_files';
+		this.FileManager = new FileManager(this.avatarFolder);
+		this.S3Manager = new S3Manager();
 	}
 
 	getIncludeQuery() {
@@ -87,6 +92,10 @@ class UserService extends resourceDao {
 				});
 			}
 
+			if (data.avatar_file) {
+				await this.updateAvatar(user.id, data.avatar_file, { transaction });
+			}
+
 			user = await this.get(user.id, { transaction });
 
 			if (!opts.transaction) transaction.commit();
@@ -122,6 +131,10 @@ class UserService extends resourceDao {
 				await this.updateOrCreateAdditionalFields(user.contact.id, data.additionalFields, {
 					transaction
 				});
+			}
+
+			if (data.avatar_file) {
+				await this.updateAvatar(userId, data.avatar_file, { transaction });
 			}
 
 			if (!opts.transaction) transaction.commit();
@@ -241,6 +254,56 @@ class UserService extends resourceDao {
 
 			addFieldValue.additional_field_values = additionalField.additional_field_values;
 			await addFieldValue.save({ transaction: opts.transaction });
+		}
+	}
+
+	async updateAvatar(userId, avatarFileData, opts = {}) {
+		const isPromise = p => {
+			return p && Object.prototype.toString.call(p) === '[object Promise]';
+		};
+
+		let transaction;
+		let avatarFile = undefined;
+
+		try {
+			transaction = opts.transaction || (await Connection.transaction());
+
+			const user = this.get(userId, { transaction });
+			avatarFile = await (isPromise(avatarFileData) ? avatarFileData : avatarFileData.promise);
+
+			console.log('Try update avatar -> upload file');
+			avatarFile = await this.FileManager.put({
+				filename: avatarFile.filename,
+				stream: avatarFile.createReadStream()
+			});
+
+			const { path, fileName } = avatarFile;
+			const s3FilePath = `${this.avatarFolder}/${fileName}`;
+
+			console.log('Try update avatar -> move file to S3');
+			await this.S3Manager.move(path, s3FilePath);
+
+			if (user.avatar) {
+				console.log('Try update avatar-> delete oldFile in S3');
+				await this.S3Manager.delete(user.avatar);
+			}
+
+			await this.update(
+				userId,
+				{
+					avatar: s3FilePath
+				},
+				{ transaction }
+			);
+
+			if (!opts.transaction) transaction.commit();
+		} catch (error) {
+			console.log('Try update avatar -> error', error);
+		} finally {
+			if (avatarFile && avatarFile.fileName) {
+				console.log('Try update avatar -> delete temp file');
+				await this.FileManager.delete(avatarFile.fileName);
+			}
 		}
 	}
 }

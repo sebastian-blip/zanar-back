@@ -1,4 +1,5 @@
 input PatientInput {
+    avatar_file: FileUpload
     name: String
     email: String
     mobile: String

@@ -3,8 +3,6 @@ import moment from 'moment';
 import { ApolloError } from 'apollo-server-errors';
 import Models, { sequelize as Connection, sequelize } from '../../../database/mySql';
 import { UserService } from '../../user/services/userService.js';
-import { FileManager } from '../../../utils/fileUploader';
-import { S3Manager } from '../../../utils/s3Manager';
 
 export class DoctorService extends UserService {
 	constructor() {
@@ -23,9 +21,6 @@ export class DoctorService extends UserService {
 			subspecializationYear: 'text_doctor_year_degree_subspecialty',
 			rm: 'text_doctor_rm'
 		};
-		this.avatarFolder = 'avatar_files';
-		this.FileManager = new FileManager(this.avatarFolder);
-		this.S3Manager = new S3Manager();
 	}
 
 	getIncludeQuery() {
@@ -207,23 +202,8 @@ export class DoctorService extends UserService {
 		return doctor;
 	}
 
-	isPromise(p) {
-		return p && Object.prototype.toString.call(p) === '[object Promise]';
-	}
-
 	async update(doctorId, data, opts) {
-		console.log('Try update doctor profile');
 		let transaction;
-		let avatarFile = undefined;
-		if (data.avatar_file) {
-			avatarFile = await (this.isPromise(data.avatar_file) ? data.avatar_file : data.avatar_file.promise);
-			console.log('Try update doctor profile -> upload file');
-			avatarFile = await this.FileManager.put({
-				filename: avatarFile.filename,
-				stream: avatarFile.createReadStream()
-			});
-		}
-
 		let doctor;
 		try {
 			transaction = opts.transaction || (await Connection.transaction());
@@ -231,27 +211,10 @@ export class DoctorService extends UserService {
 			let doctorData = await this.inputAdapter(data);
 			doctor = await this.get(doctorId, { transaction });
 
-			if (data.avatar_file) {
-				const { path, fileName } = avatarFile;
-				const s3FilePath = `${this.avatarFolder}/${fileName}`;
-
-				console.log('Try update doctor profile -> move file to S3');
-				await this.S3Manager.move(path, s3FilePath);
-
-				doctorData.avatar = s3FilePath;
-
-				if (doctor.avatar) {
-					console.log('Try update doctor profile -> delete oldFile in S3');
-					await this.S3Manager.delete(doctor.avatar);
-				}
-			}
-
 			doctor = await super.update(doctorId, doctorData, {
 				...opts,
 				transaction
 			});
-
-			console.log('Try update doctor profile -> Save all data');
 
 			if (!opts.transaction) transaction.commit();
 		} catch (error) {
@@ -259,11 +222,6 @@ export class DoctorService extends UserService {
 				transaction.rollback(error);
 			}
 			throw error;
-		} finally {
-			if (data.avatar_file) {
-				console.log('Try update doctor profile -> delete temp file');
-				await this.FileManager.delete(avatarFile.fileName);
-			}
 		}
 
 		return doctor;
