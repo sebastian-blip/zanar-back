@@ -27,7 +27,7 @@ const isAuthenticate = (fn, context) => {
 
 const login = async (username, password) => {
 	const user = await userDao.login(username, password);
-	if (!user) throw new Error('No user found');
+	if (!user) throw new Error('The username or password is incorrect');
 	const token = generateToken(user);
 	return {
 		token,

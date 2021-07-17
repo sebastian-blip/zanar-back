@@ -1,14 +1,15 @@
 import Models from '../../../database/mySql';
 import ResourceDao from '../../../database/mySql/resourceDao/resourceDao';
+import { Encryption } from '../../../utils/encryption';
 
 export default class UserDao extends ResourceDao {
 	constructor() {
 		super(Models.User, 'User');
 	}
 
-	login(username, password) {
-		return this.model.findOne({
-			attributes: ['id', 'user_type'],
+	async login(username, password) {
+		const user = await this.model.findOne({
+			attributes: ['id', 'user_type', 'password'],
 			where: { national_id: username },
 			include: [
 				{
@@ -22,6 +23,12 @@ export default class UserDao extends ResourceDao {
 			],
 			raw: true
 		});
+		if (user && user.password && Encryption.compare(password, user.password)) {
+			return user;
+		}
+		else{
+			return undefined;
+		}
 	}
 }
 
